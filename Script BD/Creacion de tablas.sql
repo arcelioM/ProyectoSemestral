@@ -146,6 +146,7 @@ CREATE TABLE pedido(
 #  TENDRA LOS PRODUCTOS REGISTRADOR POR CADA PEDIDO
 
 CREATE TABLE pedidoProducto(
+
 	id_pedidoProducto INT PRIMARY KEY AUTO_INCREMENT,
     producto_id INT NOT NULL,
     pedido_id INT NOT NULL,
@@ -156,4 +157,51 @@ CREATE TABLE pedidoProducto(
     CONSTRAINT FK_pedidoProducto_producto_idProducto FOREIGN KEY (producto_id) REFERENCES producto(id_producto),
     CONSTRAINT FK_pedidProducto_pedido_idPedido FOREIGN KEY (pedido_id) REFERENCES pedido(id_pedido),
     INDEX IN_pedidoProducto_fechaCreacion(fechaCreacion)
+);
+
+# TENDRA LOS TIPOS DE PAGOS DISPONIBLES
+CREATE TABLE tipoPago(
+	id_tipoPago INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(30) NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_tipoPago_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado)
+);
+
+# TENDRA LOS PAGOS REALIZADOS 
+CREATE TABLE pago(
+	id_pago INT PRIMARY KEY AUTO_INCREMENT,
+    no_tarjeta INT NOT NULL UNIQUE,
+    cantidad DECIMAL(7,2) NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_pago_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+    INDEX IN_pago_fechaCreacion(fechaCreacion)
+);
+
+
+# TENDRAS LAS FACTURAS GENERADAS POR COMPRA
+
+CREATE TABLE factura(
+	id_factura INT PRIMARY KEY AUTO_INCREMENT,
+    pedido_id INT NOT NULL,
+    subTotal DECIMAL(7,2) NOT NULL,
+    itbms DECIMAL(7,2) NOT NULL,
+    total DECIMAL(7,2) NOT NULL,
+    estado_id INT NOT NULL,
+    detalle_envio VARCHAR(100),
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_factura_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+    CONSTRAINT FK_factura_pedido_idPedido FOREIGN KEY (pedido_id) REFERENCES pedido(id_pedido),
+    INDEX IN_factura_fechaCreacion(fechaCreacion)
+);
+
+# TENDRA TODOS LOS PAGOS QUE SE HAYAN HECHO PRO CADA FACTURA
+CREATE TABLE facturaPago(
+	id_facturaPago INT PRIMARY KEY AUTO_INCREMENT,
+    factura_id INT NOT NULL,
+    pago_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_facturaPago_factura_idFactura FOREIGN KEY (factura_id) REFERENCES factura(id_factura),
+    CONSTRAINT FK_facturaPago_pago_idPago FOREIGN KEY (pago_id) REFERENCES pago(id_pago)
 );
