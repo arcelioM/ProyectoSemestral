@@ -87,3 +87,73 @@ CREATE TABLE usuarioRol(
     CONSTRAINT FK_usuarioRol_usuario_idUsuario FOREIGN key (usuario_id) REFERENCES usuario(id_usuario),
     CONSTRAINT FK_usuarioRol_rol_idRol FOREIGN KEY (rol_id) REFERENCES rol (id_rol)
 );
+
+# TENDRA LAS CATEGORIAS DISPONIBLES PARA LOS PRODUCTOS
+
+CREATE TABLE categoria(
+	id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(30) NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_categoria_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+	INDEX IN_categoria_nombre(nombre)
+);
+
+# TENDRA PRODUCTOS DISPONIBLES PARA LA VENTA
+
+CREATE TABLE producto(
+	id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(30) NOT NULL,
+    categoria_id INT NOT NULL,
+    cantidad INT NOT NULL DEFAULT 0,
+    precio DECIMAL(7,2) NOT NULL,
+    precio_provedor DECIMAL(7,2) NOT NULL,
+    imagen VARCHAR(50) NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_producto_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+    CONSTRAINT FK_producto_categoria_idCategoria FOREIGN KEY (categoria_id) REFERENCES categoria(id_categoria),
+    INDEX IN_producto_nombre(nombre)
+);
+
+# TENDRA LOS TIPOS DE PEDIDO QUE SE PUEDAN HACER
+
+CREATE TABLE tipoPedido(
+	id_tipoPedido INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(30) NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_tipoPedido_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado)
+);
+
+# TENDRAS LOS PEDIDOS QUE SE HAYAN HECHO
+
+CREATE TABLE pedido(
+	id_pedido INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    tipoPedido_id INT NOT NULL,
+    direccion_id INT NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_pedido_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+    CONSTRAINT FK_pedido_usuario_idUsuario FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
+    CONSTRAINT FK_pedido_direcion_idDireccion FOREIGN KEY (direccion_id) REFERENCES direccion(id_direccion),
+    CONSTRAINT FK_pedido_tipoPedido_idTipoPedido FOREIGN KEY (tipoPedido_id) REFERENCES tipoPedido(id_tipoPedido),
+    INDEX IN_pedido_fechaCreacion(fechaCreacion)
+);
+
+
+#  TENDRA LOS PRODUCTOS REGISTRADOR POR CADA PEDIDO
+
+CREATE TABLE pedidoProducto(
+	id_pedidoProducto INT PRIMARY KEY AUTO_INCREMENT,
+    producto_id INT NOT NULL,
+    pedido_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    estado_id INT NOT NULL,
+    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+    CONSTRAINT FK_pedidoProducto_estado_idEstado FOREIGN KEY (estado_id) REFERENCES estado(id_estado),
+    CONSTRAINT FK_pedidoProducto_producto_idProducto FOREIGN KEY (producto_id) REFERENCES producto(id_producto),
+    CONSTRAINT FK_pedidProducto_pedido_idPedido FOREIGN KEY (pedido_id) REFERENCES pedido(id_pedido),
+    INDEX IN_pedidoProducto_fechaCreacion(fechaCreacion)
+);
