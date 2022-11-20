@@ -1,16 +1,16 @@
 CREATE DEFINER=`user_ventas`@`localhost` PROCEDURE `SP_pedidoRealizados`( 
-		IN idUsuarioArg INT, 
+		IN idUsuarioRolArg INT, 
 		IN idEstado INT,
 		IN idTipoPedido INT)
 BEGIN
 	DECLARE userValidate INT DEFAULT 0;
     
-    SELECT count(id_usuarioRol) INTO userValidate FROM usuariorol WHERE rol_id=1 AND usuario_id = idUsuarioArg;
+    SELECT count(id_usuarioRol) INTO userValidate FROM usuariorol WHERE rol_id=1 AND id_usuarioRol = idUsuarioRolArg;
     
     # BUSCARA TODOS LOS PEDIDOS SI EL USUARIO TIENE PERMISOS
 	IF idEstado = 0 AND idTipoPedido = 0 AND userValidate = 1 THEN
     
-		SELECT p.id_pedido AS "idPedido", CONCAT(u.nombre," ",u.apellido) AS "nombreCompleto",tp.nombre AS "tipoPedido",
+		SELECT p.id_pedido AS "idPedido", CONCAT(u.nombre," ",u.apellido) AS "usuario",tp.nombre AS "tipoPedido",
         pr.nombre AS "provincia", e.nombre AS "estado", p.fechaCreacion AS "fechaCreacion"
         FROM pedido p 
         INNER JOIN usuariorol ur ON p.usuarioRol_id=ur.id_usuarioRol 
