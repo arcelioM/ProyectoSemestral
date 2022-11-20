@@ -275,7 +275,7 @@ CREATE TABLE `pedido` (
   CONSTRAINT `FK_pedido_direcion_idDireccion` FOREIGN KEY (`direccion_id`) REFERENCES `direccion` (`id_direccion`),
   CONSTRAINT `FK_pedido_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`),
   CONSTRAINT `FK_pedido_tipoPedido_idTipoPedido` FOREIGN KEY (`tipoPedido_id`) REFERENCES `tipopedido` (`id_tipoPedido`),
-  CONSTRAINT `FK_pedido_usuarioRol_idUsuarioRol` FOREIGN KEY (`usuarioRol_id`) REFERENCES `usuarioRol` (`id_usuarioRol`)
+  CONSTRAINT `FK_pedido_usuarioRol_idUsuarioRol` FOREIGN KEY (`usuarioRol_id`) REFERENCES `usuariorol` (`id_usuarioRol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -332,6 +332,7 @@ DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
   `id_producto` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
   `categoria_id` int NOT NULL,
   `cantidad` int NOT NULL DEFAULT '0',
   `precio` decimal(7,2) NOT NULL,
@@ -399,7 +400,7 @@ CREATE TABLE `rol` (
   PRIMARY KEY (`id_rol`),
   KEY `FK_rol_estado_idEstado` (`estado_id`),
   CONSTRAINT `FK_rol_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,6 +409,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'Administrador',1,'2022-11-18 19:30:44'),(2,'Cliente',1,'2022-11-18 23:02:14');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -473,7 +475,7 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `id_usuario` int PRIMARY KEY AUTO_INCREMENT,
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
   `usuario_nombre` varchar(30) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `apellido` varchar(30) NOT NULL,
@@ -485,12 +487,13 @@ CREATE TABLE `usuario` (
   `fecha_nacimiento` date NOT NULL,
   `estado_id` int NOT NULL,
   `fechaCreacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `UN_usuario_usuarioNombre` (`usuario_nombre`),
   KEY `FK_usuario_estado_idEstado` (`estado_id`),
   KEY `FK_usuario_direccion_idDireccion` (`direccion_id`),
   CONSTRAINT `FK_usuario_direccion_idDireccion` FOREIGN KEY (`direccion_id`) REFERENCES `direccion` (`id_direccion`),
   CONSTRAINT `FK_usuario_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -499,6 +502,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'nuliken','Arcelio','Apellido','1234','arceliomonte15@gmail.com',1,6524232,232311223,'2000-02-09',1,'2022-11-18 23:22:29');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +526,7 @@ CREATE TABLE `usuariorol` (
   CONSTRAINT `FK_usuarioRol_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`),
   CONSTRAINT `FK_usuarioRol_rol_idRol` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id_rol`),
   CONSTRAINT `FK_usuarioRol_usuario_idUsuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -531,12 +535,54 @@ CREATE TABLE `usuariorol` (
 
 LOCK TABLES `usuariorol` WRITE;
 /*!40000 ALTER TABLE `usuariorol` DISABLE KEYS */;
+INSERT INTO `usuariorol` VALUES (1,1,1,1,'2022-11-18 19:31:29');
 /*!40000 ALTER TABLE `usuariorol` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'ventas'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `SP_guardarPedidoProducto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`user_ventas`@`localhost` PROCEDURE `SP_guardarPedidoProducto`(OUT result INT,
+	 IN productoId INT, 
+	 IN pedidoId INT , 
+	 IN cantidadIn INT, 
+	 IN estadoId INT)
+BEGIN
+	DECLARE cantidadDisponible INT DEFAULT 0;
+    DECLARE filasAfectado INT DEFAULT 0;
+    
+    # BUSCANDO CANTIDAD DEL PRODUCTO DISPONIBLE
+    SELECT IFNULL(cantidad,0) INTO cantidadDisponible FROM producto WHERE estado_id = 1;
+    
+    # VALIDAD QUE LA CANTIDAD DISPOINBLE SEA MENOR A LA CANTIDAD QUE SE DESEA COMPRAR
+    IF cantidadDisponible > cantidadIn THEN
+		# SE ACTUALIZA LOS DATOS DE CANTIDAD DISPONIBLES
+		UPDATE producto SET cantidad = (cantidad - cantidadIn) WHERE id_producto = productoId AND estado_id = estadoId;
+		SET filasAfectado = (SELECT found_rows());
+        
+        # VALIDA QUE SE HAYA INSERTADO EL DATO CORRECTAMENTE
+        IF filasAfectado = 1 THEN
+        # SE INSERTA EL PRODUCTO AL PEDIDO
+			INSERT INTO pedidoProducto (producto_id,pedido_id,cantidad,estado_id) VALUES(productoId,pedidoId,cantidadIn,estadoId);
+            SET result = 1;
+        END IF;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_validarUsuario` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -551,14 +597,14 @@ CREATE DEFINER=`user_ventas`@`localhost` PROCEDURE `sp_validarUsuario`(OUT resul
 BEGIN
 	DECLARE countRow INT DEFAULT 0;
 	SET result = (
-		SELECT id_usuario,usuario,nombre,apellido,email,ur.id_usuarioRol,ur.rol_id 
+		SELECT u.id_usuario,u.usuario_nombre,u.nombre,u.apellido,u.email,ur.id_usuarioRol,ur.rol_id 
 			FROM  usuario as u INNER JOIN usuarioRol ur ON u.id_usuario = ur.usuario_id 
-			WHERE u.email=emailArg AND u.contraseña = contraseñaArg AND estado_id = 1);
-    SET countRow = (SELECT COUNT(result));
+			WHERE u.email=emailArg AND u.contraseña = contraseñaArg AND u.estado_id = 1);
+   # SET countRow = (SELECT COUNT(result));
     
-    IF countRow <= 0 THEN
-		SET result = 0;
-    END IF;
+    #IF countRow <= 0 THEN
+	#	SET result = 0;
+    #END IF;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -575,4 +621,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-18 18:15:48
+-- Dump completed on 2022-11-19 19:02:02
