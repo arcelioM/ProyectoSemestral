@@ -16,3 +16,7 @@ log.txt
 bower_components
 #ARCHIVO DE PRUEBA
 index.php
+
+# ARCHIVO BD
+Script BD/SP_validarUsuario.sql
+Script BD/datos insertados manualmente.sql
