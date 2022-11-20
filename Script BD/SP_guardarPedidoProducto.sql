@@ -21,6 +21,11 @@ BEGIN
         # SE INSERTA EL PRODUCTO AL PEDIDO
 			INSERT INTO pedidoProducto (producto_id,pedido_id,cantidad,estado_id) VALUES(productoId,pedidoId,cantidadIn,estadoId);
             SET result = 1;
+		ELSE
+			ROLLBACK;
+			 SET result = null;
         END IF;
+	ELSE 
+		 SET result = 0;
     END IF;
 END
