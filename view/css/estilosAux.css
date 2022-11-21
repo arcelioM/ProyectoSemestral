@@ -44,24 +44,9 @@
         
     }
 
-    #ModalTecnologia{
-        background-color: rgba(95, 92, 85, 0.384) !important;
-    }
+    
 
-    #ModalLogistica{
-        background-color: rgba(95, 92, 85, 0.384) !important;
-    }
-
-    #ModalMarketing{
-        background-color: rgba(95, 92, 85, 0.384) !important;
-    }
-
-
-    #ModalFinanzas{
-        background-color: rgba(95, 92, 85, 0.384) !important;
-    }
-
-    #exampleModal{
+    #exampleModalisisi{
         background-color: rgba(95, 92, 85, 0.384) !important;
     }
 
@@ -70,4 +55,12 @@
     .tablescroll22 {
         width: 100%;
         overflow-y:auto;
+    }
+    
+    .slide{
+        margin-top:10px; 
+    }
+
+    .slide img{
+        height:65vh; 
     }
