@@ -1,8 +1,6 @@
 $(document).ready(function(){
-    console.log('Hello mundo infeliz queridos, jquery funicona perrosossos');
-
-    /*la función siguiente es para traer el valor del primer formulario que es para 
-    para buscar un elemento en específico  */
+    
+    $('#IngresarNuevaCuenta').hide();
     $('#MensajeError').hide();
     
 

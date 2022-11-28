@@ -1,7 +1,15 @@
 $(document).ready(function(){
-    const botoncito = document.querySelector("#cerrarSesion");
-    botoncito.addEventListener("click", function(evento){
-        window.location.replace("http://localhost/ProyectoNo1/Vista/index.html?");
+    
+
+    const botoncitoInicio = document.querySelector("#iniciarSesion");
+    botoncitoInicio.addEventListener("click", function(evento){
+        window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
     });
+
+    const botoncitoInicioss = document.querySelector("#laOtrasesion");
+    botoncitoInicioss.addEventListener("click", function(evento){
+        window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+    });
+
 
 });
