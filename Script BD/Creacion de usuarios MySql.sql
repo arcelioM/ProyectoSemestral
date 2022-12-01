@@ -34,3 +34,4 @@ GRANT SELECT,INSERT,UPDATE  ON ventas.usuario TO 'cliente'@'localhost';
 GRANT SELECT,INSERT  ON ventas.usuariorol TO 'cliente'@'localhost';
 
 FLUSH PRIVILEGES;
+
