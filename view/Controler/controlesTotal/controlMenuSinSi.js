@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('#ProCarSinSesionElectornicae').hide();
 
     Obtener_ProductosGenerales();
+    LimpiarVariablesSesion();   
 
 
     $("#MenuNavegacion").click(function(){
@@ -207,6 +208,15 @@ $(document).ready(function(){
         });
 
 
+    }
+
+    function LimpiarVariablesSesion(){
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/vaciarCarritto.php?'; 
+        $.get(url, function (response){ 
+            if(response == "vaciado"){
+                console.log("logrado");
+            }
+        });
     }
 
 

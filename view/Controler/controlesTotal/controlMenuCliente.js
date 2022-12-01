@@ -8,9 +8,13 @@ $(document).ready(function(){
     $('#TitulitoProductComputadora').hide();
     $('#TitulitoProductElectronicos').hide();
 
+    $('#Mostarcarritoosi').hide();
+    $('#FacturaTotal').hide();
+
 
     CargarPerfil();
     Obtener_ProductosGenerales();
+
 
 
     $("#MenuNavegacion").click(function(){
@@ -28,6 +32,8 @@ $(document).ready(function(){
         $('#TitulitoProductComputadora').hide();
         $('#TitulitoProductElectronicos').hide();
         $('#TitulitoProductGeneral').hide();
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
     });
 
     const botoncitoCompu = document.querySelector("#ComputadorasTotal");
@@ -41,6 +47,8 @@ $(document).ready(function(){
         $('#TitulitoProductComputadora').show();
         $('#TitulitoProductElectronicos').hide();
         $('#TitulitoProductGeneral').hide();
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
     });
 
     const botoncitoElectron = document.querySelector("#ElectronicaSinSesion");
@@ -54,18 +62,25 @@ $(document).ready(function(){
         $('#TitulitoProductComputadora').hide();
         $('#TitulitoProductElectronicos').show();
         $('#TitulitoProductGeneral').hide();
+        $('#FacturaTotal').hide();
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
     });
 
 
 
     //ESTA FUNCIÓN TRAE LOS PRODUCTOS DE FORMA GENERAL SIN IMPORTAR SU CATEGORÍA
     function Obtener_ProductosGenerales(){ 
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
+        CargarContador();
         let idUsuarioRol= 1; 
         let idCategoria = 0; 
         
         $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
             let productos = response // EL UNICO PASO EXTRA
             let template = '';
+
             productos.forEach(prodctoGe => {
                 template += `
                 <div class="col">
@@ -73,16 +88,16 @@ $(document).ready(function(){
                          <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
                                   alt="...">
                         <div class="card-body" id="DatosTopProGe">
+
                             <center>
                                 <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
                             </center>
                             <h5 class="card-title">${prodctoGe.nombre}</h5>
                              <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">${prodctoGe.precio} </p>
+                            <p class="card-text">$${prodctoGe.precio} </p>
                         </div>
                         <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
-                                data-bs-target="#IrAlaSesion">
+                            <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
                                     viewBox="0 0 16 16">
                                     <path
@@ -93,6 +108,30 @@ $(document).ready(function(){
                     </div>
                 </div>
             `;
+            
+                let variable = "carritoConSesion" + prodctoGe.idProducto;
+                $(document).on('click', '.' + variable, function () {
+                    //console.log(prodctoGe.idProducto);
+                    //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
+                    let Id_ProducCarrito = prodctoGe.idProducto;
+                    
+                    //console.log(Id_ProductoCarrito);
+                    $.ajax({
+                        type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                        data: { Id_ProducCarrito },
+                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                        success: function (response) {
+                            let carritoProductoGe = response;
+                            carritoProductoGe.forEach(carritoProductoG => {
+                                console.log(carritoProductoG.idProducto);
+                            }); 
+
+                            CargarContador();
+                        }
+                    });
+
+                });
+              
             });
             $('#ProductoGeneralesSinSesio').html(template);
 
@@ -102,6 +141,8 @@ $(document).ready(function(){
     }
 
     function Obtener_ProductosCelulares(){ 
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
         let idUsuarioRol= 1; 
         let idCategoria = 1; 
         
@@ -120,11 +161,10 @@ $(document).ready(function(){
                             </center>
                             <h5 class="card-title">${prodctoGe.nombre}</h5>
                              <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">${prodctoGe.precio} </p>
+                            <p class="card-text">$${prodctoGe.precio} </p>
                         </div>
                         <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
-                                data-bs-target="#IrAlaSesion">
+                        <button class="btn btn-success ml-auto carritoConSesionCe${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
                                     viewBox="0 0 16 16">
                                     <path
@@ -135,6 +175,22 @@ $(document).ready(function(){
                     </div>
                 </div>
             `;
+                let variable = "carritoConSesionCe" + prodctoGe.idProducto;
+                $(document).on('click', '.' + variable, function () {
+                    let Id_ProducCarrito = prodctoGe.idProducto;
+                    $.ajax({
+                        type: "POST", 
+                        data: { Id_ProducCarrito },
+                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                        success: function (response) {
+                            let carritoProductoCelu = response;
+                            carritoProductoCelu.forEach(carritoProductoCelu => {
+                                console.log(carritoProductoCelu.idProducto);
+                            });
+
+                        }
+                    });
+                });
             });
             $('#ProductoCeluaresSinSesio').html(template);
 
@@ -144,6 +200,8 @@ $(document).ready(function(){
     }
 
     function Obtener_ProductosComputadora(){ 
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
         let idUsuarioRol= 1; 
         let idCategoria = 2; 
         
@@ -162,11 +220,10 @@ $(document).ready(function(){
                             </center>
                             <h5 class="card-title">${prodctoGe.nombre}</h5>
                              <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">${prodctoGe.precio} </p>
+                            <p class="card-text"> $${prodctoGe.precio} </p>
                         </div>
                         <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
-                                data-bs-target="#IrAlaSesion">
+                        <button class="btn btn-success ml-auto carritoConSesionCompu${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
                                     viewBox="0 0 16 16">
                                     <path
@@ -177,6 +234,22 @@ $(document).ready(function(){
                     </div>
                 </div>
             `;
+                let variable = "carritoConSesionCompu" + prodctoGe.idProducto;
+                $(document).on('click', '.' + variable, function () {
+                    let Id_ProducCarrito = prodctoGe.idProducto;
+                    $.ajax({
+                        type: "POST",
+                        data: { Id_ProducCarrito },
+                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                        success: function (response) {
+                            let carritoProductoCompu = response;
+                            carritoProductoCompu.forEach(carritoProductoComput => {
+                                console.log(carritoProductoComput.idProducto);
+                            });
+
+                        }
+                    });
+                });
             });
             $('#ProductoComputadoraSinSesio').html(template);
 
@@ -186,6 +259,8 @@ $(document).ready(function(){
     }
 
     function Obtener_ProductosElectronicos(){ 
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
         let idUsuarioRol= 1; 
         let idCategoria = 3; 
         
@@ -204,11 +279,10 @@ $(document).ready(function(){
                             </center>
                             <h5 class="card-title">${prodctoGe.nombre}</h5>
                              <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">${prodctoGe.precio} </p>
+                            <p class="card-text">$${prodctoGe.precio} </p>
                         </div>
                         <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
-                                data-bs-target="#IrAlaSesion">
+                        <button class="btn btn-success ml-auto carritoConSesionElectrono${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
                                     viewBox="0 0 16 16">
                                     <path
@@ -219,6 +293,22 @@ $(document).ready(function(){
                     </div>
                 </div>
             `;
+                let variable = "carritoConSesionElectrono" + prodctoGe.idProducto;
+                $(document).on('click', '.' + variable, function () {
+                    let Id_ProducCarrito = prodctoGe.idProducto;
+                    $.ajax({
+                        type: "POST",
+                        data: { Id_ProducCarrito },
+                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                        success: function (response) {
+                            let carritoProductoElectr = response;
+                            carritoProductoElectr.forEach(carritoProductoElectron => {
+                                console.log(carritoProductoElectron.idProducto);
+                            });
+
+                        }
+                    });
+                });
             });
             $('#ProductoElectroncaSinSesio').html(template);
 
@@ -229,8 +319,25 @@ $(document).ready(function(){
 
 
     $(document).on('click', '.cerrarSesionCliente', function(){ //Priemro buscaremos los datos de la tarea  a modificar y los pasaremos al formulario 
-        window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/vaciarCarritto.php?'; 
+        $.get(url, function (response){ 
+            if(response == "vaciado"){
+                window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+            }
+        });
     });
+
+    const botoncitoCerrarSesion = document.querySelector("#Cierresesion");
+    botoncitoCerrarSesion.addEventListener("click", function (evento) {
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/vaciarCarritto.php?'; 
+        $.get(url, function (response){ 
+            if(response == "vaciado"){
+                window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+            }
+        });
+    });
+
+
 
 
     function CargarPerfil() {  
@@ -271,6 +378,19 @@ $(document).ready(function(){
                     $('#PerfilUser').html(template);
             });  
             
+        });
+    }
+
+    function CargarContador() {  
+       
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/recuperarContador.php?'; 
+
+        $.get(url, function (response){ 
+            let contador='';
+            let contadorNaveggando = response;
+
+             contador=`${contadorNaveggando}`;
+             $('#contadorCarrito').html(contador);
         });
     }
 
@@ -345,7 +465,7 @@ $(document).ready(function(){
         $.get(url, function (response){ 
             let template = '';
             let usuarioNavegando = response;
-            console.log(usuarioNavegando);
+            //console.log(usuarioNavegando);
             usuarioNavegando.forEach(usernavegadiando => {
                 template += `
                 <div class="mb-3 row">
@@ -466,8 +586,153 @@ $(document).ready(function(){
         e.preventDefault();
     });
 
+    const botoncitoVerProductoCaa = document.querySelector("#mostrarrrCarrito");
+    botoncitoVerProductoCaa.addEventListener("click", function (evento) {
+        $('#ProCarSinSesionCeluare').hide();
+        $('#ProCarSinSesionComputadorae').hide();
+        $('#ProCarSinSesionElectornicae').hide();
+
+        $('#ProCarSinSesion').hide();
+        $('#TitulitoProductGeneral').hide();
+        
+
+        $('#TitulitoProductCelular').hide();
+        $('#TitulitoProductComputadora').hide();
+        $('#TitulitoProductElectronicos').hide();
+
+        $('#Mostarcarritoosi').show();
+        $('#FacturaTotal').show();
+        CargarProductosCarrito();
+    });
+
+    function CargarProductosCarrito(){
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/RecorrerCarrito.php?",
+            success: function (response) {
+                let template = '';
+                let producNaveggando = response;
+                producNaveggando.forEach(prodctoGeCarr => {
+                    template += `
+                    <tr Id_Homework="${prodctoGeCarr.idProducto}" class="table-info   text-center" >
+                    <td >${prodctoGeCarr.idProducto}</a></td> 
+                    <td >${prodctoGeCarr.nombre}</td> 
+                    <td >${prodctoGeCarr.descripcion}</td> 
+                    <td ><img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGeCarr.imagen}" class="img"></td>   
+                    <td >${prodctoGeCarr.precio}</td>
+                    <td>
+                       <button class="btn btn-danger btn- text-center eliminarproduct" data-bs-toggle="modal" data-bs-target="#ModaleliminarCarritosAux"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                     </svg>
+                           Eliminar 
+                        </button>
+                        
+                    </td>
+                    </tr>`;
+                });
+                $('#Productos_Encontrados').html(template);  
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/CalculosCarrito.php?",
+            success: function (response) {
+                let template = '';
+                let producCarreteao = response;
+                template += `
+                <div class="col">
+                        <div class="card h-90 text-bg-warning" id="ImageTopProGe">
+                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
+                                      alt="...">
+                            <div class="card-body" id="DatosTopProGe">
+                                <center>
+                                    <h5 class="card-title">Subtotal de la compra</h5>
+                                    <p class="card-text">$ ${producCarreteao.SubtotalCarrito}</p>
+                                </center>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-90 text-bg-warning" id="ImageTopProGe">
+                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar1.gif" class="card-img-top carcitaProduc"
+                                      alt="...">
+                            <div class="card-body" id="DatosTopProGe">
+                                <center>
+                                    <h5 class="card-title">Impuesto de la compra</h5>
+                                    <p class="card-text">$ ${producCarreteao.ImpuestotalCarrito} </p>
+                                </center>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-90 text-bg-warning" id="ImageTopProGe">
+                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
+                                      alt="...">
+                            <div class="card-body" id="DatosTopProGe">
+                                <center>
+                                    <h5 class="card-title">total de la compra</h5>
+                                    <p class="card-text">$ ${producCarreteao.totalCarrito} </p>
+                                </center>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                   `;
+                $('#CalculoTotales').html(template);  
+            }
+        });
+
+    }
 
 
+    $(document).on('click', '.eliminarproduct', function(){
+        let element = $(this)[0].parentElement.parentElement;    //aquí se almacena toda la fila por medio de la propiepdad parentElement y va de "td" al padre "tr"
+        let id= $(element).attr('Id_Homework');  //aquí se almacena el id del botón selecccionado por medio de fila padre
+        //console.log(id);
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/variableSesionEli.php?', {id}, function (response){
+            console.log(response);
+        });
+    });
+
+    const botoncitoBorrarProduc = document.querySelector("#BorrarProductoFi");
+    botoncitoBorrarProduc.addEventListener("click", function (evento) {
+        $.ajax({
+            type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/EliminarProduc.php?",
+            success: function (response) {
+                let template = '';
+                let tempaltess = '';
+                if (response.success == "ERROR") {
+                    console.log(response.success);
+                } else {
+                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> El Producto ha sido Elimado con Éxito del Carrito</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                `;
+                    tempaltess += `<center>
+                       <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
+                    </center>`;
+                    $('#exampleModalLeliminarFinalCarri').html(template);
+                    $('#modaleliminarFinalCarri').html(tempaltess);
+                    CargarProductosCarrito();
+                    CargarContador();
+                }
+            }
+        });
+    });
+
+    const botoncitoSeguirComprando = document.querySelector("#SeguirAgregando");
+    botoncitoSeguirComprando.addEventListener("click", function (evento) {
+        $('#Mostarcarritoosi').hide();
+        $('#FacturaTotal').hide();
+
+        $('#ProCarSinSesion').show();
+        $('#TitulitoProductGeneral').show();
+    });
 
 
 });
