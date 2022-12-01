@@ -4,10 +4,11 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_DEPRECATED);
 require_once "productrosGenea.php";
 
-
+session_start();
 $idUsuarioRol= $_POST['idUsuarioRol'];
 $idCategoria= $_POST['idCategoria'];
 $listaPro = array();
+$_SESSION['listaProductos']= array();
 
 if ($idCategoria == "0") {
     $prodctoGe = new Productos();
@@ -17,7 +18,8 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 30;
     $prodctoGe->precio = 340.56;
     $prodctoGe->imagen = "fondo21.jpg";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
+    
 
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "2";
@@ -26,7 +28,7 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 20;
     $prodctoGe->precio = 500.56;
     $prodctoGe->imagen = "opcion30.jpg";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
 
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "3";
@@ -35,7 +37,7 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 25;
     $prodctoGe->precio = 800.56;
     $prodctoGe->imagen = "opcion11.jpg";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
 
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "4";
@@ -44,7 +46,7 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 30;
     $prodctoGe->precio = 500.56;
     $prodctoGe->imagen = "opcion19.jpg";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
 
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "5";
@@ -53,7 +55,7 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 30;
     $prodctoGe->precio = 250.56;
     $prodctoGe->imagen = "opcion6.gif";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
 
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "6";
@@ -62,7 +64,9 @@ if ($idCategoria == "0") {
     $prodctoGe->cantidad = 30;
     $prodctoGe->precio = 550.56;
     $prodctoGe->imagen = "opcion76.gif";
-    array_push($listaPro, $prodctoGe);
+    array_push($_SESSION['listaProductos'], $prodctoGe);
+
+    $listaPro = $_SESSION['listaProductos'];
 
     header('Content-Type: application/json');
     echo(json_encode($listaPro));
