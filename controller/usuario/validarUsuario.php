@@ -17,7 +17,7 @@ $email =$_POST["email"];
 $pass = $_POST["pass"];
 
 
-if(empty($email || $pass)){
+if(empty($email) || empty($pass)){
     $respuesta = array(
         "valor"=>0,
         "mensaje"=>"datos no validos",
