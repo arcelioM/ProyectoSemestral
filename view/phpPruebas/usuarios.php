@@ -4,8 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_DEPRECATED);
 require_once "usuarioClas.php";
 session_start();
-
 $_SESSION['usuarios'] = array();
+
 
 $userTotal = new Usuarios();
 $userTotal->idUsarioRol = "1";

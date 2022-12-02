@@ -15,52 +15,29 @@ $nuevosIdFinal=array();
 $recorridoiD= @$_SESSION['productosID'];
 $UtlimoId= null; 
 $cantidad=0;
-$idsrecorrido=array();
-$idsrecorridoFinal=array();
-$idsrecorrido=null;
 
-
+sort($recorridoiD);
 foreach ($recorridoiD as $row) {
-    $id_Buscar= $row['idProducto'];
-    if ($idsrecorrido == null){
+    $id_Buscar= $row['idProducto']; 
+    if ($id_Buscar != $UtlimoId) {
         foreach ($recorridoiD as $row) {
             if ($row['idProducto'] ==  $id_Buscar) {
                 $cantidad= $cantidad + 1;
             }  
         }  
         $nuevosId['idProducto']= $id_Buscar; 
-        $idsrecorrido['idProductorecorrido']=$id_Buscar;
         $nuevosId['cantidad'] = $cantidad; 
         $cantidad= 0; 
         $UtlimoId= $id_Buscar;
         array_push($nuevosIdFinal, $nuevosId);
-        array_push($idsrecorridoFinal, $idsrecorrido);
-    }else{
-        foreach ($idsrecorridoFinal as $row) {
-            if ($row['idProductorecorrido'] != $id_Buscar) {
-                foreach ($recorridoiD as $row) {
-                    if ($row['idProducto'] ==  $id_Buscar) {
-                        $cantidad= $cantidad + 1;
-                    }  
-                }  
-                $nuevosId['idProducto']= $id_Buscar; 
-                $idsrecorrido['idProductorecorrido']=$id_Buscar;
-                $nuevosId['cantidad'] = $cantidad; 
-                $cantidad= 0; 
-                $UtlimoId= $id_Buscar;
-                array_push($nuevosIdFinal, $nuevosId);
-            }  
-        }
     }
-    
-  
 }
 //array_push($nuevosIdFinal, $nuevosId);
 @$_SESSION['listaProductosIdFinal']= $nuevosIdFinal;
 //$nuevosId=array_count_values($recorridoiD);
 
-header('Content-Type: application/json');
-echo(json_encode(@$_SESSION['listaProductosIdFinal']));
+//header('Content-Type: application/json');
+//echo(json_encode(@$_SESSION['listaProductosIdFinal']));
 
 
 ?>
