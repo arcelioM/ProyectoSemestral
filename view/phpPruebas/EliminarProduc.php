@@ -9,6 +9,7 @@ session_start();
 @$_SESSION['ideliminarProduc'];
 @$_SESSION['contadorCarrito'];
 
+
 $idA_Eliminar=@$_SESSION['ideliminarProduc'];                           
 $recorridoiD=array();
 $nuevosId=array();
@@ -16,8 +17,6 @@ $nuevosIdFinal=array();
 $recorridoiD= @$_SESSION['productosID'];
 $cantidad=0;
 $cantidadAux=1;
-
-
 
 
 foreach ($recorridoiD as $row) {
