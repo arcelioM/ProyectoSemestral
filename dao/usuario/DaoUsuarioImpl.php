@@ -40,6 +40,35 @@ class DaoUsuarioImpl{
 		}
 
     }
+
+    public function obtenerPorId(Usuario $usuario):?array{
+
+        try {
+			Log::write("INICIANDO CONSULTA DE USUARIOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+			$query = "SELECT u.nombre, u.apellido,u.email,CONCAT(p.nombre,'/',di.nombre,'/',co.nombre) as direccion,d.direccion_especifica,u.telefono_1,u.telefono_2,u.fecha_nacimiento,u.fechaCreacion FROM usuario u
+            INNER JOIN direccion d ON d.id_direccion = u.direccion_id
+            INNER JOIN corregimiento co ON co.id_corregimiento = d.corregimiento_id
+            INNER JOIN distrito di ON di.id_distrito = co.distrito_id
+            INNER JOIN provincia p ON p.id_provincia = di.provincia_id
+            WHERE u.id_usuario=?";
+
+            $args = [$usuario->idUsuario];
+
+			$execute = $this->connection->getConnection()->prepare($query);
+			$execute->execute($args);
+
+			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
+
+			Log::write("CONSULTA REALIZADA EXITOSAMENTE","INFO");
+			return $result;
+		} catch (PDOException $e) {
+
+			Log::write("dao\usuario\DaoUsuarioImpl", "ERROR");
+			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+			return array();
+		}
+
+    }
     public function validateUser(Usuario $usuario):?array{
 
 		try{
