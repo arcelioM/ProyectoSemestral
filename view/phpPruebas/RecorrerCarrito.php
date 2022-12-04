@@ -41,9 +41,9 @@ foreach ($recorridoiD as $row) {
 
 $impuestotalFinal=round(($pagoSubtotal * 7/100)*100) / 100;
 $pagototal=$pagoSubtotal + $impuestotalFinal; 
-@$_SESSION['SubtotalCarrito']=round(($pagoSubtotal/100)*100);
+@$_SESSION['SubtotalCarrito']=round($pagoSubtotal*100)/100;
 @$_SESSION['ImpuestotalCarrito']=$impuestotalFinal ;
-@$_SESSION['totalCarrito']=round(($pagototal/100)*100)  ;
+@$_SESSION['totalCarrito']=round($pagototal*100)/100  ;
 
 $response= $_SESSION['listaProductosCarritos'];
 header('Content-Type: application/json');

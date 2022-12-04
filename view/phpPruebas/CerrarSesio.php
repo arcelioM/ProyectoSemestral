@@ -11,6 +11,8 @@ session_start();
 @$_SESSION['totalCarrito'];
 @$_SESSION['listaProductosCarritos'];
 @$_SESSION['listaProductosIdFinal'];
+@$_SESSION['idUsarioRol'];
+
 
 
 @$_SESSION['productosID']= null;
@@ -20,6 +22,7 @@ session_start();
 @$_SESSION['totalCarrito']= null;
 @$_SESSION['ImpuestotalCarrito']= null;
 @$_SESSION['listaProductosIdFinal']=null;
+@$_SESSION['idUsarioRol'] = null;
 $response= "";
 
 

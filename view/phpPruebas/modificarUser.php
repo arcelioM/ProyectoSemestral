@@ -5,44 +5,57 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 require "usuarioClas.php"; 
 require "productrosGenea.php"; 
 session_start();
-@$_SESSION['datoUser']; //Este Arrgelo Sesión me permitrá capturar los datos del usuario que inició sesión
+@$_SESSION['datoUser']; //Este Arrgelo Sesión me permitrá capturar los datos del usuario que inició sesión Para extraer el id del usuario a modificar
+@$_SESSION['usuarios']; //Este Arreglo de sesión es para simular la búsqueda de datos en la BD
 $response=array();
 $result=array();
 $resultFin=array();
 $recorrido= @$_SESSION['datoUser'];
   
 
+
+
+
+$idUsuario= $_POST['idUsuario'];
+$usuario= $_POST['usuario'];
 $nombre = $_POST['nombre'];
 $Apellido = $_POST['Apellido'];
 $email = $_POST['email'];
-$contrasena = $_POST['contrasena'];
-$direccion = $_POST['direccion'];
+$passActual = $_POST['passActual'];
+$passNuevo = $_POST['passNuevo'];
+$direcion_especifica = $_POST['direcion_especifica'];
+$corregimiento_id = $_POST['corregimiento_id'];
 $telefono_1 = $_POST['telefono_1'];
 $telefono_2 = $_POST['telefono_2'];
+$fechaNacimiento = $_POST['fechaNacimiento'];
 $imagenTra = $_POST['imagen'];
 $imagen = substr($imagenTra, 12);
-$id_rol = $_POST['id_rol'];
-$rolNuevo = $_POST['rol'];
-           
+$auxiliar=0;
 
 /*echo (json_encode(@$_SESSION['datoUser']));
 echo "<br>";
 echo "<br>";*/
 
+//IMPORTANTE LUEGO DE TENER LOS DATOS A MODIFICAR SE HACE LA SNETECNIA SQL UPDATE Y LUEGO DE QUE SE LLEVA A CABO DE FORMA CORRECTA 
+//SE VUELVE A LLAMR LOS DATOS DEL USUARIO CON EL ID PARA LUEGO VOLVERLOS A GUARDAZR EN LA VARIABLE SESIÓN DE PERFIL PARA QUE LO CAMBIOS SE VEAN REFLEJADOS
+// ESTE FOREACH SIGUINETE ES PARA CUANDO YA SE HAYA HECHO LO ANTERIOR GUARDAR LOS CAMBIOS 
+
+
+
 foreach ($recorrido as $userTotal) {
-    if ($userTotal->idUsarioRol == $id_rol) {
-        $usercredencial = new Usuarios();
-        $usercredencial->idUsarioRol= $id_rol;
-        $usercredencial->usuario = $email;
-        $usercredencial->nombre = $nombre;
-        $usercredencial->Apellido = $Apellido ;
-        $usercredencial->imagen = $imagen;
-        $usercredencial->password = $contrasena;
-        $usercredencial->direccion = $direccion;
-        $usercredencial->telefonoUno = $telefono_1;
-        $usercredencial->telefonoDos= $telefono_2; 
-        $usercredencial->rol= $rolNuevo;
-        array_push($result, $usercredencial);                       
+    if ($userTotal->idUsuario == $idUsuario) {
+        if ($auxiliar <= 0) {
+            $usercredencial = new Usuarios();
+            $usercredencial->idUsarioRol = $userTotal->idUsarioRol;
+            $usercredencial->idUsuario = $idUsuario;
+            $usercredencial->usuario = $idUsuario;
+            $usercredencial->nombre = $nombre;
+            $usercredencial->Apellido = $Apellido;
+            $usercredencial->imagen = $imagen;
+            $usercredencial->rol = $userTotal->rol;
+            array_push($result, $usercredencial);
+            $auxiliar = $auxiliar + 1;
+        }                     
     }
 }
 

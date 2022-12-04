@@ -139,7 +139,7 @@ $(document).ready(function(){
 
 
     }
-
+   
     function Obtener_ProductosCelulares(){ 
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
@@ -319,7 +319,7 @@ $(document).ready(function(){
 
 
     $(document).on('click', '.cerrarSesionCliente', function(){ //Priemro buscaremos los datos de la tarea  a modificar y los pasaremos al formulario 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/vaciarCarritto.php?'; 
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?'; 
         $.get(url, function (response){ 
             if(response == "vaciado"){
                 window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
@@ -329,7 +329,7 @@ $(document).ready(function(){
 
     const botoncitoCerrarSesion = document.querySelector("#Cierresesion");
     botoncitoCerrarSesion.addEventListener("click", function (evento) {
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/vaciarCarritto.php?'; 
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?'; 
         $.get(url, function (response){ 
             if(response == "vaciado"){
                 window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
@@ -394,8 +394,8 @@ $(document).ready(function(){
         });
     }
 
-    $(document).on('click', '.verProfile', function(){ //Priemro buscaremos los datos de la tarea  a modificar y los pasaremos al formulario 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/datosUsere.php?'; 
+    $(document).on('click', '.verProfile', function(){ //Esto sólo para ver los datos del perfil del usuario 
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
         $.get(url, function (response){ 
             let template = '';
@@ -404,45 +404,51 @@ $(document).ready(function(){
             usuarioNavegando.forEach(usernavegadiando => {
                 template += `
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                    <div class="col-sm-6">
+                      <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                    </div>   
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
                     <div class="col-sm-6">
                       <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
                     <div class="col-sm-6">
                         <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo y Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
                     <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.email}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Password del Usuario :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.password}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
                     <div class="col-sm-6">
                         <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
                     <div class="col-sm-6">
                         <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 del Usuario  :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
                     <div class="col-sm-6">
                         <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
+                    </div>   
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
+                    <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
@@ -460,94 +466,142 @@ $(document).ready(function(){
 
     const botoncitoModificarDatosU = document.querySelector("#ModificarDatosU");
     botoncitoModificarDatosU.addEventListener("click", function (evento) {
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/datosUsere.php?'; 
+        
+
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
         $.get(url, function (response){ 
             let template = '';
             let usuarioNavegando = response;
             //console.log(usuarioNavegando);
             usuarioNavegando.forEach(usernavegadiando => {
+                TraerProvincias();
+                
                 template += `
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                    <div class="col-sm-6">
+                      <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                    </div>   
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
                     <div class="col-sm-6">
                       <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
                     <div class="col-sm-6">
                         <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo y Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
                     <div class="col-sm-6">
-                        <input type="text" id="correoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                        <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Password del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
                     <div class="col-sm-6">
-                        <input type="text" id="PasswordUSER" class="form-control-plaintext text-center" value="${usernavegadiando.password}">
-                    </div>   
+                        <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
+                    </div>    
+                </div>
+                 <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
+                    </div>    
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Provincia :</label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="ProvinciaABuscara" aria-label="Default select example">
+                                                
+                        </select>
+                    </div>   
+                                           
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Distrito :</label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="DistritoABuscaraA" aria-label="Default select example">
+                                                
+                        </select>
+                    </div>     
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Corregimiento :</label>
+                    <div class="col-sm-6">
+                        <select class="form-select" id="CorregimientoBuscaraA"aria-label="Default select example">
+                                                
+                        </select>
+                    </div>    
+                </div>
+                <div class="mb-3 row">
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
                     <div class="col-sm-6">
                         <input type="text" id="DireccionUSER" class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
                     <div class="col-sm-6">
                         <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
                     </div>   
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 del Usuario  :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
                     <div class="col-sm-6">
                         <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
                     </div>   
                 </div>
-                <input type="hidden"  id="id_rol" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsarioRol}">
-                <input type="hidden"  id="roling" class="form-control-plaintext text-center"  value="${usernavegadiando.rol}">
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
+                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
                     <div class="col-sm-6">
-                       <input type="file" class="form-control" id="imagen" name="imagen">
+                        <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
                     </div>   
                 </div>
-                
+                <div class="mb-3 row">
+                     <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
+                        <div class="col-sm-6">
+                            <input type="file" class="form-control" id="imagenR" >
+                        </div>   
+                                    </div>
+                <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
                 <div class="modal-footer">
                     <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
                     <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
                 </div>
-
-
-
                 `;
-                    
                 $('#formularioModificarUserDato').html(template);
+                TraerDistrito(); 
+                TraerCorregimiento();
             });  
             
         });
     });
 
 
+
+
     $('#formularioModificarUserDato').submit(function (e) { 
         $("#ModificarInfoVentasAUX").show();
         const postDatos= {  
+            idUsuario: $('#idUsuarioR').val(),
+            usuario : $('#USERusar').val(),
             nombre : $('#NombreUSER').val(),
             Apellido : $('#apelliodUSER').val(),
             email : $('#correoUSER').val(),
-            contrasena : $('#PasswordUSER').val(),
-            direccion : $('#DireccionUSER').val(),
+            passActual : $('#PassworActual').val(),
+            passNuevo : $('#PassworNueva').val(),
+            corregimiento_id: $('#CorregimientoBuscaraA').val(),
+            direcion_especifica : $('#DireccionUSER').val(),
             telefono_1 : $('#telefonoUnoUSER').val(),
             telefono_2 : $('#telefonoDosUSER').val(),
-            imagen: $('#imagen').val(),
-            id_rol: $('#id_rol').val(),
-            rol: $('#roling').val(),
+            fechaNacimiento: $('#fechaNacimiento').val(),
+            imagen: $('#imagenR').val(),
         };
 
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
@@ -733,6 +787,105 @@ $(document).ready(function(){
         $('#ProCarSinSesion').show();
         $('#TitulitoProductGeneral').show();
     });
+
+
+    //ESTA SECCIÓN ES PARA LLENAR LO DE LAS PROVINCIAS, DISTRITOS  PARA EL FORMULARRIO QUE SE ENCARGARÁ DE ACTULIZAR LOS DATOS DE LO USUARIOS
+    function TraerProvincias(){
+        $.ajax({
+            type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarProvin.php?",
+            success: function (response) {
+                let template = '';
+                let templatess = '';
+
+                let provinvincia = response;
+                provinvincia.forEach(ProvinciaMostar => {
+                    template += `
+                    <option value="${ProvinciaMostar.id_provincia}"> ${ProvinciaMostar.nombre}</option>
+                `;  
+                });
+                templatess += `
+                    <option selected>Escoja una provincias </option>
+                `;  
+                $('#ProvinciaABuscara').html(templatess+template);    
+            }
+        });
+    }
+
+    function TraerDistrito(){
+        let showForm=()=>{
+        
+            let id_provincia=$("#ProvinciaABuscara").val();
+    
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarDistrito.php?",
+                data: { id_provincia },
+                success: function (response) {
+                    let template = '';
+                    let templatess = '';
+    
+                    let distritos = response;
+                    distritos.forEach(DistritoTotal => {
+                        template += `
+                        <option value="${DistritoTotal.id_distrito}"> ${DistritoTotal.nombre}</option>
+                    `;  
+                    });
+                    templatess += `
+                        <option selected>Escoja un Distrito </option>
+                    `;  
+                    $('#DistritoABuscaraA').html(templatess+template); 
+                    
+                }
+            });
+            
+            
+        };
+    
+        $("#ProvinciaABuscara").on('change',showForm);
+    }
+
+    function TraerCorregimiento(){
+        let showForm=()=>{
+        
+            let id_distrito=$("#DistritoABuscaraA").val();
+    
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarCorregimiento.php?",
+                data: { id_distrito },
+                success: function (response) {
+                    let template = '';
+                    let templatess = '';
+    
+                    let corregimiento = response;
+                    corregimiento.forEach(CorregmientoTotal => {
+                        template += `
+                        <option value="${CorregmientoTotal.id_corregimiento}"> ${CorregmientoTotal.nombre}</option>
+                    `;  
+                    });
+                    templatess += `
+                        <option selected>Escoja un Corregimiento </option>
+                    `;  
+                    $('#CorregimientoBuscaraA').html(templatess+template); 
+                    
+                }
+            });
+            
+            
+        };
+    
+        $("#DistritoABuscaraA").on('change',showForm);
+    }
+
+
+
+
+    
+
+
+    
+    
 
 
 });

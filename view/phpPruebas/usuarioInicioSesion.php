@@ -11,23 +11,23 @@ $recorrido=array();
 $recorrido= @$_SESSION['usuarios'];
 $axiliar=0;
 $_SESSION['datoUser'] = array(); //Este Arrgelo Sesión me permitrá capturar los datos del usuario que inició sesión
+$_SESSION['idUsarioRol'] = null;
+
 
 if($_POST){
-    $usario= $_POST['usuario'];
+    $email= $_POST['Correo'];
     $Password = $_POST['password'];
 
     foreach ($recorrido as $userTotal) {
-        if ($userTotal->usuario == $usario && $Password == $userTotal->password) {
+
+        if ($userTotal->email == $email && $Password == $userTotal->password) {
             $usercredencial = new Usuarios();
             $usercredencial->idUsarioRol = $userTotal->idUsarioRol;
+            $usercredencial->idUsuario = $userTotal->idUsuario;
             $usercredencial->usuario = $userTotal->usuario;
             $usercredencial->nombre = $userTotal->nombre;
             $usercredencial->Apellido = $userTotal->Apellido;
             $usercredencial->imagen = $userTotal->imagen;
-            $usercredencial->password = $userTotal->password;
-            $usercredencial->direccion = $userTotal->direccion;
-            $usercredencial->telefonoUno = $userTotal->telefonoUno;
-            $usercredencial->telefonoDos = $userTotal->telefonoDos;
             $usercredencial->rol = $userTotal->rol;
             array_push($result, $usercredencial);
             $axiliar = $axiliar + 1;  //ESTO ME AYUDÓ PARA SABER SI HAY 2 BUSQEUDAS ENCOTRDAS, DE SER ASÍ; ES PORQUE EL USUSARIO ES ADMINITRADOR POR LO QUE MANDO ESTA CANTIDAD 
@@ -36,14 +36,11 @@ if($_POST){
             //ESTAS LÍNEAS ES PARA ALMACENAR LOS DATOS DEL USUARIO QUE INICIÓ SESIÓN Y ESTÁ NAVEGANDO                          
             $userDatos = new Usuarios();
             $userDatos->idUsarioRol = $userTotal->idUsarioRol;
+            $userDatos->idUsuario = $userTotal->idUsuario;
             $userDatos->usuario = $userTotal->usuario;
             $userDatos->nombre = $userTotal->nombre;
             $userDatos->Apellido = $userTotal->Apellido;
             $userDatos->imagen = $userTotal->imagen;
-            $userDatos->password = $userTotal->password;
-            $userDatos->direccion = $userTotal->direccion;
-            $userDatos->telefonoUno = $userTotal->telefonoUno;
-            $userDatos->telefonoDos = $userTotal->telefonoDos;
             $userDatos->rol = $userTotal->rol;
             array_push($_SESSION['datoUser'], $userDatos);
         }
@@ -51,6 +48,7 @@ if($_POST){
 
     if($axiliar>0){
         $response["Cantidad"]=$axiliar;
+        $_SESSION['idUsarioRol']=$axiliar; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
          array_push($result, $response);
         header('Content-Type: application/json');
         echo (json_encode($result));
