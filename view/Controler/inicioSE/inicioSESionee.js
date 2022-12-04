@@ -6,7 +6,7 @@ $(document).ready(function(){
 
     $('#UsuarioForm').submit(function (e) {  
         const postDatos= { //Este Objeto funciona para poder obtener los datos que se ingresen en formulario 
-            usuario : $('#usuario').val(),
+            Correo : $('#Correo').val(),
             password: $('#contrasena').val(),
         };
 
@@ -42,25 +42,30 @@ $(document).ready(function(){
 
 
     $('#formularioRegistrarUusuario').submit(function (e) {  
-        const postDatos= {  
+        const postDatos= { 
+            usuario : $('#USERusar').val(),
             nombre : $('#NombreUSER').val(),
             Apellido : $('#apelliodUSER').val(),
             email : $('#correoUSER').val(),
             contraseña : $('#PasswordUSER').val(),
-            direccion : $('#DireccionUSER').val(),
+            corregimiento_id: $('#CorregimientoBuscar').val(),
+            direcion_especifica : $('#DireccionUSER').val(),
             telefono_1 : $('#telefonoUnoUSER').val(),
             telefono_2 : $('#telefonoDosUSER').val(),
-            imagen: $('#imagenTraV').val(),
+            fechaNacimiento: $('#fechaNacimiento').val(),
+            imagen: $('#imagen').val(),
             id_rol: $('#id_rol').val(),
         };
 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/registrarUserClie.php?'; 
-
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/registrarUserClient.php?'; 
+       
         $.post(url, postDatos, function (response){ 
             let template = '';
             let tempaltess = '';
             let usuarioRegistado = response;
+            //console.log("hola querisoi");
             usuarioRegistado.forEach(usercreado => {
+                console.log(usuarioRegistado);
                 if(usercreado.valor == "1"){
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
