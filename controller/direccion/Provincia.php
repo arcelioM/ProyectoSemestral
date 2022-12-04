@@ -1,11 +1,9 @@
 <?php 
     
     require_once("../../autoloads.php");
-    use service\usuario\ServiceUsuarioImpl;
-
     use dao\connection\Connection;
-use dao\direccion\DaoDireccionImpl;
-use service\direccion\ServiceDireccionImpl;
+    use dao\direccion\DaoDireccionImpl;
+    use service\direccion\ServiceDireccionImpl;
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
