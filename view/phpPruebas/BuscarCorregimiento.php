@@ -6,7 +6,7 @@ require_once "ProvinClass.php";
 session_start();
 //ESTA PRUEBA SE DEBE LLENAR CON BASE DE DATOS 
 
-$idDsitrtoEscogida= $_POST['id_distrito'];
+$idDsitrtoEscogida= $_GET['id_distrito'];
 
 $response = array();
 

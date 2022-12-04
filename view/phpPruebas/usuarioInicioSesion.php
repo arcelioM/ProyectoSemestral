@@ -18,6 +18,12 @@ if($_POST){
     $email= $_POST['Correo'];
     $Password = $_POST['password'];
 
+    
+
+
+    //Aquí iría la sentecia SQL 
+    //cuando se obtinene el resultado se recorre pero es imortante 
+
     foreach ($recorrido as $userTotal) {
 
         if ($userTotal->email == $email && $Password == $userTotal->password) {
@@ -33,7 +39,7 @@ if($_POST){
             $axiliar = $axiliar + 1;  //ESTO ME AYUDÓ PARA SABER SI HAY 2 BUSQEUDAS ENCOTRDAS, DE SER ASÍ; ES PORQUE EL USUSARIO ES ADMINITRADOR POR LO QUE MANDO ESTA CANTIDAD 
                                       // AL JAVASCRITP
 
-            //ESTAS LÍNEAS ES PARA ALMACENAR LOS DATOS DEL USUARIO QUE INICIÓ SESIÓN Y ESTÁ NAVEGANDO                          
+            //ESTAS LÍNEAS ES PARA ALMACENAR LOS DATOS DEL USUARIO QUE INICIÓ SESIÓN Y ESTÁ NAVEGANDO EN VARIABLE DE SESIÓN  SE DEBE DEJAR                       
             $userDatos = new Usuarios();
             $userDatos->idUsarioRol = $userTotal->idUsarioRol;
             $userDatos->idUsuario = $userTotal->idUsuario;

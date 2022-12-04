@@ -13,9 +13,6 @@ $resultFin=array();
 $recorrido= @$_SESSION['datoUser'];
   
 
-
-
-
 $idUsuario= $_POST['idUsuario'];
 $usuario= $_POST['usuario'];
 $nombre = $_POST['nombre'];
@@ -23,8 +20,6 @@ $Apellido = $_POST['Apellido'];
 $email = $_POST['email'];
 $passActual = $_POST['passActual'];
 $passNuevo = $_POST['passNuevo'];
-$direcion_especifica = $_POST['direcion_especifica'];
-$corregimiento_id = $_POST['corregimiento_id'];
 $telefono_1 = $_POST['telefono_1'];
 $telefono_2 = $_POST['telefono_2'];
 $fechaNacimiento = $_POST['fechaNacimiento'];

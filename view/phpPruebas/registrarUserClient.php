@@ -23,6 +23,7 @@ $id_rol = $_POST['id_rol'];
 
 $response["valor"] = "1";
 $response["mensaje"] = "Creación exitosa";
+$response["fecha"] = $fechaNacimiento;
 array_push($result, $response);
 header('Content-Type: application/json');
 echo (json_encode($result));
