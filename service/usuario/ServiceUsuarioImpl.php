@@ -29,6 +29,41 @@ class ServiceUsuarioImpl{
         return $respuesta;
     }
 
+    public function obtenerPorId(array $data){
+
+        $respuesta = "";
+        foreach($data as $value){
+            if( empty($value) ){
+                $respuesta = [
+                    "valor"=>0,
+                    "usuario"=>null
+                ];
+
+                return $respuesta;
+            }
+        }
+
+        $usuario = new Usuario($data["idUsuario"]);
+
+        $result = $this->usuarioDao->obtenerPorId($usuario);
+
+        if(!empty($result)){
+            $respuesta = [
+                "valor"=>1,
+                "usuario"=>$result[0]
+            ];
+
+        }else{
+            $respuesta = [
+                "valor"=>0,
+                "usuario"=>null
+            ];
+        }
+
+        
+        return $respuesta;
+    }
+
 
     public function validarUsuario(array $data){
         if($data["email"]==null || $data["email"]=="" || $data["pass"]==null || $data["pass"]==""){
