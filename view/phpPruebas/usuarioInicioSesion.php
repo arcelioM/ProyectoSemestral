@@ -69,7 +69,7 @@ $_SESSION['idUsarioRol'] = null;
                 break;
             }else if($userTotal->rol=="Cliente"){
                 $response["Cantidad"]=1;
-                $_SESSION['idUsarioRol']=1; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
+                $_SESSION['idUsarioRol']=$userTotal->idUsuarioRol   ; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
                 array_push($result, $response);
             }
         //}
