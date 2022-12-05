@@ -50,7 +50,7 @@ class DaoUsuarioImpl{
 
         try {
 			Log::write("INICIANDO CONSULTA DE USUARIOS POR ID | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT u.nombre, u.apellido,u.email,CONCAT(p.nombre,'/',di.nombre,'/',co.nombre,'/',d.direccion_especifica) as direccion,u.telefono_1,u.telefono_2,u.fecha_nacimiento,u.fechaCreacion FROM usuario u
+			$query = "SELECT u.usuario_nombre as usuario,u.nombre, u.apellido,u.email,CONCAT(p.nombre,'/',di.nombre,'/',co.nombre,'/',d.direccion_especifica) as direccion,u.telefono_1 as telefono1,u.telefono_2 as telefono2,u.fecha_nacimiento as fechaNacimiento,u.fechaCreacion FROM usuario u
             INNER JOIN direccion d ON d.id_direccion = u.direccion_id
             INNER JOIN corregimiento co ON co.id_corregimiento = d.corregimiento_id
             INNER JOIN distrito di ON di.id_distrito = co.distrito_id
