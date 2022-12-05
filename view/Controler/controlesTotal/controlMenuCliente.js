@@ -496,7 +496,7 @@ $(document).ready(function () {
 
         $.get(url, function (response) {
             let VariableUserProfile = response;
-            console.log(VariableUserProfile);
+
             let data={
                 "idUsuario":VariableUserProfile["IdUser"]
             };
@@ -513,7 +513,6 @@ $(document).ready(function () {
                     let template = '';
                 //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
                 let usuarioNavegando = response.usuario;
-                console.log(usuarioNavegando);
                 let Contador = 0;
 
                 //console.log(usuarioNavegando);
@@ -600,83 +599,96 @@ $(document).ready(function () {
             let VariableUserProfile = response;
 
             //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+            
+            let data={
+                "idUsuario":VariableUserProfile["IdUser"]
+            };
 
-
-            let template = '';
-            //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
-            let usuarioNavegando = response.datosUser;
-            let Contador = 0;
-            usuarioNavegando.forEach(usernavegadiando => {
-                if (Contador == 0) {
-                    template += `
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                                <div class="col-sm-6">
-                                <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                                <div class="col-sm-6">
-                                <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
-                                </div>    
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
-                                </div>    
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                                </div>   
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/UsuarioPorId.php",
+                data: data,
+                success: function (response) {
+                    //console.log(response);
+                    let template = '';
+                    //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+                    let usuarioNavegando = response.usuario;
+                    let Contador = 0;
+            //usuarioNavegando.forEach(usernavegadiando => {
+                    if (Contador == 0) {
+                        template += `
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
                                     <div class="col-sm-6">
-                                        <input type="file" class="form-control" id="imagenR" >
+                                    <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usuarioNavegando.usuario}">
                                     </div>   
-                                                </div>
-                            <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
-                            <div class="modal-footer">
-                                <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
-                                <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
-                            </div>
-                        `;
-                    $('#formularioModificarUserDato').html(template);
-                    Contador = Contador + 1;
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                                    <div class="col-sm-6">
+                                    <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usuarioNavegando.nombre}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usuarioNavegando.apellido}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usuarioNavegando.email}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
+                                    </div>    
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
+                                    </div>    
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usuarioNavegando.telefono1}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usuarioNavegando.telefono2}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usuarioNavegando.fechaNacimiento}">
+                                    </div>   
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
+                                        <div class="col-sm-6">
+                                            <input type="file" class="form-control" id="imagenR" >
+                                        </div>   
+                                                    </div>
+                                <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usuarioNavegando.idUsuario}">
+                                <div class="modal-footer">
+                                    <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                                    <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
+                                </div>
+                            `;
+                        $('#formularioModificarUserDato').html(template);
+                        Contador = Contador + 1;
+                    }
                 }
             });
         });
