@@ -16,9 +16,9 @@ $con = Connection::getInstance();
 $usuarioDao = new DaoUsuarioImpl($con);
 $serviceUser = new ServiceUsuarioImpl($usuarioDao);
 
-$data = json_decode(file_get_contents("php://input"));
+$data = $_GET["idUsuario"];
 
-if(empty($data->idUsuario)){
+if(empty($data)){
     $respuesta = [
         "valor"=>0,
         "usuario"=>null
@@ -28,7 +28,7 @@ if(empty($data->idUsuario)){
     echo json_encode($respuesta);
 }else{
     
-    $idUsuario = $data->idUsuario;
+    $idUsuario = $data;
     $data = [
         "idUsuario"=>$idUsuario
     ];
