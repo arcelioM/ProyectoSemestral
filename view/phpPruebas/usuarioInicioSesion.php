@@ -1,4 +1,7 @@
 <?php
+
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_DEPRECATED);
@@ -13,17 +16,20 @@ $axiliar=0;
 $_SESSION['datoUser'] = array(); //Este Arrgelo Sesión me permitrá capturar los datos del usuario que inició sesión
 $_SESSION['idUsarioRol'] = null;
 
+//echo var_dump($DatodelUserIni);
 
-if($_POST){
+//if($_POST){
    // $email= $_POST['Correo'];
     //$Password = $_POST['password'];
 
     $DatodelUserIni=array();
-    $DatodelUserIni = $_POST['usuario'];
+    $DatodelUserIni = $_POST['usuarios'];
     $JasonPedido = array();
+    //echo var_dump($_POST['usuarios']);
     $InfoProductoLLevarFinal = array();
-    $DatodelUserIniFinal = json_decode($DatodelUserIni);
-    $DatodelUserIni = $DatodelUserIniFinal->usuarios;
+    $DatodelUserIniFinal = $_POST['usuarios'];
+
+    //$DatodelUserIni = $DatodelUserIniFinal->usuarios;
 
     
     //Aquí iría la sentecia SQL 
@@ -31,13 +37,14 @@ if($_POST){
 
     foreach ($DatodelUserIni as $userTotal) {
 
-        if ($userTotal->email == $email && $Password == $userTotal->password) {
+        $userTotal = (object) $userTotal;
+        //if ($userTotal->email == $email && $Password == $userTotal->password) {
             $usercredencial = new Usuarios();
-            $usercredencial->idUsarioRol = $userTotal->idUsarioRol;
+            $usercredencial->idUsarioRol = $userTotal->idUsuarioRol;
             $usercredencial->idUsuario = $userTotal->idUsuario;
             $usercredencial->usuario = $userTotal->usuario;
             $usercredencial->nombre = $userTotal->nombre;
-            $usercredencial->Apellido = $userTotal->Apellido;
+            $usercredencial->Apellido = $userTotal->apellido;
             $usercredencial->imagen = $userTotal->imagen;
             $usercredencial->rol = $userTotal->rol;
             array_push($result, $usercredencial);
@@ -46,23 +53,32 @@ if($_POST){
 
             //ESTAS LÍNEAS ES PARA ALMACENAR LOS DATOS DEL USUARIO QUE INICIÓ SESIÓN Y ESTÁ NAVEGANDO EN VARIABLE DE SESIÓN  SE DEBE DEJAR                       
             $userDatos = new Usuarios();
-            $userDatos->idUsarioRol = $userTotal->idUsarioRol;
+            $userDatos->idUsarioRol = $userTotal->idUsuarioRol;
             $userDatos->idUsuario = $userTotal->idUsuario;
             $userDatos->usuario = $userTotal->usuario;
             $userDatos->nombre = $userTotal->nombre;
-            $userDatos->Apellido = $userTotal->Apellido;
+            $userDatos->Apellido = $userTotal->apellido;
             $userDatos->imagen = $userTotal->imagen;
             $userDatos->rol = $userTotal->rol;
             array_push($_SESSION['datoUser'], $userDatos);
-        }
+
+            if($userTotal->rol='Administrador'){
+                $response["Cantidad"]=2;
+                $_SESSION['idUsarioRol']=2; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
+                array_push($result, $response);
+                break;
+            }else if($userTotal->rol="Cliente"){
+                $response["Cantidad"]=1;
+                $_SESSION['idUsarioRol']=1; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
+                array_push($result, $response);
+            }
+        //}
     }
 
     
 
     if($axiliar>0){
-        $response["Cantidad"]=$axiliar;
-        $_SESSION['idUsarioRol']=$axiliar; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
-         array_push($result, $response);
+       
         header('Content-Type: application/json');
         echo (json_encode($result));
 
@@ -75,7 +91,7 @@ if($_POST){
 
     }
     
-}
+//}
 
 
 
