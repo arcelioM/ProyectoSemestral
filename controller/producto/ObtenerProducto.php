@@ -15,6 +15,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders,
 
 $idUsuarioRol = empty($_GET["idUsuarioRol"])?"0":$_GET["idUsuarioRol"];
 $idCategoria = empty($_GET["idCategoria"]) ? "0" : $_GET["idCategoria"];
+
 if(empty($idUsuarioRol)){
     http_response_code(400);
 }else{
