@@ -4,19 +4,23 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_DEPRECATED);
 require_once "usuarioClas.php"; 
 session_start();
-@$_SESSION['usuarios'];//esto es por pureba, ya que se pude traer de la base de datos
+//@$_SESSION['usuarios'];//esto es por pureba, ya que se pude traer de la base de datos
 $response=array();
 $result=array();
-$recorrido=array();
-$recorrido= @$_SESSION['usuarios'];
+
+//$recorrido= @$_SESSION['usuarios'];
 $axiliar=0;
 $_SESSION['datoUser'] = array(); //Este Arrgelo Sesión me permitrá capturar los datos del usuario que inició sesión
 $_SESSION['idUsarioRol'] = null;
 
 
 if($_POST){
-    $email= $_POST['Correo'];
-    $Password = $_POST['password'];
+   // $email= $_POST['Correo'];
+    //$Password = $_POST['password'];
+
+    $DatodelUserIni=array();
+    $DatodelUserIni= $_POST['usuario'];
+
 
     
 
@@ -24,7 +28,7 @@ if($_POST){
     //Aquí iría la sentecia SQL 
     //cuando se obtinene el resultado se recorre pero es imortante 
 
-    foreach ($recorrido as $userTotal) {
+    foreach ($DatodelUserIni as $userTotal) {
 
         if ($userTotal->email == $email && $Password == $userTotal->password) {
             $usercredencial = new Usuarios();
@@ -51,6 +55,8 @@ if($_POST){
             array_push($_SESSION['datoUser'], $userDatos);
         }
     }
+
+    
 
     if($axiliar>0){
         $response["Cantidad"]=$axiliar;

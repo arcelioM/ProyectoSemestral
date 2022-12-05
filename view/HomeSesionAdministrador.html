@@ -8,7 +8,7 @@
     <LINK REL="stylesheet" HREF="http://localhost/ProyectoSemestral/view/css/style.css">
     <LINK REL="stylesheet" TYPE="text/css" HREF="http://localhost/ProyectoSemestral/view/css/estilosAux.css">
     <link rel=icon type=image/x-icon href="http://localhost/ProyectoSemestral/view/imagenes/opcion14.jpg" />
-   
+
 </head>
 <body>
     <!--<audio src="Pineapple - JayJen _ MÚSICA SIN COPYRIGHT _.m4a" autoplay="autoplay" loop="loop"></audio>-->
@@ -464,6 +464,7 @@
               </svg>
                 Retornar al Menú 
             </button>
+            <input type="search" id="busquedaUser" class="form-control-sm mr-sm-5  border-success " placeholder="Busca por Usuario">
 
             <div class="tablescroll" id="TablaUser">
                 <table class="table table-bordered table-sm table-hover table-striped ">
@@ -497,14 +498,33 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
-                            <button type="button" class="btn btn-success" id="BorrarProductoFi" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="##ModalelimibadiFinal">ESTOY SEGURO/A</button>
+                            <button type="button" class="btn btn-success" id="BorrarUserFin" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModaleliminarUserFinal">ESTOY SEGURO/A</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        
+        <div id="EliminarUserFinal">
+
+            <div class="modal fade" id="ModaleliminarUserFinal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header" id="exampleModalUserEliminado">
+                            
+                        </div>
+                        <div class="modal-body" id="modallogisticaMensajeUserEliminado">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
 
 

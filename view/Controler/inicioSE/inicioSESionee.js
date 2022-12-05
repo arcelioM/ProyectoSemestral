@@ -10,6 +10,10 @@ $(document).ready(function(){
             password: $('#contrasena').val(),
         };
 
+        //Aqui se lla el API REST Y obtiene un Response
+
+        //let LlevardatosUser= response;  //Esta variable que voy a llevar a  usuarioInicioSesion.php
+
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/usuarioInicioSesion.php?'; 
        
 
@@ -34,7 +38,6 @@ $(document).ready(function(){
                     $('#MensajeError').hide();
                 });
             });  
-            
             
         });
         e.preventDefault(); //Este método es para cancelar el comportamiento que por defecto los formularios al darle submit norefresquen la página

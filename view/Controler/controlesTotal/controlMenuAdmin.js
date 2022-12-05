@@ -38,8 +38,74 @@ $(document).ready(function(){
         $('#MostarPedidosCancelados').hide();
         $('#TitulitoOpcionesVerPedidos').hide();
         $('#botonesNegacionPedidos').hide();
+        cargarUsersList();
 
 
+        
+       
+    });
+
+    
+    const botoncitoVerPedidos = document.querySelector("#VerPedidos");
+    botoncitoVerPedidos.addEventListener("click", function (evento) {
+        $('#TitulitoOpcionesAdminitrador').hide();
+        $('#botonesNegacion').hide();
+        $('#MostarUser').hide();
+        $('#MostrarTablapedidos').hide();
+        $('#MostarPedidosEntregados').hide();
+        $('#MostarPedidosEnProceso').hide();
+        $('#MostarPedidosCancelados').hide();
+        $('#TitulitoOpcionesVerPedidos').show();
+        $('#botonesNegacionPedidos').show();
+
+    });
+
+
+    $(document).on('click', '.eliminarUser', function(){
+        let element = $(this)[0].parentElement.parentElement;    //aquí se almacena toda la fila por medio de la propiepdad parentElement y va de "td" al padre "tr"
+        let id= $(element).attr('Id_Homework');  //aquí se almacena el id del botón selecccionado por medio de fila padre
+        //console.log(id);
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', {id}, function (response){
+           
+        });
+    });
+
+    const botoncitoBorrarUser = document.querySelector("#BorrarUserFin");
+    botoncitoBorrarUser.addEventListener("click", function (evento) {
+            
+
+            $.ajax({
+                type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                url: "http://localhost/ProyectoSemestral/view/phpPruebas/TraerIdUser.php?",
+                success: function (response) {
+                    let template = '';
+                    let tempaltess = '';
+
+                    let IdLlevar= response;
+
+                    //AQUI SE LLAMA EL APIREST DE ELIMINAR
+                    
+                    
+
+                    if (response.values > "0") {
+                        console.log('Error en mostrar datos');
+                    } else {
+                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalFinanzas"> El Usuario ha sido Elimado con Éxito</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                        tempaltess += `<center>
+                           <img src="http://localhost/ProyectoNo1/imagenes/correcto.gif" class="imga">
+                        </center>`;
+                        $('#exampleModalUserEliminado').html(template);
+                        $('#modallogisticaMensajeUserEliminado').html(tempaltess);
+                        cargarUsersList();
+                    }
+                }
+            });
+         
+    });
+
+    function cargarUsersList(){
         $.ajax({
             type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarUserG.php?",
@@ -94,23 +160,8 @@ $(document).ready(function(){
                 $('#User_Encontrados').html(template);  
             }
         });
-       
-    });
 
-    
-    const botoncitoVerPedidos = document.querySelector("#VerPedidos");
-    botoncitoVerPedidos.addEventListener("click", function (evento) {
-        $('#TitulitoOpcionesAdminitrador').hide();
-        $('#botonesNegacion').hide();
-        $('#MostarUser').hide();
-        $('#MostrarTablapedidos').hide();
-        $('#MostarPedidosEntregados').hide();
-        $('#MostarPedidosEnProceso').hide();
-        $('#MostarPedidosCancelados').hide();
-        $('#TitulitoOpcionesVerPedidos').show();
-        $('#botonesNegacionPedidos').show();
-
-    });
+    }
 
 
 

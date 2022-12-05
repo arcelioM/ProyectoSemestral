@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     CargarPerfil();
     Obtener_ProductosGenerales();
-
+    
 
 
     $("#MenuNavegacion").click(function(){
@@ -74,6 +74,7 @@ $(document).ready(function(){
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
         CargarContador();
+        TraerIDcarrito();
         let idCategoria = 0; 
         
         $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
@@ -332,6 +333,8 @@ $(document).ready(function(){
             }
         });
     });
+
+
 
 
 
@@ -626,6 +629,7 @@ $(document).ready(function(){
 
     function CargarProductosCarrito(){
 
+
         $.ajax({
             type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/RecorrerCarrito.php?",
@@ -762,6 +766,46 @@ $(document).ready(function(){
             }
         });
     });
+
+
+    //PRUEBAAA CARRITO ID//////////////
+    function TraerIDcarrito(){
+    
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/LlevarIdProdu.php?",
+            success: function (response) {
+                //console.log(response);
+                let productoidLlevar = response;
+                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+
+                //Variable que gauradrá lña información de los productos traidos para el carrito
+                let InfoProductoLLevar=response; 
+
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?",
+                    data: {InfoProductoLLevar},
+                    success: function (response) {
+                        console.log(response);
+                        let productoid = response;
+                        //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+                    }
+                });
+            }
+        });
+
+        
+    }
+
+
+
+
+
+
+
 
 
 

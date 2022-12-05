@@ -16,6 +16,9 @@ $idCategoria= $_POST['idCategoria'];
 $listaPro = array();
 $_SESSION['listaProductos']= array();
 
+
+
+
 if ($idCategoria == "0") {
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "1";

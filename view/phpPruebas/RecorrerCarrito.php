@@ -12,6 +12,9 @@ session_start();
 @$_SESSION['ImpuestotalCarrito'];
 $_SESSION['listaProductosCarritos']= array();
 
+
+//ESTE SE LLENA 
+
 $response = array();
 $recorridoiD=array();
 $recorridoListaGPro=array();
@@ -21,6 +24,7 @@ $pagoSubtotal=0.0;
 $pagoSubtotalFinal=0.0; 
 $pagototal=0.0; 
 $impuestotalFinal=0.0;
+
 
 foreach ($recorridoiD as $row) {
     $indiceProduc = $row['idProducto'];
