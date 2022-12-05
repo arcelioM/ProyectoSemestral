@@ -62,12 +62,12 @@ $_SESSION['idUsarioRol'] = null;
             $userDatos->rol = $userTotal->rol;
             array_push($_SESSION['datoUser'], $userDatos);
 
-            if($userTotal->rol='Administrador'){
+            if($userTotal->rol=='Administrador'){
                 $response["Cantidad"]=2;
                 $_SESSION['idUsarioRol']=2; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
                 array_push($result, $response);
                 break;
-            }else if($userTotal->rol="Cliente"){
+            }else if($userTotal->rol=="Cliente"){
                 $response["Cantidad"]=1;
                 $_SESSION['idUsarioRol']=1; //Este me ayudará a distinguir lo usarios rol si es uno el cliente sino es administrador  
                 array_push($result, $response);
