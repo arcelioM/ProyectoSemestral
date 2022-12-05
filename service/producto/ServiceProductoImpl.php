@@ -3,6 +3,7 @@
 namespace service\producto;
 
 use dao\producto\DaoProductoImpl;
+use model\Producto;
 
 class ServiceProductoImpl{
 
@@ -25,5 +26,26 @@ class ServiceProductoImpl{
         ];
 
         return $respuesta;
+    }
+
+
+    public function obtenerProductoId(array $data){
+        if(empty($data)){
+
+            return 0;
+        }
+
+        $respuesta = [
+            "productos" => []
+        ];
+
+        foreach($data as $value){
+            $producto = new Producto(idProducto:$value->idProducto);
+            $result = $this->productoDao->obtenerProductoPorId($producto);
+            array_push($respuesta["productos"], $result);
+        }
+
+        return $respuesta;
+
     }
 }
