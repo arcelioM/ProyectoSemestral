@@ -5,41 +5,62 @@ $(document).ready(function(){
     
 
     $('#UsuarioForm').submit(function (e) {  
+
         const postDatos= { //Este Objeto funciona para poder obtener los datos que se ingresen en formulario 
-            Correo : $('#Correo').val(),
-            password: $('#contrasena').val(),
+            'email' : $('#Correo').val(),
+            'pass': $('#contrasena').val(),
         };
 
-        //Aqui se lla el API REST Y obtiene un Response
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/ProyectoSemestral/controller/usuario/validarUsuario.php",
+            data: postDatos,
+            success: function (response) {
+                let users = response;
+                //console.log(users["usuarios"]);
+                let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/usuarioInicioSesion.php'; 
 
-        //let LlevardatosUser= response;  //Esta variable que voy a llevar a  usuarioInicioSesion.php
-
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/usuarioInicioSesion.php?'; 
-       
-
-        $.post(url, postDatos, function (response){ 
-            let usuarios = response;
-            usuarios.forEach(usercredencial => {
-                if(usercredencial.valor == "0"){
-                    $('#MensajeError').show();
-                    console.log(usercredencial.valor);
-                }else{
-                    if(usercredencial.Cantidad == "2"){
-                        window.location.replace("http://localhost/ProyectoSemestral/view/MenuAdministrador.html");
-                    }else{
-                        if(usercredencial.Cantidad == "1"){
-                            window.location.replace("http://localhost/ProyectoSemestral/view/HomeSesionCliente.html");
-                        }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: users,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        let usercredencial = response;
+                        //usuarios.forEach(usercredencial => {
+                            if(usercredencial.valor == "0"){
+                                $('#MensajeError').show();
+                                console.log(usercredencial[1].Cantidad);
+                            }else{
+                                if(usercredencial[1].Cantidad == "2"){
+                                    window.location.replace("http://localhost/ProyectoSemestral/view/MenuAdministrador.html");
+                                }else{
+                                    if(usercredencial[1].Cantidad == "1"){
+                                        window.location.replace("http://localhost/ProyectoSemestral/view/HomeSesionCliente.html");
+                                    }
+                                }
+                            }
+                            $('#UsuarioForm').trigger('reset'); //esto es para cuando se recive una respuetas se resete el formulario 
+                            const boton = document.querySelector("#laequis");
+                            boton.addEventListener("click", function(evento){
+                                $('#MensajeError').hide();
+                            });
+                        
+                    },
+                    error: function (error){
+                        console.log(error);
                     }
-                }
-                $('#UsuarioForm').trigger('reset'); //esto es para cuando se recive una respuetas se resete el formulario 
-                const boton = document.querySelector("#laequis");
-                boton.addEventListener("click", function(evento){
-                    $('#MensajeError').hide();
                 });
-            });  
-            
+
+                
+            },
+            error: function (error){
+                console.log(error);
+            }
         });
+
+        
         e.preventDefault(); //Este método es para cancelar el comportamiento que por defecto los formularios al darle submit norefresquen la página
     });
 
