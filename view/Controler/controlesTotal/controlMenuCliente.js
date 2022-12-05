@@ -496,79 +496,98 @@ $(document).ready(function () {
 
         $.get(url, function (response) {
             let VariableUserProfile = response;
+            console.log(VariableUserProfile);
+            let data={
+                "idUsuario":VariableUserProfile["IdUser"]
+            };
 
             //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/UsuarioPorId.php",
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    let template = '';
+                //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+                let usuarioNavegando = response.usuario;
+                console.log(usuarioNavegando);
+                let Contador = 0;
+
+                //console.log(usuarioNavegando);
+                //usuarioNavegando.forEach(usernavegadiando => {
+                    if (Contador == 0) {
+                        template += `
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.usuario}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.nombre}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.apellido}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.email}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.direccion}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.telefono1}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.telefono2}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.fechaNacimiento}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
+                                <div class="col-sm-6">
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/${usuarioNavegando.imagen}" class="img">
+                                </div>   
+                            </div>`;
+
+                        $('#formulariomodalProfile').html(template);
+                        Contador = Contador + 1;
+                    }
+                //});
+
+                    },
+                    error: function (error){
+                        console.log(error);
+                    }
+                });
 
 
-            let template = '';
-            //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
-            let usuarioNavegando = response.datosUser;
-            let Contador = 0;
-
-            //console.log(usuarioNavegando);
-            usuarioNavegando.forEach(usernavegadiando => {
-                if (Contador == 0) {
-                    template += `
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
-                            <div class="col-sm-6">
-                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                            </div>   
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
-                            <div class="col-sm-6">
-                            <img src="http://localhost/ProyectoSemestral/view/imagenes/${usernavegadiando.imagen}" class="img">
-                            </div>   
-                        </div>`;
-
-                    $('#formulariomodalProfile').html(template);
-                    Contador = Contador + 1;
-                }
-            });
-
+            
         });
     });
 
