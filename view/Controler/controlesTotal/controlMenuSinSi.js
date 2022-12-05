@@ -43,13 +43,20 @@ $(document).ready(function(){
 
     //ESTA FUNCIÓN TRAE LOS PRODUCTOS DE FORMA GENERAL SIN IMPORTAR SU CATEGORÍA
     function Obtener_ProductosGenerales(){ 
-        let idUsuarioRol= 1; 
-        let idCategoria = 0; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
-            productos.forEach(prodctoGe => {
+
+        let data ={
+            "idUsuarioRol": 1,
+            "idCategoria": 0
+        };
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProducto.php",
+            data: data,
+            success: function (response) {
+                let productos = response["productos"] // EL UNICO PASO EXTRA
+                let template = '';
+                productos.forEach(prodctoGe => {
                 template += `
                 <div class="col">
                     <div class="card h-90" id="ImageTopProGe">
@@ -78,60 +85,72 @@ $(document).ready(function(){
             `;
             });
             $('#ProductoGeneralesSinSesio').html(template);
-
+            }
         });
 
 
     }
 
     function Obtener_ProductosCelulares(){ 
-        let idUsuarioRol= 1; 
-        let idCategoria = 1; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
-            productos.forEach(prodctoGe => {
-                template += `
-                <div class="col">
-                    <div class="card h-90" id="ImageTopProGe">
-                         <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
-                                  alt="...">
-                        <div class="card-body" id="DatosTopProGe">
-                            <center>
-                                <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
-                            </center>
-                            <h5 class="card-title">${prodctoGe.nombre}</h5>
-                             <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">${prodctoGe.precio} </p>
-                        </div>
-                        <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
-                                data-bs-target="#IrAlaSesion">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </button>
+        let data ={
+            "idUsuarioRol": 1,
+            "idCategoria": 1
+        };
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProducto.php",
+            data: data,
+            success: function (response) {
+                let productos = response["productos"];
+                let template = '';
+                productos.forEach(prodctoGe => {
+                    template += `
+                    <div class="col">
+                        <div class="card h-90" id="ImageTopProGe">
+                            <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
+                                    alt="...">
+                            <div class="card-body" id="DatosTopProGe">
+                                <center>
+                                    <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
+                                </center>
+                                <h5 class="card-title">${prodctoGe.nombre}</h5>
+                                <p class="card-text">${prodctoGe.descripcion} </p>
+                                <p class="card-text">${prodctoGe.precio} </p>
+                            </div>
+                            <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
+                                <button class="btn btn-success ml-auto" type="button" id="carritoSinSesion" data-bs-toggle="modal"
+                                    data-bs-target="#IrAlaSesion">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            });
-            $('#ProductoCeluaresSinSesio').html(template);
+                `;
+                });
+                $('#ProductoCeluaresSinSesio').html(template);
 
-        });
+        }});
 
 
     }
 
     function Obtener_ProductosComputadora(){ 
-        let idUsuarioRol= 1; 
-        let idCategoria = 2; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
+        let data ={
+            "idUsuarioRol": 1,
+            "idCategoria": 2
+        };
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProducto.php",
+            data: data,
+            success: function (response) {
+            let productos = response["productos"];
             let template = '';
             productos.forEach(prodctoGe => {
                 template += `
@@ -163,17 +182,23 @@ $(document).ready(function(){
             });
             $('#ProductoComputadoraSinSesio').html(template);
 
-        });
+        }});
 
 
     }
 
     function Obtener_ProductosElectronicos(){ 
-        let idUsuarioRol= 1; 
-        let idCategoria = 3; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
+        let data ={
+            "idUsuarioRol": 1,
+            "idCategoria": 3
+        };
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProducto.php",
+            data: data,
+            success: function (response) {
+                let productos = response["productos"];
             let template = '';
             productos.forEach(prodctoGe => {
                 template += `
@@ -205,7 +230,7 @@ $(document).ready(function(){
             });
             $('#ProductoElectroncaSinSesio').html(template);
 
-        });
+        }});
 
 
     }
