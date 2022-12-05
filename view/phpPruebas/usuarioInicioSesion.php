@@ -19,12 +19,13 @@ if($_POST){
     //$Password = $_POST['password'];
 
     $DatodelUserIni=array();
-    $DatodelUserIni= $_POST['usuario'];
-
+    $DatodelUserIni = $_POST['usuario'];
+    $JasonPedido = array();
+    $InfoProductoLLevarFinal = array();
+    $DatodelUserIniFinal = json_decode($DatodelUserIni);
+    $DatodelUserIni = $DatodelUserIniFinal->usuarios;
 
     
-
-
     //Aquí iría la sentecia SQL 
     //cuando se obtinene el resultado se recorre pero es imortante 
 
