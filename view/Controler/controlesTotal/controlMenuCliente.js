@@ -74,7 +74,7 @@ $(document).ready(function(){
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
         CargarContador();
-        TraerIDcarrito();
+        //TraerIDcarrito();
         let idCategoria = 0; 
         
         $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
@@ -401,67 +401,78 @@ $(document).ready(function(){
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
         $.get(url, function (response){ 
+            let VariableUserProfile=response; 
+
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+
+            
             let template = '';
-            let usuarioNavegando = response;
-            console.log(usuarioNavegando);
-            usuarioNavegando.forEach(usernavegadiando => {
-                template += `
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                    <div class="col-sm-6">
-                      <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                    <div class="col-sm-6">
-                      <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
-                    <div class="col-sm-6">
-                      <img src="http://localhost/ProyectoSemestral/view/imagenes/${usernavegadiando.imagen}" class="img">
-                    </div>   
-                </div>`;
-                    
-                $('#formulariomodalProfile').html(template);
+            //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+            let usuarioNavegando = response.datosUser;
+            let Contador= 0; 
+            
+            //console.log(usuarioNavegando);
+            usuarioNavegando.forEach(usernavegadiando => { 
+                if (Contador == 0) {
+                    template += `
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.email}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
+                            <div class="col-sm-6">
+                                <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
+                            </div>   
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
+                            <div class="col-sm-6">
+                            <img src="http://localhost/ProyectoSemestral/view/imagenes/${usernavegadiando.imagen}" class="img">
+                            </div>   
+                        </div>`;
+
+                    $('#formulariomodalProfile').html(template);
+                    Contador= Contador+1;
+                }
             });  
             
         });
@@ -470,86 +481,91 @@ $(document).ready(function(){
     const botoncitoModificarDatosU = document.querySelector("#ModificarDatosU");
     botoncitoModificarDatosU.addEventListener("click", function (evento) {
         
-
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
         $.get(url, function (response){ 
-            let template = '';
-            let usuarioNavegando = response;
-            //console.log(usuarioNavegando);
-            usuarioNavegando.forEach(usernavegadiando => {
-                
-                
-                template += `
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                    <div class="col-sm-6">
-                      <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                    <div class="col-sm-6">
-                      <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
-                    </div>    
-                </div>
-                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
-                    </div>    
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                     <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
-                        <div class="col-sm-6">
-                            <input type="file" class="form-control" id="imagenR" >
-                        </div>   
-                                    </div>
-                <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
-                <div class="modal-footer">
-                    <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
-                    <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
-                </div>
-                `;
-                $('#formularioModificarUserDato').html(template);
-            });  
+            let VariableUserProfile=response; 
+
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+
             
+            let template = '';
+            //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+            let usuarioNavegando = response.datosUser;
+            let Contador= 0; 
+            usuarioNavegando.forEach(usernavegadiando => {
+                if (Contador == 0) {
+                    template += `
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                                <div class="col-sm-6">
+                                <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                                <div class="col-sm-6">
+                                <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
+                                </div>    
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
+                                </div>    
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
+                                    <div class="col-sm-6">
+                                        <input type="file" class="form-control" id="imagenR" >
+                                    </div>   
+                                                </div>
+                            <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
+                            <div class="modal-footer">
+                                <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                                <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
+                            </div>
+                        `;
+                    $('#formularioModificarUserDato').html(template);
+                    Contador= Contador+1;
+                }
+            });  
         });
     });
 
@@ -610,6 +626,7 @@ $(document).ready(function(){
 
     const botoncitoVerProductoCaa = document.querySelector("#mostrarrrCarrito");
     botoncitoVerProductoCaa.addEventListener("click", function (evento) {
+        TraerIDcarrito();
         $('#ProCarSinSesionCeluare').hide();
         $('#ProCarSinSesionComputadorae').hide();
         $('#ProCarSinSesionElectornicae').hide();
@@ -781,17 +798,13 @@ $(document).ready(function(){
 
                 //Variable que gauradrá lña información de los productos traidos para el carrito
                 let InfoProductoLLevar=response; 
-
-
-
                 $.ajax({
                     type: "GET",
                     url: "http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?",
                     data: {InfoProductoLLevar},
                     success: function (response) {
                         console.log(response);
-                        let productoid = response;
-                        //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+                        
                     }
                 });
             }

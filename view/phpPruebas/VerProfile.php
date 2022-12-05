@@ -26,6 +26,10 @@ foreach ($recorrido as $userTotal) {
         $auxiliar=$auxiliar +1;                     
     }
 }
+$result["IdUser"]= $ID_User_Navegando ; 
+
+header('Content-Type: application/json');
+echo (json_encode($result));
 
 
 
@@ -35,7 +39,7 @@ foreach ($recorrido as $userTotal) {
 
 //ESTE RECORRIDO SE HACE hace la simulación de busqueda en la base de datos con el Id del usuario navegando
 
-foreach ($recorridousuario as $userTotal) {
+/*foreach ($recorridousuario as $userTotal) {
     if($userTotal->idUsuario == $ID_User_Navegando ){
         if ($auxiliarNo2 <= 0) {  
             $usercredencial = new Usuarios();
@@ -56,7 +60,7 @@ foreach ($recorridousuario as $userTotal) {
             $auxiliarNo2=$auxiliarNo2 +1;                         
         }
     }
-}
+}*/
 
 
 ?>

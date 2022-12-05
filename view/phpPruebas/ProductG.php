@@ -8,18 +8,23 @@ require_once "productrosGenea.php";
 session_start();
 @$_SESSION['idUsarioRol'];
 
-$idUsuarioRol= @$_SESSION['idUsarioRol'];
-$idCategoria= $_POST['idCategoria'];
+/*$idUsuarioRol= @$_SESSION['idUsarioRol'];
+$idCategoria= $_POST['idCategoria'];*/
 
 
 
 $listaPro = array();
 $_SESSION['listaProductos']= array();
+$InfoProductoLLevar=$_Post['InfoProductoLLevar'];
+$JasonPedido=array();
+$InfoProductoLLevarFinal=array();
+$InfoProductoLLevarFinal= json_decode($InfoProductoLLevar);
+$_SESSION['listaProductos']=$InfoProductoLLevarFinal->productos;
 
-
-
-
-if ($idCategoria == "0") {
+$response= "llenado"; 
+header('Content-Type: application/json');
+echo(json_encode($response));
+/*if ($idCategoria == "0") {
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "1";
     $prodctoGe->nombre = "DataShow";
