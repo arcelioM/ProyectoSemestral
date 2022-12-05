@@ -28,6 +28,7 @@ $(document).ready(function(){
                     success: function (response) {
                         console.log(response);
                         let usercredencial = response;
+                        console.log(usercredencial[1].Cantidad);
                         //usuarios.forEach(usercredencial => {
                             if(usercredencial.valor == "0"){
                                 $('#MensajeError').show();
