@@ -21,17 +21,22 @@ class DaoUsuarioImpl{
 
         try {
 			Log::write("INICIANDO CONSULTA DE USUARIOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT u.nombre as 'nombre',apellido,imagen, r.nombre as 'rol', ur.estado_id as 'estado' from usuario u 
-            INNER JOIN usuarioRol ur ON ur.usuario_id = u.id_usuario 
-            INNER JOIN rol r ON r.id_rol = ur.rol_id order by id_usuario ASC";
+			$query = "SELECT u.id_usuario as idUsuario,u.nombre as 'nombre',apellido,imagen, e.nombre as 'estado' from usuario u 
+            INNER JOIN estado e ON e.id_estado=u.estado_id order by id_usuario ASC";
 
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
 
 			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
 
+            foreach($result as $key=>$value){
+                $result[$key]["rol"] = $this->obtenerRoles($value["idUsuario"]);
+                //unset($result[$key]["idUsuario"]);
+            }
+
 			Log::write("CONSULTA REALIZADA EXITOSAMENTE","INFO");
 			return $result;
+            
 		} catch (PDOException $e) {
 
 			Log::write("dao\usuario\DaoUsuarioImpl", "ERROR");
@@ -166,6 +171,29 @@ class DaoUsuarioImpl{
 			Log::write("dao\usuario\DaoUsuarioImpl", "ERROR");
             Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
             return null;
+		}
+    }
+
+    private function obtenerRoles($idUsuario){
+        try {
+			Log::write("INICIANDO CONSULTA DE ROLES POR USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+			$query = "SELECT r.nombre as nombre FROM usuario u INNER JOIN usuarioRol ur ON u.id_usuario = ur.usuario_id INNER JOIN rol r ON ur.rol_id = r.id_rol
+            WHERE u.id_usuario=?";
+
+            $args = [$idUsuario];
+
+			$execute = $this->connection->getConnection()->prepare($query);
+			$execute->execute($args);
+
+			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
+
+			Log::write("CONSULTA REALIZADA EXITOSAMENTE","INFO");
+			return $result;
+		} catch (PDOException $e) {
+
+			Log::write("dao\usuario\DaoUsuarioImpl", "ERROR");
+			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+			return array();
 		}
     }
 
