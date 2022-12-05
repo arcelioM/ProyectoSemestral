@@ -82,17 +82,18 @@ class DaoUsuarioImpl{
             $execute = $this->connection->getConnection()->prepare($query);
 
             $execute->bindParam(1,$usuario->email,PDO::PARAM_STR);
-            $execute->bindParam(2,$usuario->contraseña,PDO::PARAM_INT);
+            $execute->bindParam(2,$usuario->contraseña,PDO::PARAM_STR);
             
             $execute->execute();
 			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
             $execute->closeCursor();
 
             
-            if(isset($result[0]["result"])){
+            if(!empty($result[0]["result"])){
                 return null;
             }
-            
+
+            Log::write("VALIDACION EXITOSA", "SELECT");
             return $result;
 
 		}catch(PDOException $e){
