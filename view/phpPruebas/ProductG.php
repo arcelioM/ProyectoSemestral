@@ -4,9 +4,15 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_DEPRECATED);
 require_once "productrosGenea.php";
 
+
 session_start();
-$idUsuarioRol= $_POST['idUsuarioRol'];
+@$_SESSION['idUsarioRol'];
+
+$idUsuarioRol= @$_SESSION['idUsarioRol'];
 $idCategoria= $_POST['idCategoria'];
+
+
+
 $listaPro = array();
 $_SESSION['listaProductos']= array();
 

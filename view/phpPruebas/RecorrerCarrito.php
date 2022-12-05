@@ -24,6 +24,7 @@ $impuestotalFinal=0.0;
 
 foreach ($recorridoiD as $row) {
     $indiceProduc = $row['idProducto'];
+    
     foreach ($recorridoListaGPro as $prodctoGe) {
         if ($row['idProducto'] == $prodctoGe->idProducto) {
             $prodctoGeCarr = new Productos();
@@ -32,7 +33,7 @@ foreach ($recorridoiD as $row) {
             $prodctoGeCarr->descripcion = $prodctoGe->descripcion;
             $prodctoGeCarr->cantidad =  $prodctoGe->cantidad;
             $prodctoGeCarr->precio =  $prodctoGe->precio;
-            $pagoSubtotal= $pagoSubtotal + floatval($prodctoGe->precio);
+            $pagoSubtotal= $pagoSubtotal + floatval($prodctoGe->precio);//esta línea almacena los precios 
             $prodctoGeCarr->imagen = $prodctoGe->imagen ;
             array_push($_SESSION['listaProductosCarritos'], $prodctoGeCarr);
         }
@@ -43,7 +44,7 @@ $impuestotalFinal=round(($pagoSubtotal * 7/100)*100) / 100;
 $pagototal=$pagoSubtotal + $impuestotalFinal; 
 @$_SESSION['SubtotalCarrito']=round($pagoSubtotal*100)/100;
 @$_SESSION['ImpuestotalCarrito']=$impuestotalFinal ;
-@$_SESSION['totalCarrito']=round($pagototal*100)/100  ;
+@$_SESSION['totalCarrito']=round($pagototal*100)/100 ;
 
 $response= $_SESSION['listaProductosCarritos'];
 header('Content-Type: application/json');

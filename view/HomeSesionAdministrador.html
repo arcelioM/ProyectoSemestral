@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAJAR SHOP!</title>
+    <LINK REL="stylesheet" HREF="http://localhost/ProyectoSemestral/view/css/style.css">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="http://localhost/ProyectoSemestral/view/css/estilosAux.css">
+    <link rel=icon type=image/x-icon href="http://localhost/ProyectoSemestral/view/imagenes/opcion14.jpg" />
+   
+</head>
+<body>
+    <!--<audio src="Pineapple - JayJen _ MÚSICA SIN COPYRIGHT _.m4a" autoplay="autoplay" loop="loop"></audio>-->
+    <style> 
+        body { 
+            background-image: url("http://localhost/ProyectoSemestral/view/imagenes/opcion31.jpg"); 
+            background-position: center 25%; 
+            background-size: cover; 
+        } 
+        .img{
+           width: 80px;
+           height: 70px;
+          border-radius: 50px;
+        }
+
+        .imga{
+           width: 180px;
+           height: 180px;
+          border-radius: 50px;
+        }
+
+        .titulo{
+            width:100%;
+           height: 100%;
+        }
+        .slide{
+            margin-top:6px;
+        }
+
+        .slide img{
+            height:50vh; 
+        }
+
+        .carcitaSinSesion{
+           height: 40vh;
+           
+        }
+
+        .carcitaProduc{
+           height: 20vh;
+           
+        }
+
+        .menucitoSinSesion{
+          width: 90%;
+           height: 180px;
+          border-radius: 50px;
+        }
+
+        
+
+        a { color: #000000; }
+
+        .tablescroll{
+        width: 100%;
+        height: 400px;
+        overflow-y: auto;
+    }
+
+
+        
+
+        
+
+    </style>  
+        
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: 	#130303;">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand"> <font color=white> Bienvenido/a Querido/a Administrador/a! </font>  <img class="img" src="http://localhost/ProyectoSemestral/view/imagenes/opcion14.jpg"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span cass="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-success btn- text-center " id="MenuNavegacion" data-bs-toggle="modal" data-bs-target="#MenuSinSesiones">Menú de Navegación</button>
+                    </li>
+                </ul>
+            </div>
+            
+            <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto mb-1 mb-lg-0">
+                    <div class="d-flex flex-row justify-content-center my-2">
+                        <div class="p-2">
+                            <button type="button" class="btn btn-danger position-relative" id="mostrarrrGraficaVen" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content="ver Transporte">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-data-fill" viewBox="0 0 16 16">
+                                    <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"/>
+                                    <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5ZM10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1Z"/>
+                                  </svg>
+                                  
+                                </button>
+                            <button type="button" class="btn btn-primary position-relative" id="mostrarrrCarrito">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2-fill" viewBox="0 0 16 16">
+                                <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5ZM15 4.667V5H1v-.333L1.5 4h6V1h1v3h6l.5.667Z"/>
+                              </svg>
+                            </button>
+                            <button type="button" class="btn btn-warning position-relative" id="mostrarrrTarjetas">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card" viewBox="0 0 16 16">
+                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                                    <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                                  </svg>
+                                </button>
+                        </div>
+                    </div>
+                </ul>
+                <div id="PerfilUser">
+                </div>
+            </ul>
+        </div>
+    </nav>
+    <br>
+
+    <div id="TitulitoOpcionesVerPedidos">
+        <br><br><br><br><br><br>
+        <H1 class="display-6 text-center"> <font color=white> Escoja la Opción de Filtro que sea de su  Gusto </FONT></H1>
+    </div>
+
+    <center>
+        <div class="titulo" id="botonesNegacionPedidos">
+           <button type="button" class="btn btn-warning btn- text-center " id="VerPedidosProceso"> <svg xmlns="http://www.w3.org/2000/svg" width="8%" height="8%" fill="currentColor" class="bi bi-hourglass-split" viewBox="0 0 16 16">
+            <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
+          </svg>
+          <H5 class="text-center"> <font color=black>Pedidos en Proceso</FONT></H5>
+        </button>
+        <button type="button" class="btn btn-warning btn- text-center " id="VerPedidosEntregados">  <svg xmlns="http://www.w3.org/2000/svg" width="8%" height="8%" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16">
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+          </svg>
+          <H5 class="text-center"> <font color=black>Pedidos Entregados</FONT></H5>
+        </button>
+        <button type="button" class="btn btn-warning btn- text-center " id="VerPedidosCancelados"> <svg xmlns="http://www.w3.org/2000/svg" width="8%" height="8%" fill="currentColor" class="bi bi-calendar2-x-fill" viewBox="0 0 16 16">
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-6.6 5.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
+          </svg>
+          <H5 class="text-center"> <font color=black>Pedidos Cancelados</FONT></H5>
+        </button>
+        <button type="button" class="btn btn-dark btn- text-center " id="RegresarPedido"> <svg xmlns="http://www.w3.org/2000/svg" width="8%" height="8%" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+          <H5 class="text-center"> <font color=white>Retornar al Menú</FONT></H5>
+        </button>
+            <br>
+        </div>
+    </center>
+
+    <div class="container p-4">
+        <div id="MenuNavegacionSinSesion">
+    
+            <div class="modal fade" id="MenuSinSesiones" data-bs-backdrop="static" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog  float-lg-start modal-fullscreen-xl-down">
+                    <div class="modal-content">
+                        <div class="modal-header" id="exampleModalSinSeson">
+                            <img src="http://localhost/ProyectoSemestral/view/imagenes/tiendita.gif"
+                                class="card-img-top menucitoSinSesion ">
+                            <H1 class="display-6 text-center">
+                                <font color=Black> GAJAR SHOP </FONT>
+                            </H1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modalventaMensajemodificarLogisticaliTO">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Opciones De Adminstrador
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-success" type="button" id="UserTotal"
+                                                    data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                                      </svg> Listado de Usuarios</button>
+                                                <button class="btn btn-primary" type="button" id="PedidosTotal"
+                                                    data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-inboxes-fill" viewBox="0 0 16 16">
+                                                        <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z"/>
+                                                      </svg> Listado de Pedido Realizados</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                            Cierra de Sesión
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingTwo"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-danger" type="button" id="Cierresesion"
+                                                    data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                                                        <path d="M7.5 1v7h1V1h-1z"/>
+                                                        <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
+                                                      </svg>
+                                                    Cerrar Sesión</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+        </div>
+
+
+        <div id="TitulitoOpcionesAdminitrador">
+            <br><br><br><br><br>
+            <H1 class="display-6 text-center"> <font color=white> Escoja la Opción de su Gusto </FONT></H1>
+        </div>
+
+        <center>
+            <div class="titulo" id="botonesNegacion">
+               <button type="button" class="btn btn-warning btn- text-center " id="VerUsuarios"> <svg xmlns="http://www.w3.org/2000/svg" width="20%" height="20%" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+              </svg>
+              <H3 class="text-center"> <font color=black>Ver Lista de Usuarios</FONT></H3>
+            </button>
+            <button type="button" class="btn btn-warning btn- text-center " id="VerPedidos"> <svg xmlns="http://www.w3.org/2000/svg" width="20%" height="20%" fill="currentColor" class="bi bi-inboxes-fill" viewBox="0 0 16 16">
+                <path d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z"/>
+              </svg>
+              <H3 class="text-center"> <font color=black>Ver Lista Pedidos</FONT></H3>
+            </button>
+                      
+                <br><br>
+            </div>
+        </center>
+
+
+        <div id="verificacionUserDatos">
+    
+            <div class="modal fade" id="ModaleUserDatos" data-bs-backdrop="static" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Datos del Perfil de Usuario
+                                Actual
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <form id="formulariomodalProfiles">
+                                </form>
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar </button>
+                            <button type="button" id="ModificarDatosU" class="btn btn-success" data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#ModaleModificarUserDato">Quiero Modificar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ModificarUseDatos">
+            <div class="modal fade" id="ModaleModificarUserDato" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Datos del Usuario que se puden Modificar</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <form id="formularioModificarUserDato" enctype="multipart/form-data">
+                                </form>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="ModificarUserAUX">
+
+            <div class="modal fade" id="ModificarVerificacionUser" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header" id="exampleModalLabelModiVerificacionUser">
+                            
+                        </div>
+                        <div class="modal-body" id="modalventaMensajeModiVerificacionUser">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="IngresarNuevaCuenta">
+
+            <div class="modal fade" id="ModalIngresarCuentaNuevita" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable  modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h1 class="modal-title fs-5 " id="exampleModalLabel"> Registrar Nueva Cuenta para Navegar </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <form id="formularioRegistrarUusuario" enctype="multipart/form-data">
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Usuario a crear:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="USERusaradm" placeholder="Ingrese un seudónimo" class="form-control" required>
+                                        </div>   
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre del Usuario:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="NombreUSERadm" placeholder="Ingrese su nombre" class="form-control" required>
+                                        </div>   
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido del Usuario:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="apelliodUSERadm" placeholder="Ingrese su Apellido" class="form-control" required>
+                                        </div>   
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Correo Electrónico:</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="correoUSERadm" placeholder="Ingrese su correo" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="PasswordUSERadm" placeholder="contraseña a utilizar" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Provincia :</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-select" id="ProvinciaABuscarAamd" aria-label="Default select example">
+                                                
+                                            </select>
+                                        </div>   
+                                           
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Distrito :</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-select" id="DistritoABuscaramd" aria-label="Default select example">
+                                                
+                                            </select>
+                                        </div>     
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Corregimiento :</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-select" id="CorregimientoBuscaramd"aria-label="Default select example">
+                                                
+                                            </select>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Específica  :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="DireccionUSERadm" placeholder="Ingrese su dirección actual" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono No.1 :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="telefonoUnoUSERadm" placeholder="Ingrese un número Telefónico válido" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono No.2 :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="telefonoDosUSERadm" placeholder="Ingrese un número Telefónico válido" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Fecha de Nacimiento :</label>
+                                        <div class="col-sm-6">
+                                            <input type="date" pattern="\d{4}-\d{2}-\d{2}" class="form-control" id="fechaNacimientoadm" class="form-control" required>
+                                        </div>    
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="recipient-name" class="col-sm-6 col-form-label text-center">Perfil a utilizar :</label>
+                                        <div class="col-sm-6">
+                                            <input type="file" class="form-control" id="imagenadm" required>
+                                        </div>   
+                                    </div>
+                                    <input type="hidden"  id="id_roladm" class="form-control-plaintext text-center"  value="2">
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button"  id="cerrarVentas" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                                        <button type="submit" class="btn btn-success text-center"  data-bs-toggle="modal" data-bs-target="#Ingresoaux">REGISTRAR</button>
+                                    </div>
+                                </form>
+                            </center>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="IngresoNuevaCuentaAUXii">
+
+            <div class="modal fade" id="Ingresoaux" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header" id="exampleModalLabelIngresoaux">
+                            
+                        </div>
+                        <div class="modal-body" id="modalImageIngresoaux">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    
+        <div id="MostarUser">
+            <H1 class="display-5 text-center">
+                <font color=white> Lista de Usuarios Registrados  </FONT>
+            </H1>
+            <br>
+            <button class="btn btn-warning my-2 my-sm-0" type="button" id="nuevoUser" data-bs-toggle="modal" data-bs-target="#ModalIngresarCuentaNuevita"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              </svg>
+                Ingresar Nuevo Usuario
+            </button>
+            <button class="btn btn-danger my-2 my-sm-0" type="button" id="retornarMenudeDosBotones" > <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+                Retornar al Menú 
+            </button>
+
+            <div class="tablescroll" id="TablaUser">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_User</td>
+                            <td>Nombre_User</td>
+                            <td>Perfil_User</td>
+                            <td>Roles_User</td>
+                            <td>Estado_User</td>
+                            <td>Operación_User</td>
+                        </tr>
+                    </thead>
+                    <tbody id="User_Encontrados"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="EliminarUser">
+            <div class="modal fade" id="ModaleliminarUserAux" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">¿Seguro/a de que quieres Eliminar este Usuario?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/segurin.gif" class="imga">
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                            <button type="button" class="btn btn-success" id="BorrarProductoFi" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="##ModalelimibadiFinal">ESTOY SEGURO/A</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+
+        <div id="MostarPedidosEntregados">
+            <H1 class="display-5 text-center">
+                <font color=white> Lista de Pedidos Entregados  </FONT>
+            </H1>
+        </div>
+
+        <div id="MostarPedidosEnProceso">
+            <H1 class="display-5 text-center">
+                <font color=white> Lista de Pedidos En Proceso  </FONT>
+            </H1>
+        </div>
+
+        <div id="MostarPedidosCancelados">
+            <H1 class="display-5 text-center">
+                <font color=white> Lista de Pedidos Cancelados  </FONT>
+            </H1>
+        </div>
+
+        <br>
+        <div id="MostrarTablapedidosEntregados">
+            <div class="tablescroll" id="TablaPeidos">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_Pedido</td>
+                            <td>Nombre_User</td>
+                            <td>Tipo_Pedido</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
+                        </tr>
+                    </thead>
+                    <tbody id="Pedidos_EncontradosEntregados"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="MostrarTablapedidosEnProceso">
+            <div class="tablescroll" id="TablaPeidos">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_Pedido</td>
+                            <td>Nombre_User</td>
+                            <td>Tipo_Pedido</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
+                        </tr>
+                    </thead>
+                    <tbody id="Pedidos_EncontradosEnProceso"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="MostrarTablapedidosCancelados">
+            <div class="tablescroll" id="TablaPeidos">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_Pedido</td>
+                            <td>Nombre_User</td>
+                            <td>Tipo_Pedido</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
+                        </tr>
+                    </thead>
+                    <tbody id="Pedidos_EncontradosCancelados"></tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div id="DarsedeBaja">
+            <div class="modal fade" id="ModalDarsedeBajaAux" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">¿Seguro/a de que nos quieres Abandonar?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/segurin.gif" class="imga">
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                            <button type="button" class="btn btn-success" id="BorrarMisDatosApp" data-bs-dismiss="modal">ESTOY SEGURO/A</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    
+    </div>
+
+    
+    
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"
+  ></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="http://localhost/ProyectoSemestral/view/Controler/controlesTotal/controlMenuAdmin.js?"></script>
+    <script src="http://localhost/ProyectoSemestral/view/Controler/inicioSE/aplicacionMENU.js?"></script>
+    <SCRIPT LANGUAGE="JavaScript">
+        history.forward()
+        </SCRIPT>
+</body>
+</html>

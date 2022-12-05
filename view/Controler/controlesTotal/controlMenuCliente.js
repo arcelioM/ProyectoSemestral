@@ -74,10 +74,9 @@ $(document).ready(function(){
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
         CargarContador();
-        let idUsuarioRol= 1; 
         let idCategoria = 0; 
         
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
             let productos = response // EL UNICO PASO EXTRA
             let template = '';
 
@@ -143,10 +142,9 @@ $(document).ready(function(){
     function Obtener_ProductosCelulares(){ 
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
-        let idUsuarioRol= 1; 
         let idCategoria = 1; 
         
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
             let productos = response // EL UNICO PASO EXTRA
             let template = '';
             productos.forEach(prodctoGe => {
@@ -202,10 +200,9 @@ $(document).ready(function(){
     function Obtener_ProductosComputadora(){ 
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
-        let idUsuarioRol= 1; 
         let idCategoria = 2; 
         
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
             let productos = response // EL UNICO PASO EXTRA
             let template = '';
             productos.forEach(prodctoGe => {
@@ -261,10 +258,9 @@ $(document).ready(function(){
     function Obtener_ProductosElectronicos(){ 
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
-        let idUsuarioRol= 1; 
         let idCategoria = 3; 
         
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
             let productos = response // EL UNICO PASO EXTRA
             let template = '';
             productos.forEach(prodctoGe => {
@@ -369,6 +365,10 @@ $(document).ready(function(){
                             <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
                           </svg>
                           Cerrar Sesión</a></li>
+                          <li><a class="dropdown-item EliminarSesionCliente" href="#" data-bs-toggle="modal" data-bs-target="#ModalDarsedeBajaAux"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                          <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+                            </svg>
+                          Darse de Baja</a></li>
                           
                         </ul>
                     </div>
@@ -475,7 +475,7 @@ $(document).ready(function(){
             let usuarioNavegando = response;
             //console.log(usuarioNavegando);
             usuarioNavegando.forEach(usernavegadiando => {
-                TraerProvincias();
+                
                 
                 template += `
                 <div class="mb-3 row">
@@ -515,37 +515,6 @@ $(document).ready(function(){
                     </div>    
                 </div>
                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Provincia :</label>
-                    <div class="col-sm-6">
-                        <select class="form-select" id="ProvinciaABuscara" aria-label="Default select example">
-                                                
-                        </select>
-                    </div>   
-                                           
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Distrito :</label>
-                    <div class="col-sm-6">
-                        <select class="form-select" id="DistritoABuscaraA" aria-label="Default select example">
-                                                
-                        </select>
-                    </div>     
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Corregimiento :</label>
-                    <div class="col-sm-6">
-                        <select class="form-select" id="CorregimientoBuscaraA"aria-label="Default select example">
-                                                
-                        </select>
-                    </div>    
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="DireccionUSER" class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
                     <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
                     <div class="col-sm-6">
                         <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
@@ -576,8 +545,6 @@ $(document).ready(function(){
                 </div>
                 `;
                 $('#formularioModificarUserDato').html(template);
-                TraerDistrito(); 
-                TraerCorregimiento();
             });  
             
         });
@@ -596,8 +563,6 @@ $(document).ready(function(){
             email : $('#correoUSER').val(),
             passActual : $('#PassworActual').val(),
             passNuevo : $('#PassworNueva').val(),
-            corregimiento_id: $('#CorregimientoBuscaraA').val(),
-            direcion_especifica : $('#DireccionUSER').val(),
             telefono_1 : $('#telefonoUnoUSER').val(),
             telefono_2 : $('#telefonoDosUSER').val(),
             fechaNacimiento: $('#fechaNacimiento').val(),
@@ -788,95 +753,15 @@ $(document).ready(function(){
         $('#TitulitoProductGeneral').show();
     });
 
-
-    //ESTA SECCIÓN ES PARA LLENAR LO DE LAS PROVINCIAS, DISTRITOS  PARA EL FORMULARRIO QUE SE ENCARGARÁ DE ACTULIZAR LOS DATOS DE LO USUARIOS
-    function TraerProvincias(){
-        $.ajax({
-            type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarProvin.php?",
-            success: function (response) {
-                let template = '';
-                let templatess = '';
-
-                let provinvincia = response;
-                provinvincia.forEach(ProvinciaMostar => {
-                    template += `
-                    <option value="${ProvinciaMostar.id_provincia}"> ${ProvinciaMostar.nombre}</option>
-                `;  
-                });
-                templatess += `
-                    <option selected>Escoja una provincias </option>
-                `;  
-                $('#ProvinciaABuscara').html(templatess+template);    
+    const botoncitoDarsedeBaja = document.querySelector("#BorrarMisDatosApp");
+    botoncitoDarsedeBaja.addEventListener("click", function (evento) {
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?'; 
+        $.get(url, function (response){ 
+            if(response == "Eliminado"){
+                window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
             }
         });
-    }
-
-    function TraerDistrito(){
-        let showForm=()=>{
-        
-            let id_provincia=$("#ProvinciaABuscara").val();
-    
-            $.ajax({
-                type: "POST",
-                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarDistrito.php?",
-                data: { id_provincia },
-                success: function (response) {
-                    let template = '';
-                    let templatess = '';
-    
-                    let distritos = response;
-                    distritos.forEach(DistritoTotal => {
-                        template += `
-                        <option value="${DistritoTotal.id_distrito}"> ${DistritoTotal.nombre}</option>
-                    `;  
-                    });
-                    templatess += `
-                        <option selected>Escoja un Distrito </option>
-                    `;  
-                    $('#DistritoABuscaraA').html(templatess+template); 
-                    
-                }
-            });
-            
-            
-        };
-    
-        $("#ProvinciaABuscara").on('change',showForm);
-    }
-
-    function TraerCorregimiento(){
-        let showForm=()=>{
-        
-            let id_distrito=$("#DistritoABuscaraA").val();
-    
-            $.ajax({
-                type: "POST",
-                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarCorregimiento.php?",
-                data: { id_distrito },
-                success: function (response) {
-                    let template = '';
-                    let templatess = '';
-    
-                    let corregimiento = response;
-                    corregimiento.forEach(CorregmientoTotal => {
-                        template += `
-                        <option value="${CorregmientoTotal.id_corregimiento}"> ${CorregmientoTotal.nombre}</option>
-                    `;  
-                    });
-                    templatess += `
-                        <option selected>Escoja un Corregimiento </option>
-                    `;  
-                    $('#CorregimientoBuscaraA').html(templatess+template); 
-                    
-                }
-            });
-            
-            
-        };
-    
-        $("#DistritoABuscaraA").on('change',showForm);
-    }
+    });
 
 
 

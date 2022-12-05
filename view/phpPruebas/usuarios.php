@@ -88,7 +88,7 @@ $userTotal->rol = "cliente";
 array_push($_SESSION['usuarios'], $userTotal);
 
 
-echo"<hr>";
+/*echo"<hr>";
 foreach ($_SESSION['usuarios'] as $userTotal)
 {
     echo "<br>";
@@ -119,6 +119,6 @@ foreach ($_SESSION['usuarios'] as $userTotal)
     echo "rol: " .$userTotal->rol;
     echo "<br>";
     echo"<hr>";
-}
+}*/
 
 ?>

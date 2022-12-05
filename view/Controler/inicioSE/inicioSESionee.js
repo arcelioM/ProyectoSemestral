@@ -41,6 +41,8 @@ $(document).ready(function(){
     });
 
 
+
+
     $('#formularioRegistrarUusuario').submit(function (e) {  
         const postDatos= { 
             usuario : $('#USERusar').val(),
@@ -57,6 +59,10 @@ $(document).ready(function(){
             id_rol: $('#id_rol').val(),
         };
 
+
+        
+
+
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/registrarUserClient.php?'; 
        
         $.post(url, postDatos, function (response){ 
@@ -65,7 +71,7 @@ $(document).ready(function(){
             let usuarioRegistado = response;
             //console.log("hola querisoi");
             usuarioRegistado.forEach(usercreado => {
-                console.log(usuarioRegistado);
+                console.log(usercreado.fecha);
                 if(usercreado.valor == "1"){
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -139,7 +145,7 @@ $(document).ready(function(){
         
         let id_provincia=$("#ProvinciaABuscar").val();
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarDistrito.php?",
             data: { id_provincia },
             success: function (response) {
@@ -170,7 +176,7 @@ $(document).ready(function(){
         
         let id_distrito=$("#DistritoABuscar").val();
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarCorregimiento.php?",
             data: { id_distrito },
             success: function (response) {
