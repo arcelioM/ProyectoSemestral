@@ -7,6 +7,7 @@ use model\Corregimiento;
 use model\Direccion;
 use model\Rol;
 use model\Usuario;
+use util\Log;
 
 class ServiceUsuarioImpl{
     private DaoUsuarioImpl $usuarioDao;
@@ -76,9 +77,9 @@ class ServiceUsuarioImpl{
 
         $usuario = new Usuario(email:$data["email"],contraseña:$data["pass"]);
 
+        
         $result = $this->usuarioDao->validateUser($usuario);
 
-        
         if($result===null){
             $respuesta = array(
                 "valor"=>0,
