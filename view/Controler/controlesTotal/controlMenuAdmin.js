@@ -1,11 +1,17 @@
 $(document).ready(function(){
     
     $('#MostarUser').hide();
-    $('#MostrarTablapedidos').hide();
+   
 
     $('#MostarPedidosEntregados').hide();
+    $('#MostrarTablapedidosEntregados').hide();
+
     $('#MostarPedidosEnProceso').hide();
+    $('#MostrarTablapedidosEnProceso').hide();
+
+
     $('#MostarPedidosCancelados').hide();
+    $('#MostrarTablapedidosCancelados').hide();
 
     $('#TitulitoOpcionesVerPedidos').hide();
     $('#botonesNegacionPedidos').hide();
@@ -32,6 +38,62 @@ $(document).ready(function(){
         $('#MostarPedidosCancelados').hide();
         $('#TitulitoOpcionesVerPedidos').hide();
         $('#botonesNegacionPedidos').hide();
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarUserG.php?",
+            success: function (response) {
+                let template = '';
+                let tipoUser = '';
+                let userDatos = response;
+                userDatos.forEach(userDatos => {
+                    let templateaa = '';
+                    userDatos.rol.forEach(userrol => {
+                        templateaa += `
+                        <option value="1"> ${userrol.nombre}</option>
+                    `;
+                    });
+                    if(userDatos.idEstado == "1"){
+                        tipoUser= `
+                        <button type="button" class="btn btn-warning " > <svg xmlns="http://www.w3.org/2000/svg" width="5%" height="5%" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                      </svg>
+                        Activo
+                    </button>`;
+                    }else{
+                        tipoUser= `
+                        <buttontype="button" class="btn btn-danger "> <svg xmlns="http://www.w3.org/2000/svg" width="5%" height="5%" fill="currentColor" class="bi bi-person-fill-slash" viewBox="0 0 16 16">
+                        <path d="M13.879 10.414a2.501 2.501 0 0 0-3.465 3.465l3.465-3.465Zm.707.707-3.465 3.465a2.501 2.501 0 0 0 3.465-3.465Zm-4.56-1.096a3.5 3.5 0 1 1 4.949 4.95 3.5 3.5 0 0 1-4.95-4.95ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                      </svg>
+                        Eliminado
+                    </button>`;
+                    }
+                    template += `
+                    <tr Id_Homework="${userDatos.idUsuario}" class="table-info   text-center" >
+                    <td >${userDatos.idUsuario}</td> 
+                    <td >${userDatos.nombre} ${userDatos.apellido}</td> 
+                    <td ><img src="http://localhost/ProyectoSemestral/view${userDatos.imagen}" class="img"></td>
+                    <td align="center" ><div class="col-sm-8">
+                    <select class="form-select"  aria-label="Default select example"> 
+                    `+templateaa + ` 
+                    </select>
+                    </div> </td>
+                    <td >`+tipoUser + `</td> 
+                    <td>
+                       <button class="btn btn-danger btn- text-center eliminarUser" data-bs-toggle="modal" data-bs-target="#ModaleliminarUserAux"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                     </svg>
+                           Eliminar 
+                        </button>
+                        
+                    </td>
+                    </tr>`;
+                });
+                $('#User_Encontrados').html(template);  
+            }
+        });
        
     });
 
@@ -47,10 +109,174 @@ $(document).ready(function(){
         $('#MostarPedidosCancelados').hide();
         $('#TitulitoOpcionesVerPedidos').show();
         $('#botonesNegacionPedidos').show();
-       
+
     });
 
-    //ESTA SECCIÓN ES PARA LA NECGACIÓN DENTRO DE LA OCIÓN DE VER PEDIDOS 
+
+
+
+    //ESTA SECCIÓN ES PARA LA NAVEGACIÓN DENTRO DE LA OCIÓN DE VER PEDIDOS Y MOSTRAR SUS DATOS
+
+    const botoncitoVerPedidosEnProceso = document.querySelector("#VerPedidosProceso");
+    botoncitoVerPedidosEnProceso.addEventListener("click", function (evento) {
+        $('#TitulitoOpcionesAdminitrador').hide();
+        $('#botonesNegacion').hide();
+        $('#MostarUser').hide();
+        $('#MostarPedidosEntregados').hide();
+        $('#MostrarTablapedidosEntregados').hide();
+
+        $('#MostarPedidosEnProceso').show();
+        $('#MostrarTablapedidosEnProceso').show();
+
+        $('#MostarPedidosCancelados').hide();
+        $('#MostrarTablapedidosCancelados').hide();
+
+        $('#TitulitoOpcionesVerPedidos').hide();
+        $('#botonesNegacionPedidos').show();
+
+        let idEstado="3";
+        let idTipoPedido="1";
+
+        //TraerPedidos(idEstadoF, idTipoPedidoF);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
+            data: { idEstado, idTipoPedido },
+            success: function (response) {
+                let template = '';
+                let pepdidosDatos = response;
+                pepdidosDatos.forEach(pepdidosDatosG => {
+                    template += `
+                    <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
+                    <td >${pepdidosDatosG.idPedido}</td> 
+                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.tipoPedido}</td> 
+                    <td >${pepdidosDatosG.provincia}</td> 
+                    <td >${pepdidosDatosG.fechaCreacion}</td>   
+                    </tr>`;
+                });
+                $('#Pedidos_EncontradosEnProceso').html(template);  
+            }
+        });
+    });
+
+    const botoncitoVerVerPedidosEntregados = document.querySelector("#VerPedidosEntregados");
+    botoncitoVerVerPedidosEntregados.addEventListener("click", function (evento) {
+        $('#TitulitoOpcionesAdminitrador').hide();
+        $('#botonesNegacion').hide();
+        $('#MostarUser').hide();
+        $('#MostrarTablapedidos').hide();
+        $('#MostarPedidosEntregados').show();
+        $('#MostrarTablapedidosEntregados').show();
+
+
+        $('#MostarPedidosEnProceso').hide();
+        $('#MostrarTablapedidosEnProceso').hide();
+
+
+        $('#MostarPedidosCancelados').hide();
+        $('#MostrarTablapedidosCancelados').hide();
+
+        $('#TitulitoOpcionesVerPedidos').hide();
+        $('#botonesNegacionPedidos').show();
+
+        let idEstado="4";
+        let idTipoPedido="1";
+
+        //TraerPedidos(idEstadoF, idTipoPedidoF);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
+            data: { idEstado, idTipoPedido },
+            success: function (response) {
+                let template = '';
+                let pepdidosDatos = response;
+                pepdidosDatos.forEach(pepdidosDatosG => {
+                    template += `
+                    <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
+                    <td >${pepdidosDatosG.idPedido}</td> 
+                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.tipoPedido}</td> 
+                    <td >${pepdidosDatosG.provincia}</td> 
+                    <td >${pepdidosDatosG.fechaCreacion}</td>   
+                    </tr>`;
+                });
+                $('#Pedidos_EncontradosEntregados').html(template);  
+            }
+        });
+    });
+
+    const botoncitoVerPedidosCancelados = document.querySelector("#VerPedidosCancelados");
+    botoncitoVerPedidosCancelados.addEventListener("click", function (evento) {
+        $('#TitulitoOpcionesAdminitrador').hide();
+        $('#botonesNegacion').hide();
+        $('#MostarUser').hide();
+        $('#MostarPedidosEntregados').hide();
+        $('#MostrarTablapedidosEntregados').hide();
+
+        $('#MostarPedidosEnProceso').hide();
+        $('#MostrarTablapedidosEnProceso').hide();
+
+        $('#MostarPedidosCancelados').show();
+        $('#MostrarTablapedidosCancelados').show();
+
+        $('#TitulitoOpcionesVerPedidos').hide();
+        $('#botonesNegacionPedidos').show();
+
+        let idEstado="5";
+        let idTipoPedido="1";
+        //TraerPedidos(idEstadoF, idTipoPedidoF);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
+            data: { idEstado, idTipoPedido },
+            success: function (response) {
+                let template = '';
+                let pepdidosDatos = response;
+                pepdidosDatos.forEach(pepdidosDatosG => {
+                    template += `
+                    <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
+                    <td >${pepdidosDatosG.idPedido}</td> 
+                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.tipoPedido}</td> 
+                    <td >${pepdidosDatosG.provincia}</td> 
+                    <td >${pepdidosDatosG.fechaCreacion}</td>   
+                    </tr>`;
+                });
+                $('#Pedidos_EncontradosCancelados').html(template);  
+            }
+        });
+
+    });
+
+
+    const botoncitoRegresarPedido = document.querySelector("#RegresarPedido");
+    botoncitoRegresarPedido.addEventListener("click", function (evento) {
+        $('#TitulitoOpcionesAdminitrador').show();
+        $('#botonesNegacion').show();
+        $('#MostarUser').hide();
+        $('#MostrarTablapedidos').hide();
+
+        $('#MostarPedidosEntregados').hide();
+        $('#MostrarTablapedidosEntregados').hide();
+
+        $('#MostarPedidosEnProceso').hide();
+        $('#MostrarTablapedidosEnProceso').hide();
+
+        $('#MostarPedidosCancelados').hide();
+        $('#MostrarTablapedidosCancelados').hide();
+
+        $('#TitulitoOpcionesVerPedidos').hide();
+        $('#botonesNegacionPedidos').hide();
+    });
+
+
+    /*function TraerPedidos(idEstadoF, idTipoPedidoF){
+        let idEstado=idEstadoF;
+        let idTipoPedido=idTipoPedidoF;
+        
+    }*/
+
 
 
 

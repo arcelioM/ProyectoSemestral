@@ -64,7 +64,7 @@
 
         .tablescroll{
         width: 100%;
-        height: 200px;
+        height: 400px;
         overflow-y: auto;
     }
 
@@ -119,10 +119,10 @@
             </ul>
         </div>
     </nav>
-
+    <br>
 
     <div id="TitulitoOpcionesVerPedidos">
-        <br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br>
         <H1 class="display-6 text-center"> <font color=white> Escoja la Opción de Filtro que sea de su  Gusto </FONT></H1>
     </div>
 
@@ -148,7 +148,7 @@
           </svg>
           <H5 class="text-center"> <font color=white>Retornar al Menú</FONT></H5>
         </button>
-            <br><br>
+            <br>
         </div>
     </center>
 
@@ -225,7 +225,7 @@
 
 
         <div id="TitulitoOpcionesAdminitrador">
-            <br><br><br><br><br><br><br><br>
+            <br><br><br><br><br>
             <H1 class="display-6 text-center"> <font color=white> Escoja la Opción de su Gusto </FONT></H1>
         </div>
 
@@ -246,7 +246,7 @@
             </div>
         </center>
 
-        
+
         <div id="verificacionUserDatos">
     
             <div class="modal fade" id="ModaleUserDatos" data-bs-backdrop="static" tabindex="-1"
@@ -449,7 +449,7 @@
 
     
         <div id="MostarUser">
-            <H1 class="display-6 text-center">
+            <H1 class="display-5 text-center">
                 <font color=white> Lista de Usuarios Registrados  </FONT>
             </H1>
             <br>
@@ -471,10 +471,10 @@
                         <tr>
                             <td>Id_User</td>
                             <td>Nombre_User</td>
-                            <td>Apellido_Prod</td>
                             <td>Perfil_User</td>
                             <td>Roles_User</td>
                             <td>Estado_User</td>
+                            <td>Operación_User</td>
                         </tr>
                     </thead>
                     <tbody id="User_Encontrados"></tbody>
@@ -482,28 +482,52 @@
             </div>
         </div>
 
+        <div id="EliminarUser">
+            <div class="modal fade" id="ModaleliminarUserAux" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">¿Seguro/a de que quieres Eliminar este Usuario?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <center>
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/segurin.gif" class="imga">
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                            <button type="button" class="btn btn-success" id="BorrarProductoFi" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="##ModalelimibadiFinal">ESTOY SEGURO/A</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
 
 
         <div id="MostarPedidosEntregados">
-            <H1 class="display-6 text-center">
+            <H1 class="display-5 text-center">
                 <font color=white> Lista de Pedidos Entregados  </FONT>
             </H1>
         </div>
 
         <div id="MostarPedidosEnProceso">
-            <H1 class="display-6 text-center">
+            <H1 class="display-5 text-center">
                 <font color=white> Lista de Pedidos En Proceso  </FONT>
             </H1>
         </div>
 
         <div id="MostarPedidosCancelados">
-            <H1 class="display-6 text-center">
+            <H1 class="display-5 text-center">
                 <font color=white> Lista de Pedidos Cancelados  </FONT>
             </H1>
         </div>
 
         <br>
-        <div id="MostrarTablapedidos">
+        <div id="MostrarTablapedidosEntregados">
             <div class="tablescroll" id="TablaPeidos">
                 <table class="table table-bordered table-sm table-hover table-striped ">
                     <thead class="thead-green cabeceras text-center">
@@ -511,12 +535,45 @@
                             <td>Id_Pedido</td>
                             <td>Nombre_User</td>
                             <td>Tipo_Pedido</td>
-                            <td>Perfil_User</td>
-                            <td>Roles_User</td>
-                            <td>Estado_User</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
                         </tr>
                     </thead>
-                    <tbody id="Pedidos_Encntrados"></tbody>
+                    <tbody id="Pedidos_EncontradosEntregados"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="MostrarTablapedidosEnProceso">
+            <div class="tablescroll" id="TablaPeidos">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_Pedido</td>
+                            <td>Nombre_User</td>
+                            <td>Tipo_Pedido</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
+                        </tr>
+                    </thead>
+                    <tbody id="Pedidos_EncontradosEnProceso"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="MostrarTablapedidosCancelados">
+            <div class="tablescroll" id="TablaPeidos">
+                <table class="table table-bordered table-sm table-hover table-striped ">
+                    <thead class="thead-green cabeceras text-center">
+                        <tr>
+                            <td>Id_Pedido</td>
+                            <td>Nombre_User</td>
+                            <td>Tipo_Pedido</td>
+                            <td>Provincia_Pedido</td>
+                            <td>FechaCreacion_Pedido</td>
+                        </tr>
+                    </thead>
+                    <tbody id="Pedidos_EncontradosCancelados"></tbody>
                 </table>
             </div>
         </div>
