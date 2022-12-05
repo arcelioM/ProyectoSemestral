@@ -1,5 +1,5 @@
-$(document).ready(function(){
-    
+$(document).ready(function () {
+
     $('#ProCarSinSesionCeluare').hide();
     $('#ProCarSinSesionComputadorae').hide();
     $('#ProCarSinSesionElectornicae').hide();
@@ -14,10 +14,10 @@ $(document).ready(function(){
 
     CargarPerfil();
     Obtener_ProductosGenerales();
-    
 
 
-    $("#MenuNavegacion").click(function(){
+
+    $("#MenuNavegacion").click(function () {
         $(this).toggleClass("btn-warning btn-success ");
     });
 
@@ -70,255 +70,319 @@ $(document).ready(function(){
 
 
     //ESTA FUNCIÓN TRAE LOS PRODUCTOS DE FORMA GENERAL SIN IMPORTAR SU CATEGORÍA
-    function Obtener_ProductosGenerales(){ 
+    function Obtener_ProductosGenerales() {
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
         CargarContador();
         //TraerIDcarrito();
-        let idCategoria = 0; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
 
-            productos.forEach(prodctoGe => {
-                template += `
-                <div class="col">
-                    <div class="card h-90" id="ImageTopProGe">
-                         <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
-                                  alt="...">
-                        <div class="card-body" id="DatosTopProGe">
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
 
-                            <center>
-                                <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
-                            </center>
-                            <h5 class="card-title">${prodctoGe.nombre}</h5>
-                             <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">$${prodctoGe.precio} </p>
-                        </div>
-                        <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                let idCategoria = 0;
+
+                $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol,idCategoria }, function (response) {
+                    let productos = response // EL UNICO PASO EXTRA
+                    let template = '';
+
+                    productos.forEach(prodctoGe => {
+                        template += `
+                            <div class="col">
+                                <div class="card h-90" id="ImageTopProGe">
+                                    <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
+                                            alt="...">
+                                    <div class="card-body" id="DatosTopProGe">
+
+                                        <center>
+                                            <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
+                                        </center>
+                                        <h5 class="card-title">${prodctoGe.nombre}</h5>
+                                        <p class="card-text">${prodctoGe.descripcion} </p>
+                                        <p class="card-text">$${prodctoGe.precio} </p>
+                                    </div>
+                                    <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
+                                        <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
             `;
-            
-                let variable = "carritoConSesion" + prodctoGe.idProducto;
-                $(document).on('click', '.' + variable, function () {
-                    //console.log(prodctoGe.idProducto);
-                    //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
-                    let Id_ProducCarrito = prodctoGe.idProducto;
-                    
-                    //console.log(Id_ProductoCarrito);
-                    $.ajax({
-                        type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
-                        data: { Id_ProducCarrito },
-                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
-                        success: function (response) {
-                            let carritoProductoGe = response;
-                            carritoProductoGe.forEach(carritoProductoG => {
-                                console.log(carritoProductoG.idProducto);
-                            }); 
 
-                            CargarContador();
-                        }
-                    });
+                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        $(document).on('click', '.' + variable, function () {
+                            //console.log(prodctoGe.idProducto);
+                            //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
+                            let Id_ProducCarrito = prodctoGe.idProducto;
 
-                });
-              
-            });
-            $('#ProductoGeneralesSinSesio').html(template);
+                            //console.log(Id_ProductoCarrito);
+                            $.ajax({
+                                type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                                data: { Id_ProducCarrito },
+                                url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                                success: function (response) {
+                                    let carritoProductoGe = response;
+                                    carritoProductoGe.forEach(carritoProductoG => {
+                                        console.log(carritoProductoG.idProducto);
+                                    });
 
-        });
-
-
-    }
-   
-    function Obtener_ProductosCelulares(){ 
-        $('#FacturaTotal').hide();
-        $('#Mostarcarritoosi').hide();
-        let idCategoria = 1; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
-            productos.forEach(prodctoGe => {
-                template += `
-                <div class="col">
-                    <div class="card h-90" id="ImageTopProGe">
-                         <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
-                                  alt="...">
-                        <div class="card-body" id="DatosTopProGe">
-                            <center>
-                                <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
-                            </center>
-                            <h5 class="card-title">${prodctoGe.nombre}</h5>
-                             <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">$${prodctoGe.precio} </p>
-                        </div>
-                        <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                        <button class="btn btn-success ml-auto carritoConSesionCe${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-                let variable = "carritoConSesionCe" + prodctoGe.idProducto;
-                $(document).on('click', '.' + variable, function () {
-                    let Id_ProducCarrito = prodctoGe.idProducto;
-                    $.ajax({
-                        type: "POST", 
-                        data: { Id_ProducCarrito },
-                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
-                        success: function (response) {
-                            let carritoProductoCelu = response;
-                            carritoProductoCelu.forEach(carritoProductoCelu => {
-                                console.log(carritoProductoCelu.idProducto);
+                                    CargarContador();
+                                }
                             });
 
-                        }
+                        });
+
                     });
+                    $('#ProductoGeneralesSinSesio').html(template);
+
                 });
-            });
-            $('#ProductoCeluaresSinSesio').html(template);
-
+            }
         });
-
-
     }
 
-    function Obtener_ProductosComputadora(){ 
+    function Obtener_ProductosCelulares() {
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
-        let idCategoria = 2; 
         
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
-            productos.forEach(prodctoGe => {
-                template += `
-                <div class="col">
-                    <div class="card h-90" id="ImageTopProGe">
-                         <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
-                                  alt="...">
-                        <div class="card-body" id="DatosTopProGe">
-                            <center>
-                                <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
-                            </center>
-                            <h5 class="card-title">${prodctoGe.nombre}</h5>
-                             <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text"> $${prodctoGe.precio} </p>
-                        </div>
-                        <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                        <button class="btn btn-success ml-auto carritoConSesionCompu${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                let idCategoria = 1;
+
+                $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol,idCategoria }, function (response) {
+                    let productos = response // EL UNICO PASO EXTRA
+                    let template = '';
+
+                    productos.forEach(prodctoGe => {
+                        template += `
+                            <div class="col">
+                                <div class="card h-90" id="ImageTopProGe">
+                                    <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
+                                            alt="...">
+                                    <div class="card-body" id="DatosTopProGe">
+
+                                        <center>
+                                            <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
+                                        </center>
+                                        <h5 class="card-title">${prodctoGe.nombre}</h5>
+                                        <p class="card-text">${prodctoGe.descripcion} </p>
+                                        <p class="card-text">$${prodctoGe.precio} </p>
+                                    </div>
+                                    <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
+                                        <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
             `;
-                let variable = "carritoConSesionCompu" + prodctoGe.idProducto;
-                $(document).on('click', '.' + variable, function () {
-                    let Id_ProducCarrito = prodctoGe.idProducto;
-                    $.ajax({
-                        type: "POST",
-                        data: { Id_ProducCarrito },
-                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
-                        success: function (response) {
-                            let carritoProductoCompu = response;
-                            carritoProductoCompu.forEach(carritoProductoComput => {
-                                console.log(carritoProductoComput.idProducto);
+
+                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        $(document).on('click', '.' + variable, function () {
+                            //console.log(prodctoGe.idProducto);
+                            //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
+                            let Id_ProducCarrito = prodctoGe.idProducto;
+
+                            //console.log(Id_ProductoCarrito);
+                            $.ajax({
+                                type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                                data: { Id_ProducCarrito },
+                                url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                                success: function (response) {
+                                    let carritoProductoGe = response;
+                                    carritoProductoGe.forEach(carritoProductoG => {
+                                        console.log(carritoProductoG.idProducto);
+                                    });
+
+                                    CargarContador();
+                                }
                             });
 
-                        }
-                    });
-                });
-            });
-            $('#ProductoComputadoraSinSesio').html(template);
+                        });
 
+                    });
+                    $('#ProductoCeluaresSinSesio').html(template);
+
+                });
+            }
         });
 
 
     }
 
-    function Obtener_ProductosElectronicos(){ 
+    function Obtener_ProductosComputadora() {
         $('#FacturaTotal').hide();
         $('#Mostarcarritoosi').hide();
-        let idCategoria = 3; 
-        
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idCategoria }, function (response) {
-            let productos = response // EL UNICO PASO EXTRA
-            let template = '';
-            productos.forEach(prodctoGe => {
-                template += `
-                <div class="col">
-                    <div class="card h-90" id="ImageTopProGe">
-                         <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
-                                  alt="...">
-                        <div class="card-body" id="DatosTopProGe">
-                            <center>
-                                <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
-                            </center>
-                            <h5 class="card-title">${prodctoGe.nombre}</h5>
-                             <p class="card-text">${prodctoGe.descripcion} </p>
-                            <p class="card-text">$${prodctoGe.precio} </p>
-                        </div>
-                        <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
-                        <button class="btn btn-success ml-auto carritoConSesionElectrono${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                let idCategoria = 2;
+
+                $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+                    let productos = response // EL UNICO PASO EXTRA
+                    let template = '';
+
+                    productos.forEach(prodctoGe => {
+                        template += `
+                            <div class="col">
+                                <div class="card h-90" id="ImageTopProGe">
+                                    <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
+                                            alt="...">
+                                    <div class="card-body" id="DatosTopProGe">
+
+                                        <center>
+                                            <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
+                                        </center>
+                                        <h5 class="card-title">${prodctoGe.nombre}</h5>
+                                        <p class="card-text">${prodctoGe.descripcion} </p>
+                                        <p class="card-text">$${prodctoGe.precio} </p>
+                                    </div>
+                                    <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
+                                        <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
             `;
-                let variable = "carritoConSesionElectrono" + prodctoGe.idProducto;
-                $(document).on('click', '.' + variable, function () {
-                    let Id_ProducCarrito = prodctoGe.idProducto;
-                    $.ajax({
-                        type: "POST",
-                        data: { Id_ProducCarrito },
-                        url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
-                        success: function (response) {
-                            let carritoProductoElectr = response;
-                            carritoProductoElectr.forEach(carritoProductoElectron => {
-                                console.log(carritoProductoElectron.idProducto);
+
+                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        $(document).on('click', '.' + variable, function () {
+                            //console.log(prodctoGe.idProducto);
+                            //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
+                            let Id_ProducCarrito = prodctoGe.idProducto;
+
+                            //console.log(Id_ProductoCarrito);
+                            $.ajax({
+                                type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                                data: { Id_ProducCarrito },
+                                url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                                success: function (response) {
+                                    let carritoProductoGe = response;
+                                    carritoProductoGe.forEach(carritoProductoG => {
+                                        console.log(carritoProductoG.idProducto);
+                                    });
+
+                                    CargarContador();
+                                }
                             });
 
-                        }
+                        });
+
                     });
+                    $('#ProductoComputadoraSinSesio').html(template);
+
                 });
-            });
-            $('#ProductoElectroncaSinSesio').html(template);
-
+            }
         });
-
 
     }
 
+    function Obtener_ProductosElectronicos() {
+        $('#FacturaTotal').hide();
+        $('#Mostarcarritoosi').hide();
 
-    $(document).on('click', '.cerrarSesionCliente', function(){ //Priemro buscaremos los datos de la tarea  a modificar y los pasaremos al formulario 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?'; 
-        $.get(url, function (response){ 
-            if(response == "vaciado"){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                let idCategoria = 3;
+
+                $.post('http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?', { idUsuarioRol, idCategoria }, function (response) {
+                    let productos = response // EL UNICO PASO EXTRA
+                    let template = '';
+
+                    productos.forEach(prodctoGe => {
+                        template += `
+                        <div class="col">
+                            <div class="card h-90" id="ImageTopProGe">
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGe.imagen}" class="card-img-top carcitaSinSesion"
+                                        alt="...">
+                                <div class="card-body" id="DatosTopProGe">
+
+                                    <center>
+                                        <h6 class="card-title" align=right>${prodctoGe.idProducto}</h6>
+                                    </center>
+                                    <h5 class="card-title">${prodctoGe.nombre}</h5>
+                                    <p class="card-text">${prodctoGe.descripcion} </p>
+                                    <p class="card-text">$${prodctoGe.precio} </p>
+                                </div>
+                                <div class="card-footer d-grid gap-2 d-md-flex justify-content-md-end ">
+                                    <button class="btn btn-success ml-auto carritoConSesion${prodctoGe.idProducto}" type="button" data-bs-toggle="modal" data-bs-target="#ModalAgregaralcarrito">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-cart3"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+            `;
+
+                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        $(document).on('click', '.' + variable, function () {
+                            //console.log(prodctoGe.idProducto);
+                            //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
+                            let Id_ProducCarrito = prodctoGe.idProducto;
+
+                            //console.log(Id_ProductoCarrito);
+                            $.ajax({
+                                type: "POST", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
+                                data: { Id_ProducCarrito },
+                                url: "http://localhost/ProyectoSemestral/view/phpPruebas/RegistroCarrito.php?",
+                                success: function (response) {
+                                    let carritoProductoGe = response;
+                                    carritoProductoGe.forEach(carritoProductoG => {
+                                        console.log(carritoProductoG.idProducto);
+                                    });
+
+                                    CargarContador();
+                                }
+                            });
+
+                        });
+
+                    });
+                    $('#ProductoElectroncaSinSesio').html(template);
+
+                });
+            }
+        });
+    }
+
+
+    $(document).on('click', '.cerrarSesionCliente', function () { //Priemro buscaremos los datos de la tarea  a modificar y los pasaremos al formulario 
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?';
+        $.get(url, function (response) {
+            if (response == "vaciado") {
                 window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
             }
         });
@@ -326,9 +390,9 @@ $(document).ready(function(){
 
     const botoncitoCerrarSesion = document.querySelector("#Cierresesion");
     botoncitoCerrarSesion.addEventListener("click", function (evento) {
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?'; 
-        $.get(url, function (response){ 
-            if(response == "vaciado"){
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/CerrarSesio.php?';
+        $.get(url, function (response) {
+            if (response == "vaciado") {
                 window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
             }
         });
@@ -339,15 +403,15 @@ $(document).ready(function(){
 
 
 
-    function CargarPerfil() {  
-       
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/datosUsere.php?'; 
+    function CargarPerfil() {
 
-        $.get(url, function (response){ 
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/datosUsere.php?';
+
+        $.get(url, function (response) {
             let template = '';
             let usuarioNaveggando = response;
             usuarioNaveggando.forEach(usernavegando => {
-                    template += `
+                template += `
                     <form class="form-inline my-2 my-lg-0" id="PerfilUser">
                     <img src="http://localhost/ProyectoSemestral/view/imagenes/${usernavegando.imagen}" class="img">
                     <label for="Usuario" class="form-control-sm mr-sm-5"><FONT color="white">${usernavegando.nombre} ${usernavegando.Apellido}</FONT></label>
@@ -377,42 +441,42 @@ $(document).ready(function(){
                     </div>
                     </form>
                     `;
-                    
-                    $('#PerfilUser').html(template);
-            });  
-            
+
+                $('#PerfilUser').html(template);
+            });
+
         });
     }
 
-    function CargarContador() {  
-       
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/recuperarContador.php?'; 
+    function CargarContador() {
 
-        $.get(url, function (response){ 
-            let contador='';
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/recuperarContador.php?';
+
+        $.get(url, function (response) {
+            let contador = '';
             let contadorNaveggando = response;
 
-             contador=`${contadorNaveggando}`;
-             $('#contadorCarrito').html(contador);
+            contador = `${contadorNaveggando}`;
+            $('#contadorCarrito').html(contador);
         });
     }
 
-    $(document).on('click', '.verProfile', function(){ //Esto sólo para ver los datos del perfil del usuario 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
+    $(document).on('click', '.verProfile', function () { //Esto sólo para ver los datos del perfil del usuario 
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?';
 
-        $.get(url, function (response){ 
-            let VariableUserProfile=response; 
+        $.get(url, function (response) {
+            let VariableUserProfile = response;
 
             //Se llama  al Api reste para taer todos los datos de ese usuario por ID
 
-            
+
             let template = '';
             //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
             let usuarioNavegando = response.datosUser;
-            let Contador= 0; 
-            
+            let Contador = 0;
+
             //console.log(usuarioNavegando);
-            usuarioNavegando.forEach(usernavegadiando => { 
+            usuarioNavegando.forEach(usernavegadiando => {
                 if (Contador == 0) {
                     template += `
                         <div class="mb-3 row">
@@ -471,28 +535,28 @@ $(document).ready(function(){
                         </div>`;
 
                     $('#formulariomodalProfile').html(template);
-                    Contador= Contador+1;
+                    Contador = Contador + 1;
                 }
-            });  
-            
+            });
+
         });
     });
 
     const botoncitoModificarDatosU = document.querySelector("#ModificarDatosU");
     botoncitoModificarDatosU.addEventListener("click", function (evento) {
-        
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
-        $.get(url, function (response){ 
-            let VariableUserProfile=response; 
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?';
+
+        $.get(url, function (response) {
+            let VariableUserProfile = response;
 
             //Se llama  al Api reste para taer todos los datos de ese usuario por ID
 
-            
+
             let template = '';
             //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
             let usuarioNavegando = response.datosUser;
-            let Contador= 0; 
+            let Contador = 0;
             usuarioNavegando.forEach(usernavegadiando => {
                 if (Contador == 0) {
                     template += `
@@ -563,50 +627,50 @@ $(document).ready(function(){
                             </div>
                         `;
                     $('#formularioModificarUserDato').html(template);
-                    Contador= Contador+1;
+                    Contador = Contador + 1;
                 }
-            });  
+            });
         });
     });
 
 
 
 
-    $('#formularioModificarUserDato').submit(function (e) { 
+    $('#formularioModificarUserDato').submit(function (e) {
         $("#ModificarInfoVentasAUX").show();
-        const postDatos= {  
+        const postDatos = {
             idUsuario: $('#idUsuarioR').val(),
-            usuario : $('#USERusar').val(),
-            nombre : $('#NombreUSER').val(),
-            Apellido : $('#apelliodUSER').val(),
-            email : $('#correoUSER').val(),
-            passActual : $('#PassworActual').val(),
-            passNuevo : $('#PassworNueva').val(),
-            telefono_1 : $('#telefonoUnoUSER').val(),
-            telefono_2 : $('#telefonoDosUSER').val(),
+            usuario: $('#USERusar').val(),
+            nombre: $('#NombreUSER').val(),
+            Apellido: $('#apelliodUSER').val(),
+            email: $('#correoUSER').val(),
+            passActual: $('#PassworActual').val(),
+            passNuevo: $('#PassworNueva').val(),
+            telefono_1: $('#telefonoUnoUSER').val(),
+            telefono_2: $('#telefonoDosUSER').val(),
             fechaNacimiento: $('#fechaNacimiento').val(),
             imagen: $('#imagenR').val(),
         };
 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
-        
-        $.post(url, postDatos, function (response){ 
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
+
+        $.post(url, postDatos, function (response) {
             let template = '';
             let tempaltess = '';
             let usuarioNavegando = response;
             usuarioNavegando.forEach(usernav => {
-                if(usernav.valor == "1"){
+                if (usernav.valor == "1") {
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
                     tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                         </center>`;
-                        $('#exampleModalLabelModiVerificacionUser').html(template);
-                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                        CargarPerfil();
-                               
-                }else{
+                    $('#exampleModalLabelModiVerificacionUser').html(template);
+                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                    CargarPerfil();
+
+                } else {
                     console.log(usuarioNavegando);
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -614,12 +678,12 @@ $(document).ready(function(){
                     tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
-                        $('#exampleModalLabelModiVerificacionUser').html(template);
-                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                        CargarPerfil();
+                    $('#exampleModalLabelModiVerificacionUser').html(template);
+                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                    CargarPerfil();
                 }
 
-            });  
+            });
         });
         e.preventDefault();
     });
@@ -633,7 +697,7 @@ $(document).ready(function(){
 
         $('#ProCarSinSesion').hide();
         $('#TitulitoProductGeneral').hide();
-        
+
 
         $('#TitulitoProductCelular').hide();
         $('#TitulitoProductComputadora').hide();
@@ -644,7 +708,7 @@ $(document).ready(function(){
         CargarProductosCarrito();
     });
 
-    function CargarProductosCarrito(){
+    function CargarProductosCarrito() {
 
 
         $.ajax({
@@ -671,7 +735,7 @@ $(document).ready(function(){
                     </td>
                     </tr>`;
                 });
-                $('#Productos_Encontrados').html(template);  
+                $('#Productos_Encontrados').html(template);
             }
         });
 
@@ -723,18 +787,18 @@ $(document).ready(function(){
                     </div>
 
                    `;
-                $('#CalculoTotales').html(template);  
+                $('#CalculoTotales').html(template);
             }
         });
 
     }
 
 
-    $(document).on('click', '.eliminarproduct', function(){
+    $(document).on('click', '.eliminarproduct', function () {
         let element = $(this)[0].parentElement.parentElement;    //aquí se almacena toda la fila por medio de la propiepdad parentElement y va de "td" al padre "tr"
-        let id= $(element).attr('Id_Homework');  //aquí se almacena el id del botón selecccionado por medio de fila padre
+        let id = $(element).attr('Id_Homework');  //aquí se almacena el id del botón selecccionado por medio de fila padre
         //console.log(id);
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/variableSesionEli.php?', {id}, function (response){
+        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/variableSesionEli.php?', { id }, function (response) {
             console.log(response);
         });
     });
@@ -776,9 +840,9 @@ $(document).ready(function(){
 
     const botoncitoDarsedeBaja = document.querySelector("#BorrarMisDatosApp");
     botoncitoDarsedeBaja.addEventListener("click", function (evento) {
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?'; 
-        $.get(url, function (response){ 
-            if(response == "Eliminado"){
+        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?';
+        $.get(url, function (response) {
+            if (response == "Eliminado") {
                 window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
             }
         });
@@ -786,8 +850,8 @@ $(document).ready(function(){
 
 
     //PRUEBAAA CARRITO ID//////////////
-    function TraerIDcarrito(){
-    
+    function TraerIDcarrito() {
+
         $.ajax({
             type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/LlevarIdProdu.php?",
@@ -797,20 +861,20 @@ $(document).ready(function(){
                 //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
 
                 //Variable que gauradrá lña información de los productos traidos para el carrito
-                let InfoProductoLLevar=response; 
+                let InfoProductoLLevar = response;
                 $.ajax({
                     type: "GET",
                     url: "http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?",
-                    data: {InfoProductoLLevar},
+                    data: { InfoProductoLLevar },
                     success: function (response) {
                         console.log(response);
-                        
+
                     }
                 });
             }
         });
 
-        
+
     }
 
 
@@ -823,11 +887,11 @@ $(document).ready(function(){
 
 
 
-    
 
 
-    
-    
+
+
+
 
 
 });
