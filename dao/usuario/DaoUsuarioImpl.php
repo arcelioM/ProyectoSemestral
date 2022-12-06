@@ -172,6 +172,34 @@ class DaoUsuarioImpl{
 		}
     }
 
+    public function cambiarEstado(Usuario $usuario):?int{
+
+        try {
+			Log::write("INICIANDO CAMBIO DE ESTADO PARA USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+			$query = "UPDATE usuario SET estado_id=? WHERE id_usuario=?";
+
+            $args = [
+                $usuario->estadoId->idStado,
+                $usuario->idUsuario
+            ];
+
+			$execute = $this->connection->getConnection()->prepare($query);
+			if($execute->execute($args)){
+                Log::write("ACTUALIZACION REALIZADA EXITOSAMENTE","INFO");
+                return 1;
+            }else{
+                Log::write("ACTUALIZACION REALIZADA EXITOSAMENTE","INFO");
+                return 0;
+            }
+
+		} catch (PDOException $e) {
+
+			Log::write("dao\usuario\DaoUsuarioImpl", "ERROR");
+			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+			return 0;
+		}
+    }
+
     private function obtenerRoles($idUsuario){
         try {
 			Log::write("INICIANDO CONSULTA DE ROLES POR USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
