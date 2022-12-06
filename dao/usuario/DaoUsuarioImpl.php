@@ -21,7 +21,7 @@ class DaoUsuarioImpl{
 
         try {
 			Log::write("INICIANDO CONSULTA DE USUARIOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT u.id_usuario as idUsuario,u.nombre as 'nombre',apellido,imagen, e.nombre as 'estado' from usuario u 
+			$query = "SELECT u.id_usuario as idUsuario,u.nombre as 'nombre',apellido,imagen, u.estado_id as 'idEstado' from usuario u 
             INNER JOIN estado e ON e.id_estado=u.estado_id order by id_usuario ASC";
 
 			$execute = $this->connection->getConnection()->prepare($query);
