@@ -155,7 +155,7 @@ class ServiceUsuarioImpl{
     public function actualizarUsuario(array $data){
 
 
-        if(empty($data["idUsuario"]) || empty($data["usuario"]) || empty($data["nombre"]) || empty($data["apellido"]) || empty($data["email"]) || empty($data["contraseñaActual"]) || empty($data["telefono1"]) || empty($data["telefono2"]) || empty($data["fechaNacimiento"]) || empty($data["nuevaContraseña"])){
+        if(empty($data["idUsuario"]) || empty($data["usuario"]) || empty($data["nombre"]) || empty($data["apellido"]) || empty($data["email"]) || empty($data["telefono1"]) || empty($data["telefono2"]) || empty($data["fechaNacimiento"]) ){
             $respuesta = [
                 "valor"=>0,
                 "mensaje"=>"datos no validos"
