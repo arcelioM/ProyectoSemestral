@@ -142,7 +142,7 @@ class DaoUsuarioImpl{
 
         try{
 			Log::write("INICIANDO ACTUALIZACION DE USUARIO","SELECT");
-			$query = "CALL SP_actualizarUsuario(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "CALL SP_actualizarUsuario(?,?,?,?,?,?,?,?,?,?,?)";
             $execute = $this->connection->getConnection()->prepare($query);
 
             $execute->bindParam(1,$usuario->idUsuario,PDO::PARAM_INT);
@@ -153,9 +153,6 @@ class DaoUsuarioImpl{
             $execute->bindParam(6,$nuevaContraseña,PDO::PARAM_STR);
             $execute->bindParam(7,$usuario->email,PDO::PARAM_STR);
             $execute->bindParam(8,$usuario->imagen,PDO::PARAM_STR);
-            $execute->bindParam(9,$usuario->direccionId->idDireccion,PDO::PARAM_INT);
-            $execute->bindParam(10,$usuario->direccionId->corregimientoId->idCorregimiento,PDO::PARAM_INT);
-            $execute->bindParam(11,$usuario->direccionId->direccionEspecifica,PDO::PARAM_STR);
             $execute->bindParam(12,$usuario->telefono1,PDO::PARAM_INT);
             $execute->bindParam(13,$usuario->telefono2,PDO::PARAM_INT);
             $execute->bindParam(14,$usuario->fechaNacimiento,PDO::PARAM_STR);
