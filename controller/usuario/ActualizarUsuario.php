@@ -15,7 +15,7 @@
     /*echo "<pre>";
     var_dump($data);
     echo "</pre>";*/
-    $usuarioId = $data->idUsuario;        
+    /*$usuarioId = $data->idUsuario;        
     $usuario = $data->usuario;
     $nombre = $data->nombre;
     $apellido = $data->apellido;
@@ -28,7 +28,32 @@
     $telefono1 = $data->telefono_1;
     $telefono2 = $data->telefono_2;
     $fechaNacimiento = $data->fechaNacimiento;
-    $imagen = $data->imagen;
+    $imagen = $data->imagen;*/
+
+    
+    /*idUsuario: $('#idUsuarioR').val(),
+    usuario: $('#USERusar').val(),
+    nombre: $('#NombreUSER').val(),
+    Apellido: $('#apelliodUSER').val(),
+    email: $('#correoUSER').val(),
+    passActual: $('#PassworActual').val(),
+    passNuevo: $('#PassworNueva').val(),
+    telefono_1: $('#telefonoUnoUSER').val(),
+    telefono_2: $('#telefonoDosUSER').val(),
+    fechaNacimiento: $('#fechaNacimiento').val(),
+    imagen: $('#imagenR').val(),*/
+
+    $usuarioId= $_POST["idUsuario"];
+    $usuario = $_POST["usuario"];
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["Apellido"];
+    $email = $_POST["email"];
+    $contraseñaActual = $_POST["passActual"];
+    $contraseñaNueva = $_POST["passNuevo"];
+    $telefono1 = $_POST["telefono_1"];
+    $telefono2 = $_POST["telefono_2"];
+    $fechaNacimiento = $_POST["fechaNacimiento"];
+    $imagen = $_POST["imagen"];
 
     if(empty($usuarioId)||empty($usuario) || empty($nombre) || empty($apellido) || empty($email) || empty($contraseñaActual) || empty($contraseñaNueva) ||empty($direccionId)|| empty($corregimientoID) || empty($direcion_especifica) || empty($telefono1) || empty($telefono2) || empty($fechaNacimiento) || empty($imagen)){
         

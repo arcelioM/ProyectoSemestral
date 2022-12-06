@@ -23,8 +23,8 @@ $passNuevo = $_POST['passNuevo'];
 $telefono_1 = $_POST['telefono_1'];
 $telefono_2 = $_POST['telefono_2'];
 $fechaNacimiento = $_POST['fechaNacimiento'];
-$imagenTra = $_POST['imagen'];
-$imagen = substr($imagenTra, 12);
+$imagen = $_POST['imagen'];
+//$imagen = substr($imagenTra, 12);
 $auxiliar=0;
 
 /*echo (json_encode(@$_SESSION['datoUser']));
@@ -34,8 +34,6 @@ echo "<br>";*/
 //IMPORTANTE LUEGO DE TENER LOS DATOS A MODIFICAR SE HACE LA SNETECNIA SQL UPDATE Y LUEGO DE QUE SE LLEVA A CABO DE FORMA CORRECTA 
 //SE VUELVE A LLAMR LOS DATOS DEL USUARIO CON EL ID PARA LUEGO VOLVERLOS A GUARDAZR EN LA VARIABLE SESIÓN DE PERFIL PARA QUE LO CAMBIOS SE VEAN REFLEJADOS
 // ESTE FOREACH SIGUINETE ES PARA CUANDO YA SE HAYA HECHO LO ANTERIOR GUARDAR LOS CAMBIOS 
-
-
 
 foreach ($recorrido as $userTotal) {
     if ($userTotal->idUsuario == $idUsuario) {
@@ -57,7 +55,7 @@ foreach ($recorrido as $userTotal) {
 @$_SESSION['datoUser'] = $result; 
 //echo (json_encode($result));
 
-$response["valor"] = "1";
+$response["valorUserSession"] = "1";
 array_push($resultFin, $response);
 header('Content-Type: application/json');
 echo (json_encode($resultFin));

@@ -430,9 +430,6 @@ $(document).ready(function () {
 
 
 
-
-
-
     function CargarPerfil() {
 
         let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/datosUsere.php?';
@@ -713,41 +710,99 @@ $(document).ready(function () {
             imagen: $('#imagenR').val(),
         };
 
-        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
+        let formData = new FormData();
+        let files = $('#imagenR')[0].files[0];
+        formData.append('file',files);
 
-        $.post(url, postDatos, function (response) {
+        $.ajax({
+            url: 'http://localhost/ProyectoSemestral/view/phpPruebas/AgregarImgPerfil.php?',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    postDatos.imagen = response;
+                    saveBD(postDatos);
+                } else {
+                    alert(response);
+                }
+            },error: function (error) {
+                console.log(error);
+              }
+        });
+
+        function saveBD(postDatos){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
+                data: postDatos,
+                dataType: "json",
+                success: function (response) {
+                   saveUserSession(response,postDatos);
+                },
+                error: function (error){
+                    console.log(error);
+                }
+            });
+        }
+
+        function saveUserSession(response,postDatos){
+
+            console.log(response);
+            console.log(postDatos);
+            
             let template = '';
             let tempaltess = '';
-            let usuarioNavegando = response;
-            usuarioNavegando.forEach(usernav => {
-                if (usernav.valor == "1") {
-                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
+            let valor = response["valor"];
+            //console.log("hola querisoi");
+
+            if (valor == 1) {
+
+                let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
+
+                $.post(url, postDatos, function (response) {
+                    console.log(response);
+                    let valor = response["valorUserSession"];
+                    if (valor == 1) {
+                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                    tempaltess += `<center>
+                        tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                         </center>`;
-                    $('#exampleModalLabelModiVerificacionUser').html(template);
-                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                    CargarPerfil();
-
-                } else {
-                    console.log(usuarioNavegando);
-                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
+                        $('#exampleModalLabelModiVerificacionUser').html(template);
+                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                        CargarPerfil();
+                    }else{
+                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                    tempaltess += `<center>
+                            tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
-                    $('#exampleModalLabelModiVerificacionUser').html(template);
-                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                    CargarPerfil();
-                }
-
-            });
-        });
+                            $('#exampleModalLabelModiVerificacionUser').html(template);
+                            $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                            CargarPerfil();
+                    }
+                });       
+            }else{
+                template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario por APIREST</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                            tempaltess += `<center>
+                           <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                        </center>`;
+                            $('#exampleModalLabelModiVerificacionUser').html(template);
+                            $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                            CargarPerfil();
+            }   
+    }
         e.preventDefault();
     });
+
+
+
 
     const botoncitoVerProductoCaa = document.querySelector("#mostrarrrCarrito");
     botoncitoVerProductoCaa.addEventListener("click", function (evento) {
