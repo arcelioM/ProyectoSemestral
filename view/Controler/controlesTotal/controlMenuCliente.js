@@ -692,8 +692,6 @@ $(document).ready(function () {
     });
 
 
-
-
     $('#formularioModificarUserDato').submit(function (e) {
         $("#ModificarInfoVentasAUX").show();
         const postDatos = {
@@ -732,26 +730,26 @@ $(document).ready(function () {
               }
         });
 
-        function saveBD(postDatos){
+        function saveBD(postDatos) {
             $.ajax({
                 type: "POST",
                 url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
                 data: postDatos,
                 dataType: "json",
                 success: function (response) {
-                   saveUserSession(response,postDatos);
+                    saveUserSession(response, postDatos);
                 },
-                error: function (error){
+                error: function (error) {
                     console.log(error);
                 }
             });
         }
 
-        function saveUserSession(response,postDatos){
+        function saveUserSession(response, postDatos) {
 
             console.log(response);
             console.log(postDatos);
-            
+
             let template = '';
             let tempaltess = '';
             let valor = response["valor"];
@@ -774,34 +772,32 @@ $(document).ready(function () {
                         $('#exampleModalLabelModiVerificacionUser').html(template);
                         $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
                         CargarPerfil();
-                    }else{
+                    } else {
                         template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                            tempaltess += `<center>
+                        tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
-                            $('#exampleModalLabelModiVerificacionUser').html(template);
-                            $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                            CargarPerfil();
+                        $('#exampleModalLabelModiVerificacionUser').html(template);
+                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                        CargarPerfil();
                     }
-                });       
-            }else{
+                });
+            } else {
                 template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario por APIREST</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                            tempaltess += `<center>
+                tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
-                            $('#exampleModalLabelModiVerificacionUser').html(template);
-                            $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                            CargarPerfil();
-            }   
-    }
+                $('#exampleModalLabelModiVerificacionUser').html(template);
+                $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                CargarPerfil();
+            }
+        }
         e.preventDefault();
     });
-
-
 
 
     const botoncitoVerProductoCaa = document.querySelector("#mostrarrrCarrito");
