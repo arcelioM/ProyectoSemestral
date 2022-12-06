@@ -50,7 +50,7 @@ class DaoUsuarioImpl{
 
         try {
 			Log::write("INICIANDO CONSULTA DE USUARIOS POR ID | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT u.id_usuario as idUsuario, u.usuario_nombre as usuario,u.nombre, u.apellido,u.email,CONCAT(p.nombre,'/',di.nombre,'/',co.nombre,'/',d.direccion_especifica) as direccion,u.telefono_1 as telefono1,u.telefono_2 as telefono2,u.fecha_nacimiento as fechaNacimiento,u.fechaCreacion FROM usuario u
+			$query = "SELECT u.id_usuario as idUsuario, u.usuario_nombre as usuario,u.nombre, u.apellido,u.email,CONCAT(p.nombre,'/',di.nombre,'/',co.nombre,'/',d.direccion_especifica) as direccion,u.telefono_1 as telefono1,u.telefono_2 as telefono2,u.fecha_nacimiento as fechaNacimiento,u.fechaCreacion,u.imagen FROM usuario u
             INNER JOIN direccion d ON d.id_direccion = u.direccion_id
             INNER JOIN corregimiento co ON co.id_corregimiento = d.corregimiento_id
             INNER JOIN distrito di ON di.id_distrito = co.distrito_id
@@ -153,9 +153,9 @@ class DaoUsuarioImpl{
             $execute->bindParam(6,$nuevaContraseña,PDO::PARAM_STR);
             $execute->bindParam(7,$usuario->email,PDO::PARAM_STR);
             $execute->bindParam(8,$usuario->imagen,PDO::PARAM_STR);
-            $execute->bindParam(12,$usuario->telefono1,PDO::PARAM_INT);
-            $execute->bindParam(13,$usuario->telefono2,PDO::PARAM_INT);
-            $execute->bindParam(14,$usuario->fechaNacimiento,PDO::PARAM_STR);
+            $execute->bindParam(9,$usuario->telefono1,PDO::PARAM_INT);
+            $execute->bindParam(10,$usuario->telefono2,PDO::PARAM_INT);
+            $execute->bindParam(11,$usuario->fechaNacimiento,PDO::PARAM_STR);
 
             $execute->execute();
 			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
