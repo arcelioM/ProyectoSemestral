@@ -58,6 +58,12 @@ $(document).ready(function(){
             },
             error: function (error){
                 console.log(error);
+                $('#MensajeError').show();
+                $('#UsuarioForm').trigger('reset'); //esto es para cuando se recive una respuetas se resete el formulario 
+                const boton = document.querySelector("#laequis");
+                boton.addEventListener("click", function(evento){
+                    $('#MensajeError').hide();
+                });
             }
         });
 
