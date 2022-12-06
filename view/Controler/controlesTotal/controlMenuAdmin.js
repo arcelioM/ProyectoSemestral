@@ -89,10 +89,13 @@ $(document).ready(function(){
                     };
 
                     //AQUI SE LLAMA EL APIREST DE ELIMINAR
-
-                    $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
-                        //let valor= response.idEliminarTablaU;
-                        console.log(response);
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/ProyectoSemestral/controller/usuario/CambiarEstado.php",
+                        data: data,
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
                         if (response.valor != 1) {
                             console.log('Error en mostrar datos');
                         } else {
@@ -100,11 +103,12 @@ $(document).ready(function(){
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         `;
                             tempaltess += `<center>
-                               <img src="http://localhost/ProyectoNo1/imagenes/correcto.gif" class="imga">
+                               <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                             </center>`;
                             $('#exampleModalUserEliminado').html(template);
                             $('#modallogisticaMensajeUserEliminado').html(tempaltess);
                             cargarUsersList();
+                        }
                         }
                     });
                     
@@ -118,11 +122,12 @@ $(document).ready(function(){
     function cargarUsersList(){
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarUserG.php?",
+            url: "http://localhost/ProyectoSemestral/controller/usuario/ObtenerUsuario.php",
             success: function (response) {
+                console.log(response);
                 let template = '';
                 let tipoUser = '';
-                let userDatos = response;
+                let userDatos = response["usuario"];
                 userDatos.forEach(userDatos => {
                     let templateaa = '';
                     userDatos.rol.forEach(userrol => {
@@ -150,7 +155,7 @@ $(document).ready(function(){
                     <tr Id_Homework="${userDatos.idUsuario}" class="table-info   text-center" >
                     <td >${userDatos.idUsuario}</td> 
                     <td >${userDatos.nombre} ${userDatos.apellido}</td> 
-                    <td ><img src="http://localhost/ProyectoSemestral/view${userDatos.imagen}" class="img"></td>
+                    <td ><img src="http://localhost/ProyectoSemestral/view/imagenes/${userDatos.imagen}" class="img"></td>
                     <td align="center" ><div class="col-sm-8">
                     <select class="form-select"  aria-label="Default select example"> 
                     `+templateaa + ` 
@@ -582,7 +587,7 @@ $(document).ready(function(){
                             <div class="mb-3 row">
                                 <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
+                                    <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.apellido}">
                                 </div>   
                             </div>
                             <div class="mb-3 row">
@@ -606,13 +611,13 @@ $(document).ready(function(){
                             <div class="mb-3 row">
                                 <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
+                                    <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefono1}">
                                 </div>   
                             </div>
                             <div class="mb-3 row">
                                 <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
+                                    <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefono2}">
                                 </div>   
                             </div>
                             <div class="mb-3 row">
@@ -668,92 +673,103 @@ $(document).ready(function(){
         let files = $('#imagenR')[0].files[0];
         formData.append('file',files);
 
-        $.ajax({
-            url: 'http://localhost/ProyectoSemestral/view/phpPruebas/AgregarImgPerfil.php?',
-            type: 'post',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                if (response != 0) {
-                    postDatos.imagen = response;
-                    saveBD(postDatos);
-                } else {
-                    alert(response);
-                }
-            },error: function (error) {
-                console.log(error);
-              }
-        });
-
-        function saveBD(postDatos) {
+        if(typeof(files)!="undefined"){
             $.ajax({
-                type: "POST",
-                url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
-                data: postDatos,
-                dataType: "json",
-                success: function (response) {
-                    saveUserSession(response, postDatos);
-                },
-                error: function (error) {
+                url: 'http://localhost/ProyectoSemestral/view/phpPruebas/AgregarImgPerfil.php?',
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    if (response != 0) {
+                        postDatos.imagen = response;
+                        saveBD(postDatos);
+                    } else {
+                        alert(response);
+                    }
+                },error: function (error) {
+
                     console.log(error);
                 }
             });
+        }else{
+            postDatos.imagen ="";
+            saveBD(postDatos);
         }
 
-        function saveUserSession(response, postDatos) {
-
-            console.log(response);
-            console.log(postDatos);
-
-            let template = '';
-            let tempaltess = '';
-            let valor = response["valor"];
-            //console.log("hola querisoi");
-
-            if (valor == 1) {
-
-                let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
-
-                $.post(url, postDatos, function (response) {
-                    console.log(response);
-                    let valor = response["valorUserSession"];
-                    if (valor == 1) {
-                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    `;
-                        tempaltess += `<center>
-                           <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
-                        </center>`;
-                        $('#exampleModalLabelModiVerificacionUser').html(template);
-                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                        CargarPerfil();
-                    } else {
-                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    `;
-                        tempaltess += `<center>
-                           <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
-                        </center>`;
-                        $('#exampleModalLabelModiVerificacionUser').html(template);
-                        $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                        CargarPerfil();
-                    }
-                });
-            } else {
-                template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario por APIREST</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    `;
-                tempaltess += `<center>
-                           <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
-                        </center>`;
-                $('#exampleModalLabelModiVerificacionUser').html(template);
-                $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
-                CargarPerfil();
-            }
-        }
+        
         e.preventDefault();
     });
+
+
+    function saveBD(postDatos) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
+            data: postDatos,
+            dataType: "json",
+            success: function (response) {
+                saveUserSession(response, postDatos);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function saveUserSession(response, postDatos) {
+
+        console.log(response);
+        console.log(postDatos);
+
+        let template = '';
+        let tempaltess = '';
+        let valor = response["valor"];
+        //console.log("hola querisoi");
+
+        if (valor == 1) {
+
+            let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
+
+            $.post(url, postDatos, function (response) {
+                console.log(response);
+                let valor = response["valorUserSession"];
+                if (valor == 1) {
+                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                `;
+                    tempaltess += `<center>
+                       <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
+                    </center>`;
+                    $('#exampleModalLabelModiVerificacionUser').html(template);
+                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                    CargarPerfil();
+                    cargarUsersList();
+                } else {
+                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                `;
+                    tempaltess += `<center>
+                       <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                    </center>`;
+                    $('#exampleModalLabelModiVerificacionUser').html(template);
+                    $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                    CargarPerfil();
+                    cargarUsersList();
+                }
+            });
+        } else {
+            template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario por APIREST</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                `;
+            tempaltess += `<center>
+                       <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                    </center>`;
+            $('#exampleModalLabelModiVerificacionUser').html(template);
+            $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+            CargarPerfil();
+        }
+    }
 
     //AQUÍ TAMBIÉN SE LLAMA EL API REST PARA DARSE DE BAJA
     const botoncitoDarsedeBaja = document.querySelector("#BorrarMisDatosApp");
@@ -765,15 +781,22 @@ $(document).ready(function(){
                 "idEstado":2
             };
 
-            //EN ESTE POST SE LLAMA AL API REST PARA ELIMINAR
-            $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
-                 console.log(response);
-                        if (response.valor != 1) {
-                            console.log('Error en mostrar datos');
-                        } else {
-                            window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
-                        }
-
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/CambiarEstado.php",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.valor != 1) {
+                        console.log('Error en mostrar datos');
+                    } else {
+                        window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+                    }
+                },
+                error: function(error){
+                    console.log(error);
+                }
             });
         });
     });
