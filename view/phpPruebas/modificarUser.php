@@ -44,7 +44,7 @@ foreach ($recorrido as $userTotal) {
             $usercredencial->usuario = $idUsuario;
             $usercredencial->nombre = $nombre;
             $usercredencial->Apellido = $Apellido;
-            $usercredencial->imagen = $imagen;
+            $usercredencial->imagen = empty($imagen)?$userTotal->imagen:$imagen;
             $usercredencial->rol = $userTotal->rol;
             array_push($result, $usercredencial);
             $auxiliar = $auxiliar + 1;
@@ -56,8 +56,8 @@ foreach ($recorrido as $userTotal) {
 //echo (json_encode($result));
 
 $response["valorUserSession"] = "1";
-array_push($resultFin, $response);
+//array_push($resultFin, $response);
 header('Content-Type: application/json');
-echo (json_encode($resultFin));
+echo (json_encode($response));
 
 ?>
