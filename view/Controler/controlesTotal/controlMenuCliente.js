@@ -967,11 +967,23 @@ $(document).ready(function () {
 
     const botoncitoDarsedeBaja = document.querySelector("#BorrarMisDatosApp");
     botoncitoDarsedeBaja.addEventListener("click", function (evento) {
-        let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?';
-        $.get(url, function (response) {
-            if (response == "Eliminado") {
-                window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
-            }
+        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?'; 
+        $.get(url, function (response){ 
+            let data={
+                "idUsuario":response,
+                "idEstado":2
+            };
+
+            //EN ESTE POST SE LLAMA AL API REST PARA ELIMINAR
+            $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
+                 console.log(response);
+                        if (response.valor != 1) {
+                            console.log('Error en mostrar datos');
+                        } else {
+                            window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+                        }
+
+            });
         });
     });
 

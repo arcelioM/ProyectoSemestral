@@ -56,7 +56,7 @@ $ID_User_Eliminar= $ID_User_Navegando;
 @$_SESSION['idUsarioRol'] = null;        //AQUÍ SE FORMATEAN ESA VARIABLES DE SESIÓN PARA QUE QUEDEN LIMPIAR DE VALOR
 
 
-$response= "Eliminado";
+$response= $ID_User_Eliminar;
 header('Content-Type: application/json');
 echo (json_encode($response));
 

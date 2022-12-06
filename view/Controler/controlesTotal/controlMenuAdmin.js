@@ -64,12 +64,15 @@ $(document).ready(function(){
     $(document).on('click', '.eliminarUser', function(){
         let element = $(this)[0].parentElement.parentElement;    //aquí se almacena toda la fila por medio de la propiepdad parentElement y va de "td" al padre "tr"
         let id= $(element).attr('Id_Homework');  //aquí se almacena el id del botón selecccionado por medio de fila padre
-        //console.log(id);
-        $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', {id}, function (response){
+        
+       $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', {id}, function (response){
+           //let valor= response.idEliminarTablaU;
+           console.log(response);
            
         });
     });
 
+    //AQUÍ VA EL API-REST ACTUALIZAR ESTADOS
     const botoncitoBorrarUser = document.querySelector("#BorrarUserFin");
     botoncitoBorrarUser.addEventListener("click", function (evento) {
             
@@ -80,26 +83,33 @@ $(document).ready(function(){
                 success: function (response) {
                     let template = '';
                     let tempaltess = '';
-
-                    let IdLlevar= response;
+                    let data={
+                        "idUsuario":response,
+                        "idEstado":2
+                    };
 
                     //AQUI SE LLAMA EL APIREST DE ELIMINAR
-                    
+
+                    $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
+                        //let valor= response.idEliminarTablaU;
+                        console.log(response);
+                        if (response.valor != 1) {
+                            console.log('Error en mostrar datos');
+                        } else {
+                            template += `<h1 class="modal-title fs-5 text-center" id="exampleModalFinanzas"> El Usuario ha sido Elimado con Éxito</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        `;
+                            tempaltess += `<center>
+                               <img src="http://localhost/ProyectoNo1/imagenes/correcto.gif" class="imga">
+                            </center>`;
+                            $('#exampleModalUserEliminado').html(template);
+                            $('#modallogisticaMensajeUserEliminado').html(tempaltess);
+                            cargarUsersList();
+                        }
+                    });
                     
 
-                    if (response.values > "0") {
-                        console.log('Error en mostrar datos');
-                    } else {
-                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalFinanzas"> El Usuario ha sido Elimado con Éxito</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    `;
-                        tempaltess += `<center>
-                           <img src="http://localhost/ProyectoNo1/imagenes/correcto.gif" class="imga">
-                        </center>`;
-                        $('#exampleModalUserEliminado').html(template);
-                        $('#modallogisticaMensajeUserEliminado').html(tempaltess);
-                        cargarUsersList();
-                    }
+                    
                 }
             });
          
@@ -552,7 +562,7 @@ $(document).ready(function(){
                     //console.log(response);
                     let template = '';
                     //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
-                    let usuarioNavegando = response.usuario;
+                    let usernavegadiando = response.usuario;
                     let Contador = 0;
             //usuarioNavegando.forEach(usernavegadiando => {
                     if (Contador == 0) {
@@ -745,14 +755,26 @@ $(document).ready(function(){
         e.preventDefault();
     });
 
-    
+    //AQUÍ TAMBIÉN SE LLAMA EL API REST PARA DARSE DE BAJA
     const botoncitoDarsedeBaja = document.querySelector("#BorrarMisDatosApp");
     botoncitoDarsedeBaja.addEventListener("click", function (evento) {
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/DarsedeBaja.php?'; 
         $.get(url, function (response){ 
-            if(response == "Eliminado"){
-                window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
-            }
+            let data={
+                "idUsuario":response,
+                "idEstado":2
+            };
+
+            //EN ESTE POST SE LLAMA AL API REST PARA ELIMINAR
+            $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
+                 console.log(response);
+                        if (response.valor != 1) {
+                            console.log('Error en mostrar datos');
+                        } else {
+                            window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+                        }
+
+            });
         });
     });
 
