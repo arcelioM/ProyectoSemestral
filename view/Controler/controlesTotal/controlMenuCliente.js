@@ -974,16 +974,24 @@ $(document).ready(function () {
                 "idEstado":2
             };
 
-            //EN ESTE POST SE LLAMA AL API REST PARA ELIMINAR
-            $.post('http://localhost/ProyectoSemestral/view/phpPruebas/VariabbleUserEliminar.php?', { data }, function (response) {
-                 console.log(response);
-                        if (response.valor != 1) {
-                            console.log('Error en mostrar datos');
-                        } else {
-                            window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
-                        }
-
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/CambiarEstado.php",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.valor != 1) {
+                        console.log('Error en mostrar datos');
+                    } else {
+                        window.location.replace("http://localhost/ProyectoSemestral/view/iniciodeSesion.html?");
+                    }
+                },
+                error: function(error){
+                    console.log(error);
+                }
             });
+
         });
     });
 
