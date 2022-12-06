@@ -55,7 +55,7 @@
     $fechaNacimiento = $_POST["fechaNacimiento"];
     $imagen = $_POST["imagen"];
 
-    if(empty($usuarioId)||empty($usuario) || empty($nombre) || empty($apellido) || empty($email) || empty($contraseñaActual) || empty($contraseñaNueva) ||empty($direccionId)|| empty($corregimientoID) || empty($direcion_especifica) || empty($telefono1) || empty($telefono2) || empty($fechaNacimiento) || empty($imagen)){
+    if(empty($usuarioId)||empty($usuario) || empty($nombre) || empty($apellido) || empty($email) || empty($contraseñaActual) || empty($contraseñaNueva)  || empty($telefono1) || empty($telefono2) || empty($fechaNacimiento) ){
         
         $respuesta = array(
             "valor"=>0,
@@ -73,9 +73,6 @@
             "email"=>$email,
             "contraseñaActual"=>$contraseñaActual,
             "nuevaContraseña"=>$contraseñaNueva,
-            "idDireccion"=>(int)$direccionId,
-            "corregimientoID"=>(int)$corregimientoID,
-            "direcion_especifica"=>$direcion_especifica,
             "telefono1"=>(int)$telefono1,
             "telefono2"=>(int)$telefono2,
             "fechaNacimiento"=>$fechaNacimiento,
