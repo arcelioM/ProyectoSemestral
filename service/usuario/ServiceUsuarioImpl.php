@@ -153,14 +153,15 @@ class ServiceUsuarioImpl{
     }
 
     public function actualizarUsuario(array $data){
-        foreach($data as $value){
-            if( empty($value) ){
-                $respuesta = [
-                    "valor"=>0,
-                    "mensaje"=>"datos no validos"
-                ];
-                return $respuesta;
-            }
+
+
+        if(empty($data["idUsuario"]) || empty($data["usuario"]) || empty($data["nombre"]) || empty($data["apellido"]) || empty($data["email"]) || empty($data["contraseñaActual"]) || empty($data["telefono1"]) || empty($data["telefono2"]) || empty($data["fechaNacimiento"]) || empty($data["nuevaContraseña"])){
+            $respuesta = [
+                "valor"=>0,
+                "mensaje"=>"datos no validos"
+            ];
+            return $respuesta;
+
         }
 
         $usuario = new Usuario(idUsuario:$data["idUsuario"]);
@@ -169,7 +170,6 @@ class ServiceUsuarioImpl{
         $usuario->apellido = $data["apellido"];
         $usuario->email = $data["email"];
         $usuario->contraseña = $data["contraseñaActual"];
-        $usuario->direccionId = new Direccion(idDireccion:$data["idDireccion"],corregimientoId:new Corregimiento(idCorregimiento:$data["corregimientoID"]),direccionEspecifica:$data["direcion_especifica"]);
         $usuario->telefono1 = $data["telefono1"];
         $usuario->telefono2 = $data["telefono2"];
         $usuario->fechaNacimiento = $data["fechaNacimiento"];
