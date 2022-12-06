@@ -692,8 +692,6 @@ $(document).ready(function () {
     });
 
 
-
-
     $('#formularioModificarUserDato').submit(function (e) {
         $("#ModificarInfoVentasAUX").show();
         const postDatos = {
@@ -729,8 +727,9 @@ $(document).ready(function () {
                         alert(response);
                     }
                 },error: function (error) {
+
                     console.log(error);
-                  }
+                }
             });
         }else{
             postDatos.imagen ="";
@@ -738,8 +737,10 @@ $(document).ready(function () {
         }
         
 
+
         e.preventDefault();
     });
+
 
 
     function saveBD(postDatos){
@@ -749,7 +750,7 @@ $(document).ready(function () {
             data: postDatos,
             dataType: "json",
             success: function (response) {
-               saveUserSession(response,postDatos);
+            saveUserSession(response,postDatos);
             },
             error: function (error){
                 console.log(error);
@@ -781,7 +782,7 @@ $(document).ready(function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                     tempaltess += `<center>
-                       <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
+                <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                     </center>`;
                     $('#exampleModalLabelModiVerificacionUser').html(template);
                     $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
@@ -791,11 +792,12 @@ $(document).ready(function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                         tempaltess += `<center>
-                       <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                    <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                     </center>`;
                         $('#exampleModalLabelModiVerificacionUser').html(template);
                         $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
                         CargarPerfil();
+
                 }
             });       
         }else{
@@ -803,14 +805,13 @@ $(document).ready(function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                         tempaltess += `<center>
-                       <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                     </center>`;
                         $('#exampleModalLabelModiVerificacionUser').html(template);
                         $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
                         CargarPerfil();
         }   
 }
-
 
 
 
@@ -852,10 +853,10 @@ $(document).ready(function () {
                     <td ><img src="http://localhost/ProyectoSemestral/view/imagenes/${prodctoGeCarr.imagen}" class="img"></td>   
                     <td >${prodctoGeCarr.precio}</td>
                     <td>
-                       <button class="btn btn-danger btn- text-center eliminarproduct" data-bs-toggle="modal" data-bs-target="#ModaleliminarCarritosAux"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                     </svg>
-                           Eliminar 
+                    <button class="btn btn-danger btn- text-center eliminarproduct" data-bs-toggle="modal" data-bs-target="#ModaleliminarCarritosAux"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                    Eliminar 
                         </button>
                         
                     </td>
@@ -874,8 +875,8 @@ $(document).ready(function () {
                 template += `
                 <div class="col">
                         <div class="card h-90 text-bg-warning" id="ImageTopProGe">
-                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
-                                      alt="...">
+                        <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
+                                alt="...">
                             <div class="card-body" id="DatosTopProGe">
                                 <center>
                                     <h5 class="card-title">Subtotal de la compra</h5>
@@ -887,8 +888,8 @@ $(document).ready(function () {
                     </div>
                     <div class="col">
                         <div class="card h-90 text-bg-warning" id="ImageTopProGe">
-                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar1.gif" class="card-img-top carcitaProduc"
-                                      alt="...">
+                        <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar1.gif" class="card-img-top carcitaProduc"
+                            alt="...">
                             <div class="card-body" id="DatosTopProGe">
                                 <center>
                                     <h5 class="card-title">Impuesto de la compra</h5>
@@ -900,8 +901,8 @@ $(document).ready(function () {
                     </div>
                     <div class="col">
                         <div class="card h-90 text-bg-warning" id="ImageTopProGe">
-                             <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
-                                      alt="...">
+                        <img src="http://localhost/ProyectoSemestral/view/imagenes/pagar2.gif" class="card-img-top carcitaProduc"
+                        alt="...">
                             <div class="card-body" id="DatosTopProGe">
                                 <center>
                                     <h5 class="card-title">total de la compra</h5>
@@ -912,7 +913,7 @@ $(document).ready(function () {
                         </div>
                     </div>
 
-                   `;
+                `;
                 $('#CalculoTotales').html(template);
             }
         });
@@ -944,7 +945,7 @@ $(document).ready(function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                     tempaltess += `<center>
-                       <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
+                    <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                     </center>`;
                     $('#exampleModalLeliminarFinalCarri').html(template);
                     $('#modaleliminarFinalCarri').html(tempaltess);
@@ -999,7 +1000,6 @@ $(document).ready(function () {
                 });
             }
         });
-
 
     }
 

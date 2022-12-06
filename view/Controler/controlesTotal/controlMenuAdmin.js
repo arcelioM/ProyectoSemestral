@@ -427,72 +427,100 @@ $(document).ready(function(){
     $(document).on('click', '.verProfiles', function(){ //Esto sólo para ver los datos del perfil del usuario 
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
-        $.get(url, function (response){ 
-            let template = '';
-            let usuarioNavegando = response;
-            usuarioNavegando.forEach(usernavegadiando => {
-                template += `
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                    <div class="col-sm-6">
-                      <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                    <div class="col-sm-6">
-                      <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.direccion}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
-                    <div class="col-sm-6">
-                        <input type="text" readonly class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
-                    <div class="col-sm-6">
-                      <img src="http://localhost/ProyectoSemestral/view/imagenes/${usernavegadiando.imagen}" class="img">
-                    </div>   
-                </div>`;
-                    
-                $('#formulariomodalProfiles').html(template);
-            });  
-            
+        $.get(url, function (response) {
+            let VariableUserProfile = response;
+
+            let data={
+                "idUsuario":VariableUserProfile["IdUser"]
+            };
+
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/UsuarioPorId.php",
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                    let template = '';
+                //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+                let usuarioNavegando = response.usuario;
+                let Contador = 0;
+
+                //console.log(usuarioNavegando);
+                //usuarioNavegando.forEach(usernavegadiando => {
+                    if (Contador == 0) {
+                        template += `
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.usuario}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.nombre}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.apellido}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.email}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Dirección Registrada :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.direccion}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.telefono1}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.telefono2}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Naciemiento Registrada  :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" readonly class="form-control-plaintext text-center" value="${usuarioNavegando.fechaNacimiento}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Imagen Perfil del Usuario :</label>
+                                <div class="col-sm-6">
+                                <img src="http://localhost/ProyectoSemestral/view/imagenes/${usuarioNavegando.imagen}" class="img">
+                                </div>   
+                            </div>`;
+
+                        $('#formulariomodalProfiles').html(template);
+                        Contador = Contador + 1;
+                    }
+                //});
+
+                    },
+                    error: function (error){
+                        console.log(error);
+                    }
+                });
         });
     });
 
+    //$('#formulariomodalProfiles').html(template);
 
 
 
@@ -504,85 +532,106 @@ $(document).ready(function(){
 
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/VerProfile.php?'; 
 
-        $.get(url, function (response){ 
-            let template = '';
-            let usuarioNavegando = response;
-            //console.log(usuarioNavegando);
-            usuarioNavegando.forEach(usernavegadiando => {
-                
-                
-                template += `
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
-                    <div class="col-sm-6">
-                      <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
-                    <div class="col-sm-6">
-                      <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
-                    </div>    
-                </div>
-                 <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
-                    </div>    
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                    <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
-                    <div class="col-sm-6">
-                        <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
-                    </div>   
-                </div>
-                <div class="mb-3 row">
-                     <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
-                        <div class="col-sm-6">
-                            <input type="file" class="form-control" id="imagenR" >
-                        </div>   
-                                    </div>
-                <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
-                <div class="modal-footer">
-                    <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
-                    <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
-                </div>
-                `;
-                $('#formularioModificarUserDato').html(template);
-            });  
+        $.get(url, function (response) {
+            let VariableUserProfile = response;
+
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
             
+            let data={
+                "idUsuario":VariableUserProfile["IdUser"]
+            };
+
+            //Se llama  al Api reste para taer todos los datos de ese usuario por ID
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/UsuarioPorId.php",
+                data: data,
+                success: function (response) {
+                    //console.log(response);
+                    let template = '';
+                    //aQUÍ SE ALMACENA LO QUE EL APIREST REGRESE
+                    let usuarioNavegando = response.usuario;
+                    let Contador = 0;
+            //usuarioNavegando.forEach(usernavegadiando => {
+                    if (Contador == 0) {
+                        template += `
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Usuario Uitlizado:</label>
+                                <div class="col-sm-6">
+                                <input type="text" id="USERusar" class="form-control-plaintext text-center" value="${usernavegadiando.usuario}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nombre Registrado :</label>
+                                <div class="col-sm-6">
+                                <input type="text" id="NombreUSER" class="form-control-plaintext text-center" value="${usernavegadiando.nombre}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Apellido Registrado:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="apelliodUSER" class="form-control-plaintext text-center" value="${usernavegadiando.Apellido}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Correo Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="correoUSER"class="form-control-plaintext text-center" value="${usernavegadiando.email}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Actual :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="PassworActual" placeholder="**contraseña en uso" class="form-control" >
+                                </div>    
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Contraseña Nueva :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="PassworNueva" placeholder="**contraseña nueva a usar" class="form-control" >
+                                </div>    
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #1 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="telefonoUnoUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoUno}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Teléfono #2 Registrado :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="telefonoDosUSER" class="form-control-plaintext text-center" value="${usernavegadiando.telefonoDos}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center"> Fecha de Nacimiento Registrada  :</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="fechaNacimiento" class="form-control-plaintext text-center" value="${usernavegadiando.fechaNacimiento}">
+                                </div>   
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="recipient-name" class="col-sm-6 col-form-label text-center">Nuevo Perfil a utilizar :</label>
+                                    <div class="col-sm-6">
+                                        <input type="file" class="form-control" id="imagenR" >
+                                    </div>   
+                                                </div>
+                            <input type="hidden"  id="idUsuarioR" class="form-control-plaintext text-center"  value="${usernavegadiando.idUsuario}">
+                            <div class="modal-footer">
+                                <button type="button"  id="cerrarModiVenta" class="btn btn-danger" data-bs-dismiss="modal">CANCELAR </button>
+                                <button type="submit" class="btn btn-success text-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#ModificarVerificacionUser">MODIFICAR</button>
+                            </div>
+                            `;
+                        $('#formularioModificarUserDato').html(template);
+                        Contador = Contador + 1;
+                    }
+                }
+            });
         });
     });
+
+    //$('#formularioModificarUserDato').html(template);
 
 
     $('#formularioModificarUserDato').submit(function (e) { 
@@ -600,41 +649,99 @@ $(document).ready(function(){
             fechaNacimiento: $('#fechaNacimiento').val(),
             imagen: $('#imagenR').val(),
         };
+
        
 
         let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
         
-        $.post(url, postDatos, function (response){ 
+        let formData = new FormData();
+        let files = $('#imagenR')[0].files[0];
+        formData.append('file',files);
+
+        $.ajax({
+            url: 'http://localhost/ProyectoSemestral/view/phpPruebas/AgregarImgPerfil.php?',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    postDatos.imagen = response;
+                    saveBD(postDatos);
+                } else {
+                    alert(response);
+                }
+            },error: function (error) {
+                console.log(error);
+              }
+        });
+
+        function saveBD(postDatos) {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
+                data: postDatos,
+                dataType: "json",
+                success: function (response) {
+                    saveUserSession(response, postDatos);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function saveUserSession(response, postDatos) {
+
+            console.log(response);
+            console.log(postDatos);
+
             let template = '';
             let tempaltess = '';
-            let usuarioNavegando = response;
-            usuarioNavegando.forEach(usernav => {
-                if(usernav.valor == "1"){
-                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
+            let valor = response["valor"];
+            //console.log("hola querisoi");
+
+            if (valor == 1) {
+
+                let url = 'http://localhost/ProyectoSemestral/view/phpPruebas/modificarUser.php?';
+
+                $.post(url, postDatos, function (response) {
+                    console.log(response);
+                    let valor = response["valorUserSession"];
+                    if (valor == 1) {
+                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido modificados con Éxito </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                    tempaltess += `<center>
+                        tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                         </center>`;
                         $('#exampleModalLabelModiVerificacionUser').html(template);
                         $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
                         CargarPerfil();
-                               
-                }else{
-                    console.log(usuarioNavegando);
-                    template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
+                    } else {
+                        template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
-                    tempaltess += `<center>
+                        tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
                         $('#exampleModalLabelModiVerificacionUser').html(template);
                         $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
                         CargarPerfil();
-                }
-
-            });  
-        });
+                    }
+                });
+            } else {
+                template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> No se pudo Modificar los datos de este usuario por APIREST</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    `;
+                tempaltess += `<center>
+                           <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
+                        </center>`;
+                $('#exampleModalLabelModiVerificacionUser').html(template);
+                $('#modalventaMensajeModiVerificacionUser').html(tempaltess);
+                CargarPerfil();
+            }
+        }
         e.preventDefault();
     });
 
