@@ -55,7 +55,7 @@
     $fechaNacimiento = $_POST["fechaNacimiento"];
     $imagen = $_POST["imagen"];
 
-    if(empty($usuarioId)||empty($usuario) || empty($nombre) || empty($apellido) || empty($email) || empty($contraseñaActual) || empty($contraseñaNueva)  || empty($telefono1) || empty($telefono2) || empty($fechaNacimiento) ){
+    if(empty($usuarioId)||empty($usuario) || empty($nombre) || empty($apellido) || empty($email)  || empty($telefono1) || empty($telefono2) || empty($fechaNacimiento) ){
         
         $respuesta = array(
             "valor"=>0,
