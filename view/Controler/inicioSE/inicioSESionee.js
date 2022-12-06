@@ -69,35 +69,83 @@ $(document).ready(function(){
 
 
     $('#formularioRegistrarUusuario').submit(function (e) {  
-        const postDatos= { 
+        const postDatos= {
             usuario : $('#USERusar').val(),
             nombre : $('#NombreUSER').val(),
-            Apellido : $('#apelliodUSER').val(),
+            apellido : $('#apelliodUSER').val(),
             email : $('#correoUSER').val(),
             contraseña : $('#PasswordUSER').val(),
-            corregimiento_id: $('#CorregimientoBuscar').val(),
+            corregimiento_id: 1,
             direcion_especifica : $('#DireccionUSER').val(),
             telefono_1 : $('#telefonoUnoUSER').val(),
             telefono_2 : $('#telefonoDosUSER').val(),
-            fechaNacimiento: $('#fechaNacimiento').val(),
+            fechaNacimiento:$('#fechaNacimiento').val(),
             imagen: $('#imagen').val(),
             id_rol: $('#id_rol').val(),
         };
 
+        let formData = new FormData();
+        let files = $('#imagen')[0].files[0];
+        formData.append('file',files);
+
+        $.ajax({
+            url: 'http://localhost/ProyectoSemestral/view/phpPruebas/AgregarImgPerfil.php?',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    postDatos.imagen = response;
+                    saveBD(postDatos);
+                } else {
+                    alert(response);
+                }
+            },error: function (error) {
+                console.log(error);
+              }
+        });
+
 
         
 
+        e.preventDefault(); //Este método es para cancelar el comportamiento que por defecto los formularios al darle submit no refresquen la página
+    });
 
-        let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/registrarUserClient.php?'; 
-       
-        $.post(url, postDatos, function (response){ 
+    /**
+     * SE GUARDARA DATOS DE NUEVO USUARIO EN LA BD
+     */
+    function saveBD(postDatos){
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/ProyectoSemestral/controller/usuario/CrearUsuario.php",
+            data: postDatos,
+            dataType: "json",
+            success: function (response) {
+               saveUserSession(response);
+            },
+            error: function (error){
+                console.log(error);
+            }
+        });
+    }
+
+
+    /**
+     * SE GUARDARA LOS DATOS DE USUARIO SEN VARIABLE DE SESSION
+     */
+    function saveUserSession(response){
+
+            console.log(response);
+            
             let template = '';
             let tempaltess = '';
-            let usuarioRegistado = response;
+            let valor = response["valor"];
             //console.log("hola querisoi");
-            usuarioRegistado.forEach(usercreado => {
-                console.log(usercreado.fecha);
-                if(usercreado.valor == "1"){
+            
+            //usuarioRegistado.forEach(usercreado => {
+                //console.log(usercreado.fecha);;
+                if(valor == 1){
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
@@ -108,7 +156,7 @@ $(document).ready(function(){
                     $('#modalImageIngresoaux').html(tempaltess);
                     $('#formularioRegistrarUusuario').trigger('reset');
                 } else {
-                    if (usercreado.valor == "0") {
+                    if (valor == 0) {
                         template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario no ha podido ser registrados.  </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     `;
@@ -118,7 +166,7 @@ $(document).ready(function(){
                         $('#exampleModalLabelIngresoaux').html(template);
                         $('#modalImageIngresoaux').html(tempaltess);
                     } else {
-                        if (usercreado.valor === null) {
+                        if (valor === null) {
                             template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Lo Sentimos, ya se encuentra un Usuario registarado con los mismo datos.  </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         `;
@@ -130,11 +178,8 @@ $(document).ready(function(){
                         }
                     }
                 }
-            });  
-            
-        });
-        e.preventDefault(); //Este método es para cancelar el comportamiento que por defecto los formularios al darle submit no refresquen la página
-    });
+            //});
+    }
 
 
     const botoncitoTraerProvincias = document.querySelector("#RegistrarCuenta");
