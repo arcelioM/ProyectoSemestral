@@ -5,6 +5,7 @@ namespace service\usuario;
 use dao\usuario\DaoUsuarioImpl;
 use model\Corregimiento;
 use model\Direccion;
+use model\Estado;
 use model\Rol;
 use model\Usuario;
 use util\Log;
@@ -204,6 +205,37 @@ class ServiceUsuarioImpl{
                 return $respuesta;
             }
             
+        }
+    }
+
+
+    public function cambiarEstado(array $data){
+        if(empty($data["idUsuario"]) || empty($data["idEstado"])){
+            $respuesta = [
+                "valor" => 0,
+                "mensaje" => "Datos no validos"
+            ];
+            http_response_code(400);
+            return $respuesta;
+        }
+
+        $usuario = new Usuario(idUsuario:$data["idUsuario"],estadoId: new Estado(idStado:$data["idEstado"]));
+
+        $result = $this->usuarioDao->cambiarEstado($usuario);
+
+        if($result==1){
+            $respuesta = [
+                "valor" => $result,
+                "mensaje" => "Actualizacion exitosa"
+            ];
+            return $respuesta;
+        }else{
+            $respuesta = [
+                "valor" => $result,
+                "mensaje" => "Actualizacion fallida"
+            ];
+
+            return $respuesta;
         }
     }
 
