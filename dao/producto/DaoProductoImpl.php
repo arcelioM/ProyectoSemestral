@@ -4,7 +4,6 @@ namespace dao\producto;
 
 use dao\connection\IConnection;
 use model\Producto;
-use model\UsuarioRol;
 use PDO;
 use PDOException;
 use util\Log;
