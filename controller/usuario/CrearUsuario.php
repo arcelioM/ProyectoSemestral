@@ -11,22 +11,19 @@
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 
-    $data = json_decode(file_get_contents("php://input"));
-    /*echo "<pre>";
-    var_dump($data);
-    echo "</pre>";*/
-    $usuario = $data->usuario->usuario;
-    $nombre = $data->usuario->nombre;
-    $apellido = $data->usuario->apellido;
-    $email = $data->usuario->email;
-    $contraseña = $data->usuario->contraseña;
-    $corregimientoID = $data->usuario->direccion->corregimiento_id;
-    $direcion_especifica = $data->usuario->direccion->direcion_especifica;
-    $telefono1 = $data->usuario->telefono_1;
-    $telefono2 = $data->usuario->telefono_2;
-    $fechaNacimiento = $data->usuario->fechaNacimiento;
-    $imagen = $data->usuario->imagen;
-    $rol = $data->usuarioRol->id_rol;
+
+    $usuario = $_POST["usuario"];
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["apellido"];
+    $email = $_POST["email"];
+    $contraseña = $_POST["contraseña"];
+    $corregimientoID = $_POST["corregimiento_id"];
+    $direcion_especifica = $_POST["direcion_especifica"];
+    $telefono1 = $_POST["telefono_1"];
+    $telefono2 = $_POST["telefono_2"];
+    $fechaNacimiento = $_POST["fechaNacimiento"];
+    $imagen = $_POST["imagen"];
+    $rol = $_POST["id_rol"];
 
     if(empty($usuario) || empty($nombre) || empty($apellido) || empty($email) || empty($contraseña) || empty($corregimientoID) || empty($direcion_especifica) || empty($telefono1) || empty($telefono2) ||empty($imagen)|| empty($fechaNacimiento) || empty($rol)){
         
