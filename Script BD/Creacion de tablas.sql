@@ -64,6 +64,7 @@ CREATE TABLE usuario(
     apellido VARCHAR(30) NOT NULL,
     contraseña VARCHAR(200) NOT NULL,
     email  varchar(50) NOT NULL,
+    imagen VARCHAR(75) NOT NULL,
     direccion_id INT NOT NULL,
     telefono_1 INT NOT NULL,
     telefono_2 INT NOT NULL,
@@ -104,6 +105,7 @@ CREATE TABLE categoria(
 CREATE TABLE producto(
 	id_producto INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL,
     categoria_id INT NOT NULL,
     cantidad INT NOT NULL DEFAULT 0,
     precio DECIMAL(7,2) NOT NULL,
