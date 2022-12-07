@@ -239,5 +239,36 @@ class ServiceUsuarioImpl{
         }
     }
 
+
+    public function obtenerUsuarioPorNombre(array $data){
+        
+        if(empty($data["nombre"])){
+            $respuesta = array(
+                "valor"=>0,
+                "mensaje"=>"datos no validos",
+                "usuario"=>[]
+            );
+
+            return $respuesta;
+        }
+
+        $result = $this->usuarioDao->getByNombre($data["nombre"]);
+
+        if(empty($result)){
+            $respuesta = array(
+                "valor"=>0,
+                "mensaje"=>"datos no validos",
+                "usuario"=>[]
+            );
+        }else{
+            $respuesta = array(
+                "valor"=>1,
+                "mensaje"=>"Usuarios encontrados",
+                "usuarios"=>$result
+            );
+        }
+
+    }
+
     
 }

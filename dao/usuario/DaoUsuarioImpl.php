@@ -200,6 +200,29 @@ class DaoUsuarioImpl{
 		}
     }
 
+    public function getByNombre(String $nombre){
+        if($nombre===null || $nombre==""){
+            return null;
+        }
+
+        try{
+            Log::write("INICIANDO CONSULTA | user->getByNombre()","SELECT");
+            $sqlQuery="SELECT u.id_usuario as idUsuario,u.nombre as 'nombre',apellido,imagen, u.estado_id as 'idEstado' from usuario u 
+            INNER JOIN estado e ON e.id_estado=u.estado_id  WHERE  u.nombre LIKE CONCAT(?, '%')  order by id_usuario ASC";
+            $args=array($nombre);
+            $execute=$this->connection->getConnection()->prepare($sqlQuery);
+            $execute->execute($args);
+            $result=$execute->fetchall(PDO::FETCH_ASSOC);
+            Log::write("TERMINO CONSULTA","INFO");
+            return $result;
+        }catch(PDOException $e){
+            Log::write("dao\user\DaoUsuarioImpl","ERROR");
+            Log::write("ARCHIVO: ".$e->getFile()." | lINEA DE ERROR: ".$e->getLine()." | MENSAJE".$e->getMessage(),"ERROR");
+            return "DATOS NO DISPONIBLE";
+        }
+    }
+
+
     private function obtenerRoles($idUsuario){
         try {
 			
