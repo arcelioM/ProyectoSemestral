@@ -818,6 +818,7 @@ $(document).ready(function () {
     const botoncitoVerProductoCaa = document.querySelector("#mostrarrrCarrito");
     botoncitoVerProductoCaa.addEventListener("click", function (evento) {
         TraerIDcarrito();
+        console.log("cargar idpro");
         $('#ProCarSinSesionCeluare').hide();
         $('#ProCarSinSesionComputadorae').hide();
         $('#ProCarSinSesionElectornicae').hide();
@@ -832,11 +833,9 @@ $(document).ready(function () {
 
         $('#Mostarcarritoosi').show();
         $('#FacturaTotal').show();
-        CargarProductosCarrito();
     });
 
     function CargarProductosCarrito() {
-
 
         $.ajax({
             type: "GET",
@@ -863,9 +862,18 @@ $(document).ready(function () {
                     </tr>`;
                 });
                 $('#Productos_Encontrados').html(template);
+                hacerCalculodeTotal();
+            }, 
+            error: function (error){
+                console.log(error);
             }
         });
 
+        
+
+    }
+
+    function hacerCalculodeTotal(){
         $.ajax({
             type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/CalculosCarrito.php?",
@@ -917,7 +925,6 @@ $(document).ready(function () {
                 $('#CalculoTotales').html(template);
             }
         });
-
     }
 
 
@@ -949,7 +956,7 @@ $(document).ready(function () {
                     </center>`;
                     $('#exampleModalLeliminarFinalCarri').html(template);
                     $('#modaleliminarFinalCarri').html(tempaltess);
-                    CargarProductosCarrito();
+                    TraerIDcarrito();
                     CargarContador();
                 }
             }
@@ -1003,40 +1010,50 @@ $(document).ready(function () {
             type: "GET",
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/LlevarIdProdu.php?",
             success: function (response) {
-                //console.log(response);
-                let productoidLlevar = response;
+                console.log(response);
+                let productoidLlevar = {
+                    "productos":response
+                };
                 //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
 
-                //Variable que gauradrá lña información de los productos traidos para el carrito
-                let InfoProductoLLevar = response;
                 $.ajax({
-                    type: "GET",
-                    url: "http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?",
-                    data: { InfoProductoLLevar },
+                    type: "POST",
+                    url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProductoId.php",
+                    data: productoidLlevar,
+                    dataType: "json",
                     success: function (response) {
                         console.log(response);
-
+                        infoProducto(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
                     }
                 });
+
+                //Variable que gauradrá lña información de los productos traidos para el carrito
+                
             }
         });
 
     }
 
+    function infoProducto (response) { 
+        let InfoProductoLLevar = response;
+                
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/ProyectoSemestral/view/phpPruebas/ProductG.php?",
+                data: { InfoProductoLLevar },
+                success: function (response) {
+                    console.log(response);
+                    CargarProductosCarrito();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                },
+                error: function (response){
+                    console.log(response);
+                }
+            });
+     }
 
 
 
