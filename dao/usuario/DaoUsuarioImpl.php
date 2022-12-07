@@ -213,6 +213,13 @@ class DaoUsuarioImpl{
             $execute=$this->connection->getConnection()->prepare($sqlQuery);
             $execute->execute($args);
             $result=$execute->fetchall(PDO::FETCH_ASSOC);
+            Log::write("INICIANDO CONSULTA DE ROLES POR USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+            foreach($result as $key=>$value){
+                $result[$key]["rol"] = $this->obtenerRoles($value["idUsuario"]);
+                //unset($result[$key]["idUsuario"]);
+            }
+
+			Log::write("CONSULTA REALIZADA EXITOSAMENTE","INFO");
             Log::write("TERMINO CONSULTA","INFO");
             return $result;
         }catch(PDOException $e){
