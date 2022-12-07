@@ -19,30 +19,33 @@ $response = array();
 $recorridoiD=array();
 $recorridoListaGPro=array();
 $recorridoiD= @$_SESSION['productosID'];
-$recorridoListaGPro= @$_SESSION['listaProductos'];
+$recorridoListaGPro = @$_SESSION['listaProductos'];
+//echo var_dump($recorridoListaGPro);
 $pagoSubtotal=0.0; 
 $pagoSubtotalFinal=0.0; 
 $pagototal=0.0; 
 $impuestotalFinal=0.0;
 
 
-foreach ($recorridoiD as $row) {
-    $indiceProduc = $row['idProducto'];
+//foreach ($recorridoiD as $row) {
+ //   $indiceProduc = $row['idProducto'];
     
     foreach ($recorridoListaGPro as $prodctoGe) {
-        if ($row['idProducto'] == $prodctoGe->idProducto) {
+        //if ($row['idProducto'] == $prodctoGe["id_producto"]) {
+            //echo var_dump($prodctoGe[0]);
+            $prodctoGe = $prodctoGe[0];
             $prodctoGeCarr = new Productos();
-            $prodctoGeCarr->idProducto = $prodctoGe->idProducto;
-            $prodctoGeCarr->nombre = $prodctoGe->nombre;
-            $prodctoGeCarr->descripcion = $prodctoGe->descripcion;
-            $prodctoGeCarr->cantidad =  $prodctoGe->cantidad;
-            $prodctoGeCarr->precio =  $prodctoGe->precio;
-            $pagoSubtotal= $pagoSubtotal + floatval($prodctoGe->precio);//esta línea almacena los precios 
-            $prodctoGeCarr->imagen = $prodctoGe->imagen ;
+            $prodctoGeCarr->idProducto = $prodctoGe["id_producto"];
+            $prodctoGeCarr->nombre = $prodctoGe["nombre"];
+            $prodctoGeCarr->descripcion = $prodctoGe["descripcion"];
+            //$prodctoGeCarr->cantidad =  $prodctoGe->cantidad;
+            $prodctoGeCarr->precio =  $prodctoGe["precio"];
+            $pagoSubtotal= $pagoSubtotal + floatval($prodctoGe["precio"]);//esta línea almacena los precios 
+            $prodctoGeCarr->imagen = $prodctoGe["imagen"];
             array_push($_SESSION['listaProductosCarritos'], $prodctoGeCarr);
-        }
+        //}
     }
-}
+//}
 
 $impuestotalFinal=round(($pagoSubtotal * 7/100)*100) / 100;
 $pagototal=$pagoSubtotal + $impuestotalFinal; 
