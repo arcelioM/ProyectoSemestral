@@ -1110,7 +1110,7 @@ $(document).ready(function () {
         const postDatos = {
             usuario: $('#USERusaradm').val(),
             nombre: $('#NombreUSERadm').val(),
-            Apellido: $('#apelliodUSERadm').val(),
+            apellido: $('#apelliodUSERadm').val(),
             email: $('#correoUSERadm').val(),
             contraseña: $('#PasswordUSERadm').val(),
             corregimiento_id: $('#CorregimientoBuscaramd').val(),
@@ -1185,6 +1185,7 @@ $(document).ready(function () {
                 $('#exampleModalLabelIngresoaux').html(template);
                 $('#modalImageIngresoaux').html(tempaltess);
                 $('#formularioRegistrarUusuario').trigger('reset');
+                cargarUsersList();
             } else {
                 if (valor == 0) {
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario no ha podido ser registrados.  </h1>
