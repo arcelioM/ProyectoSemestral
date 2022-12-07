@@ -1176,6 +1176,7 @@ $(document).ready(function () {
     });
 
     function saveBD(postDatos){
+        console.log(postDatos);
         $.ajax({
             type: "POST",
             url: "http://localhost/ProyectoSemestral/controller/usuario/CrearUsuario.php",
