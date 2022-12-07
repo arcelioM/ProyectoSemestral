@@ -11,9 +11,8 @@
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 
-    
 
-    $nombre= $_GET["nombre"];
+    $nombre= $_GET["data"]["nombre"];
 
     if(empty($nombre) ){
         
