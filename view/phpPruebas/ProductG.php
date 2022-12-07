@@ -15,15 +15,19 @@ $idCategoria= $_POST['idCategoria'];*/
 
 $listaPro = array();
 $_SESSION['listaProductos']= array();
-$InfoProductoLLevar=$_Post['InfoProductoLLevar'];
+$InfoProductoLLevar=$_POST['InfoProductoLLevar'];
 $JasonPedido=array();
 $InfoProductoLLevarFinal=array();
-$InfoProductoLLevarFinal= json_decode($InfoProductoLLevar);
-$_SESSION['listaProductos']=$InfoProductoLLevarFinal->productos;
+$InfoProductoLLevarFinal= $InfoProductoLLevar["productos"];
+$_SESSION['listaProductos']=$InfoProductoLLevarFinal;
 
-$response= "llenado"; 
 header('Content-Type: application/json');
-echo(json_encode($response));
+if(empty($_SESSION["listaProductos"])){
+    echo json_encode("vacio");
+}else{
+    echo(json_encode("llenado"));
+}
+
 /*if ($idCategoria == "0") {
     $prodctoGe = new Productos();
     $prodctoGe->idProducto = "1";
