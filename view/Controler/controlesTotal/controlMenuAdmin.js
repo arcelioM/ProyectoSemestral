@@ -1131,7 +1131,7 @@ $(document).ready(function () {
     });
 
 
-    $('#formularioRegistrarUusuario').submit(function (e) {
+    $('#formularioRegistrarUusuarioAdmin').submit(function (e) {
 
         const postDatos = {
             usuario: $('#USERusaradm').val(),
@@ -1208,10 +1208,10 @@ $(document).ready(function () {
                 tempaltess += `<center>
                        <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                     </center>`;
-                $('#exampleModalLabelIngresoaux').html(template);
-                $('#modalImageIngresoaux').html(tempaltess);
-                $('#formularioRegistrarUusuario').trigger('reset');
-                cargarUsersList();
+                $('#exampleModalLabelIngresoauxAdmi').html(template);
+                $('#modalImageIngresoauxAdmi').html(tempaltess);
+                $('#formularioRegistrarUusuarioAdmin').trigger('reset');
+                //cargarUsersList();
             } else {
                 if (valor == 0) {
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario no ha podido ser registrados.  </h1>
@@ -1220,8 +1220,8 @@ $(document).ready(function () {
                     tempaltess += `<center>
                        <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                     </center>`;
-                    $('#exampleModalLabelIngresoaux').html(template);
-                    $('#modalImageIngresoaux').html(tempaltess);
+                    $('#exampleModalLabelIngresoauxAdmi').html(template);
+                    $('#modalImageIngresoauxAdmi').html(tempaltess);
                 } else {
                     if (valor === null) {
                         template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Lo Sentimos, ya se encuentra un Usuario registarado con los mismo datos.  </h1>
@@ -1230,8 +1230,8 @@ $(document).ready(function () {
                         tempaltess += `<center>
                            <img src="http://localhost/ProyectoSemestral/view/imagenes/errosillo.gif" class="imga">
                         </center>`;
-                        $('#exampleModalLabelIngresoaux').html(template);
-                        $('#modalImageIngresoaux').html(tempaltess);
+                        $('#exampleModalLabelIngresoauxAdmi').html(template);
+                        $('#modalImageIngresoauxAdmi').html(tempaltess);
                     }
                 }
             }
