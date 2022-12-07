@@ -1202,14 +1202,14 @@ $(document).ready(function () {
         //usuarioRegistado.forEach(usercreado => {
             //console.log(usercreado.fecha);;
             if(valor == 1){
-                template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
+                /*template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                 tempaltess += `<center>
                        <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                     </center>`;
                 $('#exampleModalLabelIngresoauxAdmi').html(template);
-                $('#modalImageIngresoauxAdmi').html(tempaltess);
+                $('#modalImageIngresoauxAdmi').html(tempaltess);*/
                 $('#formularioRegistrarUusuarioAdmin').trigger('reset');
                 //cargarUsersList();
             } else {
