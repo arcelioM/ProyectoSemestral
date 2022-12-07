@@ -93,7 +93,7 @@ CREATE TABLE `direccion` (
   KEY `FK_direccion_estado_idEstado` (`estado_id`),
   CONSTRAINT `FK_direccion_corregimiento` FOREIGN KEY (`corregimiento_id`) REFERENCES `corregimiento` (`id_corregimiento`),
   CONSTRAINT `FK_direccion_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `direccion` (
 
 LOCK TABLES `direccion` WRITE;
 /*!40000 ALTER TABLE `direccion` DISABLE KEYS */;
-INSERT INTO `direccion` VALUES (1,1,'San jose',1),(2,1,'San jose',1),(13,1,'asd',1),(36,1,'Calle san carlos',1),(37,1,'El diablito',1),(38,1,'las lomas',1),(39,1,'las lomas',1),(40,1,'las lomas',1),(41,1,'Las lomas',1),(42,1,'Las lomas',1),(43,1,'Las lomas',1),(45,1,'1',1),(46,1,'Al frente del centro de salud, san jose',1);
+INSERT INTO `direccion` VALUES (1,1,'San jose',1),(2,1,'San jose',1),(13,1,'asd',1),(36,1,'Calle san carlos',1),(37,1,'El diablito',1),(38,1,'las lomas',1),(39,1,'las lomas',1),(40,1,'las lomas',1),(41,1,'Las lomas',1),(42,1,'Las lomas',1),(43,1,'Las lomas',1),(45,1,'1',1),(46,1,'Al frente del centro de salud, san jose',1),(47,11,'sepa dios',1);
 /*!40000 ALTER TABLE `direccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +288,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (1,1,1,1,3,'2022-11-19 20:38:09'),(2,1,2,1,4,'2022-11-19 20:38:10');
+INSERT INTO `pedido` VALUES (1,1,1,1,3,'2022-11-19 20:38:09'),(2,1,1,1,4,'2022-11-19 20:38:10');
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,7 +503,7 @@ CREATE TABLE `usuario` (
   KEY `FK_usuario_direccion_idDireccion` (`direccion_id`),
   CONSTRAINT `FK_usuario_direccion_idDireccion` FOREIGN KEY (`direccion_id`) REFERENCES `direccion` (`id_direccion`),
   CONSTRAINT `FK_usuario_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -512,7 +512,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'nuliken','Arcelio','Montezuma','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','arceliomonte15@gmail.com','arcelio.jpg',1,6524232,232311223,'2000-02-09',1,'2022-11-18 23:22:29'),(2,'noriel22','noriel','melendez','5ab252b4f983434ae505be442a92027f14a6e265','asd','asd',13,234,3435,'2000-09-02',1,'2022-12-01 21:31:51'),(5,'nulikas','Arcelio','Montezuma','50efed8aa351df246e92e81cb7bd096aa56d6972','arce@gmail.com','cara.webp',36,65282,23435,'2000-09-02',1,'2022-12-02 00:47:11'),(6,'Geovy','Geovanny','Pitti','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','geovy@gmail.com','../imagenes/perra.webp',37,67341823,65234512,'2002-03-17',1,'2022-12-05 13:49:11'),(7,'Juanito','Juan','Almengor','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juanAl@gmail.com','perfil.jpeg',38,3423823,342335,'2022-12-07',1,'2022-12-05 18:51:53'),(8,'Carmen','Carmen','Guevara','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','carmeGue@gmail.com','perfil.jpeg',39,3423823,342335,'2022-12-07',2,'2022-12-05 18:55:10'),(9,'Pablito','Pablo','Guevara','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','pabloG@gmail.com','perfil.jpeg',40,3423823,342335,'2022-12-07',1,'2022-12-05 18:56:11'),(10,'Pinito','Leonel','Garcia','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','leGarci@gmail.com','cara.webp',41,122324,23224,'2005-05-09',1,'2022-12-05 18:58:10'),(11,'Juanca','Juan carlos','Mendoza','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juancamen@gmail.com','sad.png',42,2332238,233423,'2022-12-22',1,'2022-12-05 18:59:55'),(12,'Juanita','Juana','Miranda','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juanmira@gmail.com','sad.png',43,2335535,3546,'2004-02-03',1,'2022-12-05 19:01:33'),(14,'12','12','12','356a192b7913b04c54574d18c28d46e6395428ab','12','sad.png',45,12,12,'2002-12-12',2,'2022-12-05 19:03:25'),(15,'Eli19','Eliseo','Morales','99800b85d3383e3a2fb45eb7d0066a4879a9dad0','elimorales@gmail.com','eli.jpg',46,67349172,64012345,'2001-06-12',1,'2022-12-06 23:50:50');
+INSERT INTO `usuario` VALUES (1,'nuliken','Arcelio','Montezuma','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','arceliomonte15@gmail.com','arcelio.jpg',1,6524232,232311223,'2000-02-09',1,'2022-11-18 23:22:29'),(2,'noriel22','noriel','melendez','5ab252b4f983434ae505be442a92027f14a6e265','asd','asd',13,234,3435,'2000-09-02',1,'2022-12-01 21:31:51'),(5,'nulikas','Arcelio','Montezuma','50efed8aa351df246e92e81cb7bd096aa56d6972','arce@gmail.com','cara.webp',36,65282,23435,'2000-09-02',1,'2022-12-02 00:47:11'),(6,'Geovy','Geovanny','Pitti','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','geovy@gmail.com','../imagenes/perra.webp',37,67341823,65234512,'2002-03-17',1,'2022-12-05 13:49:11'),(7,'Juanito','Juan','Almengor','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juanAl@gmail.com','perfil.jpeg',38,3423823,342335,'2022-12-07',1,'2022-12-05 18:51:53'),(8,'Carmen','Carmen','Guevara','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','carmeGue@gmail.com','perfil.jpeg',39,3423823,342335,'2022-12-07',2,'2022-12-05 18:55:10'),(9,'Pablito','Pablo','Guevara','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','pabloG@gmail.com','perfil.jpeg',40,3423823,342335,'2022-12-07',1,'2022-12-05 18:56:11'),(10,'Pinito','Leonel','Garcia','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','leGarci@gmail.com','cara.webp',41,122324,23224,'2005-05-09',1,'2022-12-05 18:58:10'),(11,'Juanca','Juan carlos','Mendoza','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juancamen@gmail.com','sad.png',42,2332238,233423,'2022-12-22',1,'2022-12-05 18:59:55'),(12,'Juanita','Juana','Miranda','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','juanmira@gmail.com','sad.png',43,2335535,3546,'2004-02-03',1,'2022-12-05 19:01:33'),(14,'12','12','12','356a192b7913b04c54574d18c28d46e6395428ab','12','sad.png',45,12,12,'2002-12-12',2,'2022-12-05 19:03:25'),(15,'Eli19','Eliseo','Morales','99800b85d3383e3a2fb45eb7d0066a4879a9dad0','elimorales@gmail.com','eli.jpg',46,67349172,64012345,'2001-06-12',1,'2022-12-06 23:50:50'),(16,'Pepito','Pepito','Morales','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','pepi@gmail.com','correo contraseña propia descubrir.jpg',47,67349123,60934123,'2001-06-11',1,'2022-12-07 04:11:22');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -536,7 +536,7 @@ CREATE TABLE `usuariorol` (
   CONSTRAINT `FK_usuarioRol_estado_idEstado` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id_estado`),
   CONSTRAINT `FK_usuarioRol_rol_idRol` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id_rol`),
   CONSTRAINT `FK_usuarioRol_usuario_idUsuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,7 +545,7 @@ CREATE TABLE `usuariorol` (
 
 LOCK TABLES `usuariorol` WRITE;
 /*!40000 ALTER TABLE `usuariorol` DISABLE KEYS */;
-INSERT INTO `usuariorol` VALUES (1,1,1,1,'2022-11-18 19:31:29'),(2,1,2,1,'2022-12-01 21:31:51'),(3,2,5,1,'2022-12-02 00:47:11'),(4,1,6,1,'2022-12-05 13:49:11'),(5,2,6,1,'2022-12-05 13:49:37'),(6,2,7,1,'2022-12-05 18:51:53'),(7,2,8,1,'2022-12-05 18:55:10'),(8,2,9,1,'2022-12-05 18:56:11'),(9,2,10,1,'2022-12-05 18:58:10'),(10,2,11,1,'2022-12-05 18:59:55'),(11,2,12,1,'2022-12-05 19:01:33'),(12,2,14,1,'2022-12-05 19:03:25'),(13,2,15,1,'2022-12-06 23:50:50');
+INSERT INTO `usuariorol` VALUES (1,1,1,1,'2022-11-18 19:31:29'),(2,1,2,1,'2022-12-01 21:31:51'),(3,2,5,1,'2022-12-02 00:47:11'),(4,1,6,1,'2022-12-05 13:49:11'),(5,2,6,1,'2022-12-05 13:49:37'),(6,2,7,1,'2022-12-05 18:51:53'),(7,2,8,1,'2022-12-05 18:55:10'),(8,2,9,1,'2022-12-05 18:56:11'),(9,2,10,1,'2022-12-05 18:58:10'),(10,2,11,1,'2022-12-05 18:59:55'),(11,2,12,1,'2022-12-05 19:01:33'),(12,2,14,1,'2022-12-05 19:03:25'),(13,2,15,1,'2022-12-06 23:50:50'),(14,1,16,1,'2022-12-07 04:11:22');
 /*!40000 ALTER TABLE `usuariorol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -994,4 +994,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-07  2:33:16
+-- Dump completed on 2022-12-07 12:36:44
