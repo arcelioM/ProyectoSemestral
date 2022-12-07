@@ -201,9 +201,9 @@ CREATE TABLE factura(
 # TENDRA TODOS LOS PAGOS QUE SE HAYAN HECHO PRO CADA FACTURA
 CREATE TABLE facturaPago(
 	id_facturaPago INT PRIMARY KEY AUTO_INCREMENT,
-    factura_id INT NOT NULL,
-    pago_id INT NOT NULL,
-    fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
-    CONSTRAINT FK_facturaPago_factura_idFactura FOREIGN KEY (factura_id) REFERENCES factura(id_factura),
-    CONSTRAINT FK_facturaPago_pago_idPago FOREIGN KEY (pago_id) REFERENCES pago(id_pago)
-);
+        factura_id INT NOT NULL,
+        pago_id INT NOT NULL,
+        fechaCreacion DATETIME NOT NULL DEFAULT NOW(),
+        CONSTRAINT FK_facturaPago_factura_idFactura FOREIGN KEY (factura_id) REFERENCES factura(id_factura),
+        CONSTRAINT FK_facturaPago_pago_idPago FOREIGN KEY (pago_id) REFERENCES pago(id_pago)
+    );
