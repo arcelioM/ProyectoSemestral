@@ -260,14 +260,18 @@ class ServiceUsuarioImpl{
                 "mensaje"=>"datos no validos",
                 "usuario"=>[]
             );
+
+            return $respuesta;
         }else{
             $respuesta = array(
                 "valor"=>1,
                 "mensaje"=>"Usuarios encontrados",
                 "usuarios"=>$result
             );
-        }
 
+            return $respuesta;
+        }
+        
     }
 
     
