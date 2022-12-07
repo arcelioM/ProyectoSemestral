@@ -151,6 +151,8 @@ $(document).ready(function () {
             url: "http://localhost/ProyectoSemestral/controller/usuario/ObtenerUsuario.php",
             success: function (response) {
                 console.log(response);
+                $('#TablaUser').show();
+                $('#TitulitoErrorBusqueda').hide();
                 let template = '';
                 let tipoUser = '';
                 let tipoAccion = '';
@@ -273,7 +275,7 @@ $(document).ready(function () {
                         let template = '';
                         let tipoUser = '';
                         let tipoAccion = '';
-                        let userDatos = response["usuario"];
+                        let userDatos = response["usuarios"];
                         if (response.valor == 0) {
                             console.log("Dato de Búsqeuda no hayado");
                             $('#TablaUser').hide();
@@ -332,6 +334,10 @@ $(document).ready(function () {
                             });
                             $('#User_Encontrados').html(template);
                         }
+                    },error: function(error){
+                        console.log("Dato de Búsqeuda no hayado");
+                        $('#TablaUser').hide();
+                        $('#TitulitoErrorBusqueda').show();
                     }
                 });
             }else{
@@ -416,28 +422,46 @@ $(document).ready(function () {
         let idEstado = "3";
         let idTipoPedido = "1";
 
-        //TraerPedidos(idEstadoF, idTipoPedidoF);
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
-            data: { idEstado, idTipoPedido },
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
             success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+                traerPedidos(idUsuarioRol,idEstado,idTipoPedido);
+            }
+        });
+
+        //TraerPedidos(idEstadoF, idTipoPedidoF);
+        
+    });
+
+    function traerPedidos(idUsuarioRol,idEstado,idTipoPedido){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/pedido/VerPedidos.php",
+            data: { idUsuarioRol, idEstado, idTipoPedido },
+            success: function (response) {
+                console.log(response);
                 let template = '';
-                let pepdidosDatos = response;
+                let pepdidosDatos = response["pedidos"];
                 pepdidosDatos.forEach(pepdidosDatosG => {
                     template += `
                     <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
                     <td >${pepdidosDatosG.idPedido}</td> 
-                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.nombreCompleto}</td> 
                     <td >${pepdidosDatosG.tipoPedido}</td> 
                     <td >${pepdidosDatosG.provincia}</td> 
                     <td >${pepdidosDatosG.fechaCreacion}</td>   
                     </tr>`;
                 });
                 $('#Pedidos_EncontradosEnProceso').html(template);
+            },error: function (error){
+                console.log(error);
             }
         });
-    });
+    }
 
     const botoncitoVerVerPedidosEntregados = document.querySelector("#VerPedidosEntregados");
     botoncitoVerVerPedidosEntregados.addEventListener("click", function (evento) {
@@ -1188,96 +1212,92 @@ $(document).ready(function () {
 }
 
 
-    function TraerProvincias() {
+    function TraerProvincias(){
         $.ajax({
             type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarProvin.php?",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/Provincia.php",
+            success: function (response) {
+                console.log(response);
+                let template = '';
+                let templatess = '';
+
+                let provinvincia = response["provincias"];
+                provinvincia.forEach(ProvinciaMostar => {
+                    template += `
+                    <option value="${ProvinciaMostar.id_provincia}"> ${ProvinciaMostar.nombre}</option>
+                `;  
+                });
+                templatess += `
+                    <option selected>Escoja una provincias </option>
+                `;  
+                $('#ProvinciaABuscarAamd').html(templatess+template);    
+            }
+        });
+    }
+
+
+    let showForm=()=>{
+    
+        let id_provincia=$("#ProvinciaABuscarAamd").val();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/DistritoPorProvincia.php",
+            data: { id_provincia },
+            success: function (response) {
+                let template = '';
+                let templatess = '';
+                let distritos = response["distritos"];
+                distritos.forEach(DistritoTotal => {
+                    template += `
+                    <option value="${DistritoTotal.id_distrito}"> ${DistritoTotal.nombre}</option>
+                `;  
+                });
+                templatess += `
+                    <option selected>Escoja un Distrito </option>
+                `;  
+                $('#DistritoABuscaramd').html(templatess+template); 
+                
+            }, 
+            error: function (error){
+                console.log(error);
+            }
+        });
+        
+        
+    };
+
+    $("#ProvinciaABuscarAamd").on('change',showForm);
+
+
+    let showFormAT=()=>{
+    
+        let id_distrito=$("#DistritoABuscaramd").val();
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/CorregimientoPorDistrito.php",
+            data: { id_distrito },
             success: function (response) {
                 let template = '';
                 let templatess = '';
 
-                let provinvincia = response;
-                provinvincia.forEach(ProvinciaMostar => {
+                let corregimiento = response["corregimientos"];
+                corregimiento.forEach(CorregmientoTotal => {
                     template += `
-                    <option value="${ProvinciaMostar.id_provincia}"> ${ProvinciaMostar.nombre}</option>
-                `;
+                    <option value="${CorregmientoTotal.id_corregimiento}"> ${CorregmientoTotal.nombre}</option>
+                `;  
                 });
                 templatess += `
-                    <option selected>Escoja una provincias </option>
-                `;
-                $('#ProvinciaABuscarAamd').html(templatess + template);
+                    <option selected>Escoja un Corregimiento </option>
+                `;  
+                $('#CorregimientoBuscaramd').html(templatess+template); 
+                
             }
         });
+        
+        
+    };
 
-    }
-
-    function TraerDistrito() {
-        let showForm = () => {
-
-            let id_provincia = $("#ProvinciaABuscarAamd").val();
-
-
-            $.ajax({
-                type: "GET",
-                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarDistrito.php?",
-                data: { id_provincia },
-                success: function (response) {
-                    let template = '';
-                    let templatess = '';
-
-                    let distritos = response;
-                    distritos.forEach(DistritoTotal => {
-                        template += `
-                        <option value="${DistritoTotal.id_distrito}"> ${DistritoTotal.nombre}</option>
-                    `;
-                    });
-                    templatess += `
-                        <option selected>Escoja un Distrito </option>
-                    `;
-                    $('#DistritoABuscaramd').html(templatess + template);
-
-                }
-            });
-
-
-        };
-
-        $("#ProvinciaABuscarAamd").on('change', showForm);
-
-    }
-
-    function TraerCorregimientos() {
-        let showFormAT = () => {
-
-            let id_distrito = $("#DistritoABuscaramd").val();
-            $.ajax({
-                type: "GET",
-                url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarCorregimiento.php?",
-                data: { id_distrito },
-                success: function (response) {
-                    let template = '';
-                    let templatess = '';
-
-                    let corregimiento = response;
-                    corregimiento.forEach(CorregmientoTotal => {
-                        template += `
-                        <option value="${CorregmientoTotal.id_corregimiento}"> ${CorregmientoTotal.nombre}</option>
-                    `;
-                    });
-                    templatess += `
-                        <option selected>Escoja un Corregimiento </option>
-                    `;
-                    $('#CorregimientoBuscaramd').html(templatess + template);
-
-                }
-            });
-
-
-        };
-
-        $("#DistritoABuscaramd").on('change', showFormAT);
-
-    }
+    $("#DistritoABuscaramd").on('change',showFormAT);
 
 
 
