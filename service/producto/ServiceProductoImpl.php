@@ -40,7 +40,7 @@ class ServiceProductoImpl{
         ];
 
         foreach($data as $value){
-            $producto = new Producto(idProducto:$value->idProducto);
+            $producto = new Producto(idProducto:$value["idProducto"]);
             $result = $this->productoDao->obtenerProductoPorId($producto);
             array_push($respuesta["productos"], $result);
         }
