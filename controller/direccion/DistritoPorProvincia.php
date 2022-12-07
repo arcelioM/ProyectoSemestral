@@ -11,8 +11,8 @@
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 
-    $data = json_decode(file_get_contents("php://input"));
-    if(empty($data->idProvincia)){
+    $data = $_GET["id_provincia"];
+    if(empty($data)){
 
         http_response_code(400);
 
@@ -22,7 +22,7 @@
         $serviceDireccion = new ServiceDireccionImpl($direccionDao);
 
         $data = [
-            "idProvincia" => $data->idProvincia
+            "idProvincia" => $data
         ];
     
         $respuesta = $serviceDireccion->obtenerDistritoPorProvincia($data);
