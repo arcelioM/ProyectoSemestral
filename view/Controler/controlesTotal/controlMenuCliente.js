@@ -207,7 +207,7 @@ $(document).ready(function () {
                                     </div>
                     `;
 
-                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        /*let variable = "carritoConSesion" + prodctoGe.idProducto;
                         $(document).on('click', '.' + variable, function () {
                             //console.log(prodctoGe.idProducto);
                             //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
@@ -228,7 +228,7 @@ $(document).ready(function () {
                                 }
                             });
 
-                        });
+                        });*/
 
                     });
                     $('#ProductoCeluaresSinSesio').html(template);
@@ -293,7 +293,7 @@ $(document).ready(function () {
                                 </div>
                 `;
 
-                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        /*let variable = "carritoConSesion" + prodctoGe.idProducto;
                         $(document).on('click', '.' + variable, function () {
                             //console.log(prodctoGe.idProducto);
                             //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
@@ -314,7 +314,7 @@ $(document).ready(function () {
                                 }
                             });
 
-                        });
+                        });*/
 
                     });
                     $('#ProductoComputadoraSinSesio').html(template);
@@ -377,7 +377,7 @@ $(document).ready(function () {
                         </div>
             `;
 
-                        let variable = "carritoConSesion" + prodctoGe.idProducto;
+                        /*let variable = "carritoConSesion" + prodctoGe.idProducto;
                         $(document).on('click', '.' + variable, function () {
                             //console.log(prodctoGe.idProducto);
                             //let url= 'http://localhost/ProyectoSemestral/view/phpPruebas/RecorridoCarrito.php?'; 
@@ -398,7 +398,7 @@ $(document).ready(function () {
                                 }
                             });
 
-                        });
+                        });*/
 
                     });
                     $('#ProductoElectroncaSinSesio').html(template);
