@@ -486,19 +486,32 @@ $(document).ready(function () {
         let idEstado = "4";
         let idTipoPedido = "1";
 
-        //TraerPedidos(idEstadoF, idTipoPedidoF);
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
-            data: { idEstado, idTipoPedido },
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+                pedidosEntregado(idUsuarioRol,idEstado,idTipoPedido);
+            }
+        });
+
+    });
+
+    function pedidosEntregado(idUsuarioRol,idEstado,idTipoPedido){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/pedido/VerPedidos.php",
+            data: { idUsuarioRol, idEstado, idTipoPedido },
             success: function (response) {
                 let template = '';
-                let pepdidosDatos = response;
+                let pepdidosDatos = response["pedidos"];
                 pepdidosDatos.forEach(pepdidosDatosG => {
                     template += `
                     <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
                     <td >${pepdidosDatosG.idPedido}</td> 
-                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.nombreCompleto}</td> 
                     <td >${pepdidosDatosG.tipoPedido}</td> 
                     <td >${pepdidosDatosG.provincia}</td> 
                     <td >${pepdidosDatosG.fechaCreacion}</td>   
@@ -507,7 +520,7 @@ $(document).ready(function () {
                 $('#Pedidos_EncontradosEntregados').html(template);
             }
         });
-    });
+    }
 
     const botoncitoVerPedidosCancelados = document.querySelector("#VerPedidosCancelados");
     botoncitoVerPedidosCancelados.addEventListener("click", function (evento) {
@@ -531,16 +544,31 @@ $(document).ready(function () {
         //TraerPedidos(idEstadoF, idTipoPedidoF);
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/mostrarPedidos.php?",
-            data: { idEstado, idTipoPedido },
+            url: "http://localhost/ProyectoSemestral/view/phpPruebas/IdRolEnviar.php?",
+            success: function (response) {
+                //console.log(response);
+                let idUsuarioRol = response;
+                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+                pedidosCancelados(idUsuarioRol,idEstado,idTipoPedido);
+            }
+        });
+
+
+    });
+
+    function pedidosCancelados(idUsuarioRol,idEstado,idTipoPedido) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/ProyectoSemestral/controller/pedido/VerPedidos.php",
+            data: { idUsuarioRol, idEstado, idTipoPedido },
             success: function (response) {
                 let template = '';
-                let pepdidosDatos = response;
+                let pepdidosDatos = response["pedidos"];
                 pepdidosDatos.forEach(pepdidosDatosG => {
                     template += `
                     <tr Id_Homework="${pepdidosDatosG.idPedido}" class="table-info   text-center" >
                     <td >${pepdidosDatosG.idPedido}</td> 
-                    <td >${pepdidosDatosG.usuario}</td> 
+                    <td >${pepdidosDatosG.nombreCompleto}</td> 
                     <td >${pepdidosDatosG.tipoPedido}</td> 
                     <td >${pepdidosDatosG.provincia}</td> 
                     <td >${pepdidosDatosG.fechaCreacion}</td>   
@@ -549,9 +577,7 @@ $(document).ready(function () {
                 $('#Pedidos_EncontradosCancelados').html(template);
             }
         });
-
-    });
-
+    }
 
     const botoncitoRegresarPedido = document.querySelector("#RegresarPedido");
     botoncitoRegresarPedido.addEventListener("click", function (evento) {
