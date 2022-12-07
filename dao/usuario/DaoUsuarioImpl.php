@@ -28,7 +28,7 @@ class DaoUsuarioImpl{
 			$execute->execute();
 
 			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
-
+            Log::write("INICIANDO CONSULTA DE ROLES POR USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
             foreach($result as $key=>$value){
                 $result[$key]["rol"] = $this->obtenerRoles($value["idUsuario"]);
                 //unset($result[$key]["idUsuario"]);
@@ -202,7 +202,7 @@ class DaoUsuarioImpl{
 
     private function obtenerRoles($idUsuario){
         try {
-			Log::write("INICIANDO CONSULTA DE ROLES POR USUARIO | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+			
 			$query = "SELECT r.nombre as nombre FROM usuario u INNER JOIN usuarioRol ur ON u.id_usuario = ur.usuario_id INNER JOIN rol r ON ur.rol_id = r.id_rol
             WHERE u.id_usuario=?";
 
@@ -213,7 +213,7 @@ class DaoUsuarioImpl{
 
 			$result = $execute->fetchAll(PDO::FETCH_ASSOC);
 
-			Log::write("CONSULTA REALIZADA EXITOSAMENTE","INFO");
+
 			return $result;
 		} catch (PDOException $e) {
 
