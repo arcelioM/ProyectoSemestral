@@ -11,8 +11,8 @@
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 
-    $data = json_decode(file_get_contents("php://input"));
-    if(empty($data->idDistrito)){
+    $data = $_GET["id_distrito"];
+    if(empty($data)){
         http_response_code(400);
 
     }else{
@@ -21,7 +21,7 @@
         $serviceDireccion = new ServiceDireccionImpl($direccionDao);
 
         $data = [
-            "idDistrito" => $data->idDistrito
+            "idDistrito" => $data
         ];
     
         $respuesta = $serviceDireccion->obtenerCorregimientoPorDistrito($data);
