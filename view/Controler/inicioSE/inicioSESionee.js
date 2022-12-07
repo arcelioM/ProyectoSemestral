@@ -81,7 +81,7 @@ $(document).ready(function(){
             apellido : $('#apelliodUSER').val(),
             email : $('#correoUSER').val(),
             contraseña : $('#PasswordUSER').val(),
-            corregimiento_id: 1,
+            corregimiento_id: $("#CorregimientoBuscar").val(),
             direcion_especifica : $('#DireccionUSER').val(),
             telefono_1 : $('#telefonoUnoUSER').val(),
             telefono_2 : $('#telefonoDosUSER').val(),
@@ -197,12 +197,13 @@ $(document).ready(function(){
     function TraerProvincias(){
         $.ajax({
             type: "GET", // usamos este método porque nos traeremos los resultados sin enviar ningún otro dato
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarProvin.php?",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/Provincia.php",
             success: function (response) {
+                console.log(response);
                 let template = '';
                 let templatess = '';
 
-                let provinvincia = response;
+                let provinvincia = response["provincias"];
                 provinvincia.forEach(ProvinciaMostar => {
                     template += `
                     <option value="${ProvinciaMostar.id_provincia}"> ${ProvinciaMostar.nombre}</option>
@@ -222,13 +223,13 @@ $(document).ready(function(){
         let id_provincia=$("#ProvinciaABuscar").val();
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarDistrito.php?",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/DistritoPorProvincia.php",
             data: { id_provincia },
             success: function (response) {
                 let template = '';
                 let templatess = '';
 
-                let distritos = response;
+                let distritos = response["distritos"];
                 distritos.forEach(DistritoTotal => {
                     template += `
                     <option value="${DistritoTotal.id_distrito}"> ${DistritoTotal.nombre}</option>
@@ -239,6 +240,9 @@ $(document).ready(function(){
                 `;  
                 $('#DistritoABuscar').html(templatess+template); 
                 
+            }, 
+            error: function (error){
+                console.log(error);
             }
         });
         
@@ -253,13 +257,13 @@ $(document).ready(function(){
         let id_distrito=$("#DistritoABuscar").val();
         $.ajax({
             type: "GET",
-            url: "http://localhost/ProyectoSemestral/view/phpPruebas/BuscarCorregimiento.php?",
+            url: "http://localhost/ProyectoSemestral/controller/direccion/CorregimientoPorDistrito.php",
             data: { id_distrito },
             success: function (response) {
                 let template = '';
                 let templatess = '';
 
-                let corregimiento = response;
+                let corregimiento = response["corregimientos"];
                 corregimiento.forEach(CorregmientoTotal => {
                     template += `
                     <option value="${CorregmientoTotal.id_corregimiento}"> ${CorregmientoTotal.nombre}</option>
