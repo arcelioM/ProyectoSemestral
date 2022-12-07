@@ -1011,24 +1011,36 @@ $(document).ready(function () {
             url: "http://localhost/ProyectoSemestral/view/phpPruebas/LlevarIdProdu.php?",
             success: function (response) {
                 console.log(response);
-                let productoidLlevar = {
-                    "productos":response
-                };
-                //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
 
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProductoId.php",
-                    data: productoidLlevar,
-                    dataType: "json",
-                    success: function (response) {
-                        console.log(response);
-                        infoProducto(response);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
+                if(response.length==0){
+                    
+                    let productoidLlevar = {
+                        "productos":[]
+                    };
+                    infoProducto(productoidLlevar);
+
+                }else{
+                    let productoidLlevar = {
+                        "productos":response
+                    };
+                    
+                    //AQUI AL API REST Y SE TRAE UNA VARIABLE CON L AINFO PRODUCTO
+    
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/ProyectoSemestral/controller/producto/ObtenerProductoId.php",
+                        data: productoidLlevar,
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+                            infoProducto(response);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+                
 
                 //Variable que gauradrá lña información de los productos traidos para el carrito
                 
