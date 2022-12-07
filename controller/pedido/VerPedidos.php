@@ -15,10 +15,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders,
 
 
 
-$data = json_decode(file_get_contents("php://input"));
+$idUsuarioRol = $_GET["idUsuarioRol"];
+$idEstado = $_GET["idEstado"];
+$idTipoPedido = $_GET["idTipoPedido"];
 
-if(empty($data->idUsuarioRol) ){
-
+if(empty($idUsuarioRol) ){
     http_response_code(400);
 }else{
 
@@ -27,9 +28,9 @@ if(empty($data->idUsuarioRol) ){
     $servicePedido = new ServicePedidoImpl($pedidoDao);
 
     $data = [
-        "idUsuarioRol"=> $data->idUsuarioRol,
-        "idEstado"=> $data->idEstado,
-        "idTipoPedido"=> $data->idTipoPedido
+        "idUsuarioRol"=> $idUsuarioRol,
+        "idEstado"=> $idEstado,
+        "idTipoPedido"=> $idTipoPedido
     ];
 
     $respuesta = $servicePedido->obtenerPedidos($data);
