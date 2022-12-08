@@ -998,7 +998,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response != 0) {
                         postDatos.imagen = response;
-                        saveBD(postDatos);
+                        saveBDAc(postDatos);
                     } else {
                         alert(response);
                     }
@@ -1009,7 +1009,7 @@ $(document).ready(function () {
             });
         } else {
             postDatos.imagen = "";
-            saveBD(postDatos);
+            saveBDAc(postDatos);
         }
 
 
@@ -1017,14 +1017,14 @@ $(document).ready(function () {
     });
 
 
-    function saveBD(postDatos) {
+    function saveBDAc(postDatos) {
         $.ajax({
             type: "POST",
             url: "http://localhost/ProyectoSemestral/controller/usuario/ActualizarUsuario.php",
             data: postDatos,
             dataType: "json",
             success: function (response) {
-                saveUserSession(response, postDatos);
+                saveUserSessionMod(response, postDatos);
             },
             error: function (error) {
                 console.log(error);
@@ -1032,7 +1032,7 @@ $(document).ready(function () {
         });
     }
 
-    function saveUserSession(response, postDatos) {
+    function saveUserSessionMod(response, postDatos) {
 
         console.log(response);
         console.log(postDatos);
@@ -1203,16 +1203,16 @@ $(document).ready(function () {
         //usuarioRegistado.forEach(usercreado => {
             //console.log(usercreado.fecha);;
             if(valor == 1){
-                /*template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
+                template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario  han sido registrados con Éxito y listo para navegar.  </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 `;
                 tempaltess += `<center>
                        <img src="http://localhost/ProyectoSemestral/view/imagenes/correcto.gif" class="imga">
                     </center>`;
                 $('#exampleModalLabelIngresoauxAdmi').html(template);
-                $('#modalImageIngresoauxAdmi').html(tempaltess);*/
+                $('#modalImageIngresoauxAdmi').html(tempaltess);
                 $('#formularioRegistrarUusuarioAdmin').trigger('reset');
-                //cargarUsersList();
+                cargarUsersList();
             } else {
                 if (valor == 0) {
                     template += `<h1 class="modal-title fs-5 text-center" id="exampleModalTecnologia"> Los Datos del Usuario no ha podido ser registrados.  </h1>
